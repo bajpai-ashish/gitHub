@@ -1,0 +1,83 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>top vs top with ties</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <style>
+      body {
+        font-family: "Ubuntu", sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+      h3 {
+        color: #2c3e50;
+      }
+      code {
+        background-color: #ecf0f1;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div dir="ltr" style="text-align: left" trbidi="on">
+      <h3 style="font-family: Ubuntu">Compare top vs top with ties:</h3>
+      <div style="font-family: Ubuntu">
+        In SQL, <code>TOP</code> is used to retrieve a specified number of rows,
+        while <code>TOP WITH TIES</code> returns the top rows along with any
+        additional rows that have the same value as the last row in the top set,
+        potentially returning more than the specified <code>TOP</code> number.
+      </div>
+      <div style="font-family: Ubuntu">
+        <h3 style="font-family: Ubuntu">Example:</h3>
+        <code>SELECT TOP 5 * FROM Employees ORDER BY Salary DESC</code> will
+        return the top 5 highest salaries.
+        <br />
+        <code
+          >SELECT TOP 5 WITH TIES * FROM Employees ORDER BY Salary DESC</code
+        >
+        will return the top 5 highest salaries and any additional employees with
+        the same salary as the 5th highest.
+      </div>
+      <div>
+        <h4>TOP (n):</h4>
+        <ul>
+          <li>
+            Returns the first <em>n</em> rows of the result set, based on the
+            <strong>ORDER BY</strong> clause.
+          </li>
+          <li>
+            If there are ties for the <em>n<sup>th</sup></em> row, only the
+            first <em>n</em> rows are returned, and the tied rows are not
+            included.
+          </li>
+        </ul>
+        <h4>TOP WITH TIES:</h4>
+        <ul>
+          <li>
+            Returns the first <em>n</em> rows, as with <strong>TOP</strong>.
+          </li>
+          <li>
+            Includes all rows that have the same value as the last row in the
+            <strong>TOP n</strong> set, even if it exceeds <em>n</em>.
+          </li>
+        </ul>
+      </div>
+      <hr style="border: 1px solid #c7c6c6; width: 100%" />
+      <div style="font-family: Ubuntu">
+        <iframe
+          style="width: 100%; height: 580px; border: none"
+          src="https://onecompiler.com/embed/sqlserver/43emp9p35?hideNew=true&hideLanguageSelection=true&hideStdin=true&disableCopyPaste=true&theme=auto"
+        >
+        </iframe>
+      </div>
+    </div>
+    <hr style="border: 1px solid #c7c6c6; width: 100%" />
+  </body>
+</html>
