@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pandas vs PySpark</title>
+    <style>
+      body {
+        font-family: Ubuntu, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        color: #333;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f4f4f4;
+      }
+
+      h1,
+      h2 {
+        color: #555;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Pandas vs PySpark</h1>
+    <p>
+      Pandas and PySpark are both Python libraries used for data manipulation
+      and analysis, but they differ significantly in their architecture and use
+      cases. Pandas is designed for single-machine processing, while PySpark is
+      built for distributed computing across a cluster.
+    </p>
+
+    <h2>Feature Comparison</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Pandas</th>
+          <th>PySpark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong style="color: rgb(4, 0, 255)">Data Architecture</strong>
+          </td>
+          <td>Single-node, in-memory processing</td>
+          <td>Distributed computing across multiple nodes</td>
+        </tr>
+        <tr>
+          <td><strong style="color: rgb(4, 0, 255)">Data Size</strong></td>
+          <td>Handles small to medium-sized datasets</td>
+          <td>Processes large-scale datasets</td>
+        </tr>
+        <tr>
+          <td><strong style="color: rgb(4, 0, 255)">Performance</strong></td>
+          <td>Fast for smaller datasets</td>
+          <td>Efficient for large datasets due to parallelism</td>
+        </tr>
+        <tr>
+          <td><strong style="color: rgb(4, 0, 255)">Ease of Use</strong></td>
+          <td>Simpler syntax, easier for data exploration</td>
+          <td>
+            More complex setup, requires understanding of distributed computing
+          </td>
+        </tr>
+        <tr>
+          <td><strong style="color: rgb(4, 0, 255)">Data Sources</strong></td>
+          <td>Primarily local files, but can connect to other sources</td>
+          <td>Various sources including HDFS, S3, and databases</td>
+        </tr>
+        <tr>
+          <td><strong style="color: rgb(4, 0, 255)">Use Cases</strong></td>
+          <td>Data cleaning, analysis, visualization</td>
+          <td>ETL, large-scale data processing, machine learning</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Choosing between Pandas and PySpark depends on the size of your data and
+      the complexity of your analysis.
+    </p>
+    <p>
+      Pandas is suitable for smaller datasets and interactive analysis, while
+      PySpark is better for large-scale data processing and distributed
+      computing.
+    </p>
+  </body>
+</html>
