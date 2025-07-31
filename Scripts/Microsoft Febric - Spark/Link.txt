@@ -1,0 +1,32 @@
+https://www.youtube.com/watch?v=Av44Nrhl05s
+https://www.youtube.com/watch?v=RHV7jZqc_tE
+
+
+74,420 views  21 Apr 2024
+🚀Join me in this tutorial as we build an end to end data engineering and reporting solution using Microsoft Fabric. 
+
+This tutorial uses the USGS Earthquake API to build an end to end data solution focusing on the Data Engineering, Data Factory and Power BI experiences. 
+
+⌚ Timestamps
+00:00 Introduction to the Project and Solution Overview
+03:20 Creating a Fabric Workspace and Data Lakehouse
+06:48 Overview of the USGS Earthquake API
+08:04 Using Python Requests to Fetch API data
+14:40 Coding the Bronze Layer Processing Notebook
+21:40 Coding the Silver Layer Processing Notebook
+30:40 Coding the Gold Layer Processing Notebook
+41:14 Updating the Default Semantic Model and Creating the Power BI Report
+52:36 Using a Data Factory Pipeline to Orchestrate the Data Processing
+01:03:10 Project Debrief
+
+🔗 Links and Resources
+GitHub Repository: https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbmZmcUljN2MtMTlEOGpybG1Ga2lhcEVhcy1Fd3xBQ3Jtc0tsRHZ4Um9aODBndTNjVzZPVXROd0MyVGJPQkxQMVNfTEpvWktfd0VhWU9PWFlkX0EwWEpMdURzNnBEaE42SVdZemZ2bW03aG5iU2d4Z25nZi1na05KQ3ZTZFVLQU1uSEh0LWNkNVgwU19Dck1jVWhIbw&q=https%3A%2F%2Fgithub.com%2Fmalvik01%2FEarthquake-Data-Engineering-Project-with-Microsoft-Fabric%2Ftree%2Fmain&v=Av44Nrhl05s
+Earthquake API: https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqblVJeWMzbEJjWXlpVzNfUnFEMWl4dTBfWXNlQXxBQ3Jtc0treTRRVTFjV3dJaTV3QWI0ek1PbU82QmFsaUpzczlzTC1VRUhxRmxZUXFVZ2wyZ2w0QWZDOXhaSkdicW9lVG1KZk04NWM5Y1hKblhMMXkxcllzLVd0MVhEMWtvajNFYmMzcG9Da0FPaUx4N1p0NWlZcw&q=https%3A%2F%2Fearthquake.usgs.gov%2Ffdsnws%2Fevent%2F1%2F%23parameters&v=Av44Nrhl05s
+
+Unix Timestamp Convertor: https://www.unixtimestamp.com/
+Reverse Geocoder Python Library: https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbFhCNTlYZUhDcU9IcW9OQ2Q4MURiY3hKN012Z3xBQ3Jtc0ttd3Ruenl1VTFsdjlCUGZvbDhCT1BJNzN5VDNOQkFtTlBoYkFtQUZFSjJndHNTa19KRnBkbmtvSnR4UmdFUzBUWkptUVF2cFdTc0MxaXVDUFNfbTFQeUN0OUpjaUlYdm5OaFF5ZXlyS0lhdjViOGoxMA&q=https%3A%2F%2Fpypi.org%2Fproject%2Freverse_geocoder%2F&v=Av44Nrhl05s
+What is the Medallion Architecture: https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqazIyLVNpcXdQb3cxVDU2cnVVRDk0dldBZDJfd3xBQ3Jtc0ttUDVXdWM5aTJkZjlSeGwxUlgzLWJmRUloMjIzTllJaW1Lb2VmdTFLNE5kYlNqQ2xLVlRHWGlqQnFmVC1TSmZEeWo2UmU4aW9ZV1VIOGV0eU9sQWkwVF9kUFdfS3lhZ1V4ejdnQTlrcG5DTUxBRFkxVQ&q=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fazure%2Fdatabricks%2Flakehouse%2Fmedallion&v=Av44Nrhl05s
+Fabric Environments: https://learn.microsoft.com/en-us/fab...
+
+📚 Check out my Udemy Course
+Microsoft Fabric: The Ultimate Guide: https://www.udemy.com/course/microsof...
