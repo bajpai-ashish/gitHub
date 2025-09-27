@@ -413,8 +413,8 @@
         <tr>
           <td>How is Snowflake different from traditional databases?</td>
           <td>
-            Snowflake is built for the cloud and offers features like automatic
-            scaling and data sharing.
+            Snowflake is built for the cloud and offers features like <strong>automatic
+            scaling and data sharing</strong>.
           </td>
         </tr>
         <tr>
@@ -439,28 +439,8 @@
         <tr>
           <td>What is Time Travel in Snowflake?</td>
           <td>
-            Time Travel lets you access historical data (up to 90 days) even
+            <strong>Time Travel</strong> lets you access historical data (up to 90 days) even
             after it's been updated or deleted. Useful for data recovery,
-            auditing, and rollback operations.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            What is Snowflake and how is it different from traditional data
-            warehouses?
-          </td>
-          <td>
-            Snowflake is a cloud-native data platform that separates compute and
-            storage, supports multi-cloud, and offers near-zero
-            maintenance.Unlike legacy systems, it’s built for elasticity,
-            scalability, and secure data sharing.
-          </td>
-        </tr>
-        <tr>
-          <td>What is Time Travel in Snowflake?</td>
-          <td>
-            Time Travel lets you access historical data (up to 90 days) even
-            after it's been updated or deleted.Useful for data recovery,
             auditing, and rollback operations.
           </td>
         </tr>
@@ -494,7 +474,7 @@
           </td>
           <td>
             Snowflake supports native ingestion and querying of semi-structured
-            data using the VARIANT data type.You can use FLATTEN, LATERAL, and
+            data using the VARIANT data type.You can use <code>FLATTEN, LATERAL,</code> and
             dot notation to extract nested fields.
           </td>
         </tr>
@@ -526,8 +506,21 @@
         <tr>
           <td>How do you load data from S3 into Snowflake?</td>
           <td>
-            Create a stage, define a file format, and use COPY INTO to load
-            data.Optionally automate with SnowPipe or orchestrate with Tasks.
+            <ul>
+              <li>
+                Create an external stage pointing to your S3 bucket using
+                <code>CREATE STAGE</code>.
+              </li>
+              <li>
+                Define a file format (e.g., CSV, JSON) with
+                <code>CREATE FILE FORMAT</code>.
+              </li>
+              <li>
+                Use the <code>COPY INTO</code> command to load data from the
+                stage into Snowflake tables.
+              </li>
+            </ul>
+            Optionally automate with SnowPipe or orchestrate with Tasks.
           </td>
         </tr>
       </table>
