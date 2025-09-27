@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snowflake Related Questions</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <style>
+      body {
+        font-family: "Ubuntu", sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        text-align: justify;
+        font-size: 15px;
+      }
+      h3 {
+        color: #2c3e50;
+        text-align: center;
+      }
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+
+      table {
+        color: #2c3e50;
+        padding: 2px 4px;
+        border-radius: 4px;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      code {
+        background-color: #ecf0f1;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h3>Data Vault Related Questions</h3>
+      <table>
+        <tr>
+          <th>Questions</th>
+          <th>Answers</th>
+        </tr>
+        <tr>
+          <td>What is Data Vault Modeling?</td>
+          <td>
+            Data Vault is a data modeling methodology optimized for historical
+            tracking, auditability, and scalability. It separates raw data
+            ingestion from business logic using three core components:
+            <strong>Hubs</strong>, <strong>Links</strong>, and
+            <strong>Satellites</strong>.
+          </td>
+        </tr>
+        <tr>
+          <td>How does Data Vault handle historical data?</td>
+          <td>
+            Data Vault captures historical data by using a combination of hubs,
+            links, and satellites to track changes over time.
+          </td>
+        </tr>
+        <tr>
+          <td>What are Hubs, Links, and Satellites?</td>
+          <td>
+            <ul>
+              <li>
+                <strong>Hubs</strong>: Represent core business entities (e.g.,
+                Customer, Product). Store unique business keys.
+              </li>
+              <li>
+                <strong>Links</strong>: Capture relationships between Hubs
+                (e.g., Customer-Order).
+              </li>
+              <li>
+                <strong>Satellites</strong>: Store descriptive attributes and
+                track historical changes over time.
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Why is Data Vault considered audit-friendly?</td>
+          <td>
+            Data Vault is considered audit-friendly because it provides a clear
+            and traceable data lineage. Its architecture allows for easy
+            auditing and validation of data, ensuring that all changes are
+            tracked and can be reviewed. It never
+            <strong>deletes or updates records</strong> — it only appends. This
+            ensures a complete historical trail of all data changes, making it
+            ideal for compliance and forensic analysis.
+          </td>
+        </tr>
+        <tr>
+          <td>How does Data Vault differ from Dimensional Modeling?</td>
+          <td>
+            Data Vault focuses on providing a flexible and scalable architecture
+            for data warehousing, while Dimensional Modeling is more rigid and
+            optimized for query performance.
+            <table>
+              <tr>
+                <th>Features</th>
+                <th>Data Vault</th>
+                <th>Dimensional Modeling</th>
+              </tr>
+              <tr>
+                <td>Flexibility</td>
+                <td>High (schema evolution is easy)</td>
+                <td>
+                  Rigid (requires redesign) and optimized for query performance
+                </td>
+              </tr>
+              <tr>
+                <td>Historical Tracking</td>
+                <td>
+                  Built in; Data Vault provides a clear focuses on historical
+                  tracking
+                </td>
+                <td>
+                  Often limited; Dimensional Modeling focuses on current
+                  dataFocuses on current data
+                </td>
+              </tr>
+              <tr>
+                <td>Normalization</td>
+                <td>Highly normalized</td>
+                <td>Denormalized (star/snowflake)</td>
+              </tr>
+              <tr>
+                <td>Use Case</td>
+                <td>Raw data ingestion and business logic</td>
+                <td>BI/reporting layer</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>What is the role of surrogate keys in Data Vault?</td>
+          <td>
+            Each Hub, Link, and Satellite uses a <strong>surrogate key</strong>
+            (often a hash or sequence) to uniquely identify records. This
+            ensures consistency and supports parallel processing.
+          </td>
+        </tr>
+        <tr>
+          <td>How do you handle schema changes in Data Vault?</td>
+          <td>
+            Data Vault is designed to accommodate schema changes easily. You can
+            add new Satellites or attributes —
+            <strong>you don't need to modify existing Hubs or Links.</strong>
+            New Hubs, Links, and Satellites can be added without impacting
+            existing structures. This flexibility allows organizations to adapt
+            to changing business requirements without significant rework.
+          </td>
+        </tr>
+        <tr>
+          <td>Can Data Vault support real-time or big data environments?</td>
+          <td>
+            Yes. Data Vault is <strong>highly scalable</strong> and works well
+            with streaming <strong>ingestion, cloud platforms,</strong> and
+            <strong>massive datasets.</strong> It’s often paired with tools like
+            Snowflake, dbt, or Spark.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            What is a PIT (Point-in-Time) table and Bridge table in Data Vault?
+          </td>
+          <td>
+            <ul>
+              <li>
+                <strong>PIT Table:</strong> Captures snapshot views across
+                multiple Satellites for fast querying.
+              </li>
+              <li>
+                <strong>Bridge Table:</strong> Used to handle many-to-many
+                relationships between Hubs, providing a way to link related
+                data.
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>How do you load data into a Data Vault model?</td>
+          <td>
+            Data is loaded into a Data Vault model using an ETL (Extract,
+            Transform, Load) process. The raw data is ingested into Staging
+            tables, then processed and loaded into Hubs, Links, and Satellites
+            according to the Data Vault architecture.
+            <ul>
+              <li>Load raw data into Hubs (business keys)</li>
+              <li>Create Links (relationships)</li>
+              <li>Populate Satellites (descriptive data + timestamps)</li>
+            </ul>
+            Tools like Airflow, dbt, or Snowflake Tasks can orchestrate this.
+          </td>
+        </tr>
+        <tr>
+          <td>What are micro-partitions in Snowflake?</td>
+          <td>
+            Snowflake stores data in compressed columnar micro-partitions
+            (50–500MB chunks).These enable fast pruning, efficient storage, and
+            optimized query performance.
+          </td>
+        </tr>
+        <tr>
+          <td>What is Zero-Copy Cloning?</td>
+          <td>
+            You can clone databases, schemas, or tables instantly without
+            duplicating data.Great for testing, sandboxing, or branching
+            environments.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            How does Snowflake handle semi-structured data (JSON, XML, Avro)?
+          </td>
+          <td>
+            Snowflake supports native ingestion and querying of semi-structured
+            data using the VARIANT data type.You can use FLATTEN, LATERAL, and
+            dot notation to extract nested fields.
+          </td>
+        </tr>
+        <tr>
+          <td>What is a Task in Snowflake and how is it used?</td>
+          <td>
+            Tasks automate SQL execution on a schedule or trigger.You can chain
+            tasks using AFTER to build DAG-like orchestration inside Snowflake.
+          </td>
+        </tr>
+        <tr>
+          <td>How does Snowflake ensure security and compliance?</td>
+          <td>
+            Role-based access control (RBAC), data encryption (at rest and in
+            transit), masking policies, and support for HIPAA, GDPR, SOC 2, etc.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            What is the difference between Snowflake and Redshift/BigQuery?
+          </td>
+          <td>
+            Snowflake separates compute/storage, supports multi-cloud, and
+            offers features like Time Travel, cloning, and native
+            semi-structured support.Redshift is AWS-only and less flexible;
+            BigQuery is serverless but lacks some orchestration features.
+          </td>
+        </tr>
+        <tr>
+          <td>How do you load data from S3 into Snowflake?</td>
+          <td>
+            Create a stage, define a file format, and use COPY INTO to load
+            data.Optionally automate with SnowPipe or orchestrate with Tasks.
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h3>Snowflake Related Questions</h3>
+      <table>
+        <tr>
+          <th>Questions</th>
+          <th>Answers</th>
+        </tr>
+        <tr>
+          <td>What is Snowflake?</td>
+          <td>A cloud-based data warehousing service.</td>
+        </tr>
+        <tr>
+          <td>How does Snowflake work?</td>
+          <td>
+            Snowflake uses a unique architecture that separates storage and
+            compute resources.
+          </td>
+        </tr>
+        <tr>
+          <td>How is Snowflake different from traditional databases?</td>
+          <td>
+            Snowflake is built for the cloud and offers features like automatic
+            scaling and data sharing.
+          </td>
+        </tr>
+        <tr>
+          <td>What is Snowflake's architecture?</td>
+          <td>
+            Snowflake's architecture is a multi-cluster shared data architecture
+            that allows for concurrent processing and scaling.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            What is Snowflake and how is it different from traditional data
+            warehouses?
+          </td>
+          <td>
+            Snowflake is a cloud-native data platform that separates compute and
+            storage, supports multi-cloud, and offers near-zero maintenance.
+            Unlike legacy systems, it’s built for elasticity, scalability, and
+            secure data sharing.
+          </td>
+        </tr>
+        <tr>
+          <td>What is Time Travel in Snowflake?</td>
+          <td>
+            Time Travel lets you access historical data (up to 90 days) even
+            after it's been updated or deleted. Useful for data recovery,
+            auditing, and rollback operations.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            What is Snowflake and how is it different from traditional data
+            warehouses?
+          </td>
+          <td>
+            Snowflake is a cloud-native data platform that separates compute and
+            storage, supports multi-cloud, and offers near-zero
+            maintenance.Unlike legacy systems, it’s built for elasticity,
+            scalability, and secure data sharing.
+          </td>
+        </tr>
+        <tr>
+          <td>What is Time Travel in Snowflake?</td>
+          <td>
+            Time Travel lets you access historical data (up to 90 days) even
+            after it's been updated or deleted.Useful for data recovery,
+            auditing, and rollback operations.
+          </td>
+        </tr>
+        <tr>
+          <td>What is SnowPipe and how does it work?</td>
+          <td>
+            SnowPipe is Snowflake’s continuous data ingestion service.It loads
+            data from cloud storage (like S3) automatically using event
+            notifications or REST APIs.
+          </td>
+        </tr>
+        <tr>
+          <td>What are micro-partitions in Snowflake?</td>
+          <td>
+            Snowflake stores data in compressed columnar micro-partitions
+            (50–500MB chunks).These enable fast pruning, efficient storage, and
+            optimized query performance.
+          </td>
+        </tr>
+        <tr>
+          <td>What is Zero-Copy Cloning?</td>
+          <td>
+            You can clone databases, schemas, or tables instantly without
+            duplicating data.Great for testing, sandboxing, or branching
+            environments.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            How does Snowflake handle semi-structured data (JSON, XML, Avro)?
+          </td>
+          <td>
+            Snowflake supports native ingestion and querying of semi-structured
+            data using the VARIANT data type.You can use FLATTEN, LATERAL, and
+            dot notation to extract nested fields.
+          </td>
+        </tr>
+        <tr>
+          <td>What is a Task in Snowflake and how is it used?</td>
+          <td>
+            Tasks automate SQL execution on a schedule or trigger.You can chain
+            tasks using AFTER to build DAG-like orchestration inside Snowflake.
+          </td>
+        </tr>
+        <tr>
+          <td>How does Snowflake ensure security and compliance?</td>
+          <td>
+            Role-based access control (RBAC), data encryption (at rest and in
+            transit), masking policies, and support for HIPAA, GDPR, SOC 2, etc.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            What is the difference between Snowflake and Redshift/BigQuery?
+          </td>
+          <td>
+            Snowflake separates compute/storage, supports multi-cloud, and
+            offers features like Time Travel, cloning, and native
+            semi-structured support.Redshift is AWS-only and less flexible;
+            BigQuery is serverless but lacks some orchestration features.
+          </td>
+        </tr>
+        <tr>
+          <td>How do you load data from S3 into Snowflake?</td>
+          <td>
+            Create a stage, define a file format, and use COPY INTO to load
+            data.Optionally automate with SnowPipe or orchestrate with Tasks.
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
+<html></html>
