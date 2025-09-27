@@ -29,15 +29,15 @@
 
       table {
         color: #2c3e50;
-        padding: 2px 4px;
-        border-radius: 4px;
+        padding: 2px 2px;
+        border-radius: 2px;
         border-collapse: collapse;
         width: 100%;
       }
       th,
       td {
         text-align: left;
-        padding: 8px;
+        padding: 4px;
       }
       tr:nth-child(even) {
         background-color: #f2f2f2;
@@ -49,14 +49,19 @@
         background-color: #ecf0f1;
         padding: 2px 4px;
         border-radius: 4px;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 110%;
       }
     </style>
   </head>
   <body>
     <div>
+      <p></p>
+      <hr style="border: 1px solid #c7c6c6; width: 100%" />
       <h3>Data Vault Related Questions</h3>
+      <hr style="border: 1px solid #c7c6c6; width: 100%" />
       <table>
-        <tr>
+        <tr style="background-color: #3498db; color: white">
           <th>Questions</th>
           <th>Answers</th>
         </tr>
@@ -213,69 +218,184 @@
           </td>
         </tr>
         <tr>
-          <td>What are micro-partitions in Snowflake?</td>
+          <td>What are the main benefits of using Data Vault?</td>
           <td>
-            Snowflake stores data in compressed columnar micro-partitions
-            (50–500MB chunks).These enable fast pruning, efficient storage, and
-            optimized query performance.
+            <ul>
+              <li>
+                <strong>Scalability:</strong> Easily handles growing data
+                volumes; Handles petabyte-scale data
+              </li>
+              <li>
+                <strong>Flexibility:</strong> Adapts to changing business
+                requirements and adapts to schema drift & new sources easily
+              </li>
+              <li>
+                <strong>Auditability:</strong> Complete historical tracking of
+                data changes.
+              </li>
+              <li>
+                <strong>Separation of Concerns:</strong> Isolates raw data from
+                business logic.
+              </li>
+              <li>
+                <strong>Parallel Loading:</strong> Supports high-performance
+                data ingestion.
+              </li>
+              <li><strong>Modularity:</strong> Easy to extend and refactor</li>
+              <li>
+                <strong>Business Alignment:</strong> Separates raw data from
+                business logic
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div>
+      <p></p>
+      <hr style="border: 1px solid #c7c6c6; width: 100%" />
+      <h3>dbt Related Questions</h3>
+      <hr style="border: 1px solid #c7c6c6; width: 100%" />
+      <table>
+        <tr style="background-color: #3498db; color: white">
+          <th>Questions</th>
+          <th>Answers</th>
+        </tr>
+        <tr>
+          <td>
+            What is dbt and how does it fit into the data engineering workflow?
+          </td>
+          <td>
+            <strong>dbt</strong> is an open-source tool that focuses on the
+            Transform step in ELT. It lets you write modular SQL models, test
+            them, document them, and orchestrate them—all within your data
+            warehouse.
           </td>
         </tr>
         <tr>
-          <td>What is Zero-Copy Cloning?</td>
+          <td>How is dbt different from traditional ETL tools?</td>
           <td>
-            You can clone databases, schemas, or tables instantly without
-            duplicating data.Great for testing, sandboxing, or branching
-            environments.
+            Unlike ETL tools that transform data outside the warehouse,
+            <strong>dbt</strong> performs transformations inside the warehouse
+            using SQL. It’s lightweight, version-controlled, and designed for
+            <strong>analytics engineering</strong>.
           </td>
         </tr>
         <tr>
+          <td>What are dbt models and how do you create them?</td>
           <td>
-            How does Snowflake handle semi-structured data (JSON, XML, Avro)?
-          </td>
-          <td>
-            Snowflake supports native ingestion and querying of semi-structured
-            data using the VARIANT data type.You can use FLATTEN, LATERAL, and
-            dot notation to extract nested fields.
-          </td>
-        </tr>
-        <tr>
-          <td>What is a Task in Snowflake and how is it used?</td>
-          <td>
-            Tasks automate SQL execution on a schedule or trigger.You can chain
-            tasks using AFTER to build DAG-like orchestration inside Snowflake.
+            A <strong>dbt</strong> model is simply a <strong>.sql</strong> file
+            containing a <code>SELECT</code> statement. dbt compiles these into
+            tables or views based on your
+            <strong
+              >materialization strategy (table, view, incremental, etc.)</strong
+            >.
           </td>
         </tr>
         <tr>
-          <td>How does Snowflake ensure security and compliance?</td>
+          <td>What is materialization in dbt?</td>
           <td>
-            Role-based access control (RBAC), data encryption (at rest and in
-            transit), masking policies, and support for HIPAA, GDPR, SOC 2, etc.
+            Materialization defines how dbt stores the result of a model:
+            <ul>
+              <li><strong>Table:</strong> Creates a physical table.</li>
+              <li><strong>View:</strong> Creates a view.</li>
+              <li>
+                <strong>Incremental:</strong> Updates / appends new or changed
+                data.
+              </li>
+              <li>
+                <strong>Ephemeral:</strong> In-memory CTE, used for intermediate
+                logic; not persisted.
+              </li>
+            </ul>
           </td>
         </tr>
         <tr>
+          <td>How does dbt handle testing and validation?</td>
           <td>
-            What is the difference between Snowflake and Redshift/BigQuery?
-          </td>
-          <td>
-            Snowflake separates compute/storage, supports multi-cloud, and
-            offers features like Time Travel, cloning, and native
-            semi-structured support.Redshift is AWS-only and less flexible;
-            BigQuery is serverless but lacks some orchestration features.
+            dbt supports <strong>schema tests</strong> (e.g.,
+            <code>not_null, unique, accepted_values</code>) and
+            <strong>custom tests</strong> using SQL. These ensure data quality
+            and catch issues early in the pipeline.
           </td>
         </tr>
         <tr>
-          <td>How do you load data from S3 into Snowflake?</td>
+          <td>What is the role of surrogate keys in Data Vault?</td>
           <td>
-            Create a stage, define a file format, and use COPY INTO to load
-            data.Optionally automate with SnowPipe or orchestrate with Tasks.
+            Each Hub, Link, and Satellite uses a <strong>surrogate key</strong>
+            (often a hash or sequence) to uniquely identify records. This
+            ensures consistency and supports parallel processing.
+          </td>
+        </tr>
+        <tr>
+          <td>What is the role of <code>dbt_project.yml</code>?</td>
+          <td>
+            This config file defines your project’s structure, model paths,
+            materializations, and metadata.
+            <strong
+              >In other simple words, it’s the central brain of your dbt
+              project.</strong
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>How does dbt support documentation and lineage?</td>
+          <td>
+            dbt auto-generates documentation and a
+            <strong>DAG (Directed Acyclic Graph)</strong>
+            showing model dependencies. You can annotate models and columns for
+            stakeholder clarity.
+          </td>
+        </tr>
+        <tr>
+          <td>Can dbt be used with version control and CI/CD? If so, how?</td>
+          <td>
+            Yes. dbt projects are just code, so they integrate seamlessly with
+            Git for version control. You can set up CI/CD pipelines using tools
+            like GitHub Actions, GitLab CI, or Jenkins to automate testing and
+            deployment.
+          </td>
+        </tr>
+        <tr>
+          <td>What are sources and seeds in dbt?</td>
+          <td>
+            <ul>
+              <li>
+                <strong>Sources:</strong> Reference raw tables already in your
+                warehouse.
+              </li>
+              <li>
+                <strong>Seeds:</strong> Load static CSV files into your
+                warehouse for use in models (e.g., lookup tables).
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>How do you orchestrate dbt workflows?</td>
+          <td>
+            You can run dbt models using:
+            <ul>
+              <li><strong>dbt run:</strong> executes transformations.</li>
+              <li><strong>dbt test:</strong> runs validations.</li>
+              <li><strong>dbt docs generate:</strong> builds documentation.</li>
+              <li>
+                External orchestration via
+                <strong>Airflow, Dagster, or dbt Cloud jobs</strong>.
+              </li>
+            </ul>
           </td>
         </tr>
       </table>
     </div>
     <div>
+      <p></p>
+      <hr style="border: 1px solid #c7c6c6; width: 100%" />
       <h3>Snowflake Related Questions</h3>
+      <hr style="border: 1px solid #c7c6c6; width: 100%" />
       <table>
-        <tr>
+        <tr style="background-color: #3498db; color: white">
           <th>Questions</th>
           <th>Answers</th>
         </tr>
@@ -411,6 +531,149 @@
           </td>
         </tr>
       </table>
+    </div>
+    <div>
+      <p></p>
+      <hr style="border: 1px solid #c7c6c6; width: 100%" />
+      <h3>dbt vs. Snowflake Tasks for Data Orchestration</h3>
+      <hr style="border: 1px solid #c7c6c6; width: 100%" />
+      <table>
+        <tr style="background-color: #3498db; color: white">
+          <th>Feature</th>
+          <th>dbt (Data Build Tool)</th>
+          <th>Snowflake Tasks</th>
+        </tr>
+        <tr>
+          <td>Primary Purpose</td>
+          <td>Data transformation and modeling within the data warehouse.</td>
+          <td>
+            Automating SQL or procedure execution and scheduling within
+            Snowflake.
+          </td>
+        </tr>
+        <tr>
+          <td>Language</td>
+          <td>SQL with Jinja templating for modularity and reusability.</td>
+          <td>Standard SQL or JavaScript for procedural logic.</td>
+        </tr>
+        <tr>
+          <td>Execution Model</td>
+          <td>
+            SQL compiled into models, run via <strong>dbt run</strong> or
+            scheduler
+          </td>
+          <td>SQL/procedure runs on schedule or trigger</td>
+        </tr>
+        <tr>
+          <td>Orchestration</td>
+          <td>
+            Requires external orchestration tools (e.g., Airflow, Dagster, dbt
+            Cloud). DAG of models with dependencies (<code>ref()</code>)
+          </td>
+          <td>
+            Built-in scheduling and chaining of tasks using
+            <code>AFTER</code> clauses.
+          </td>
+        </tr>
+        <tr>
+          <td>Materialization</td>
+          <td>
+            <code>table, view, incremental, ephemeral</code>
+          </td>
+          <td>Executes logic, no materialization concept.</td>
+        </tr>
+        <tr>
+          <td>Documentation</td>
+          <td>Auto-generated docs + lineage graph</td>
+          <td>No native docs, but can be documented via metadata</td>
+        </tr>
+        <tr>
+          <td>Environment Support</td>
+          <td>Git-based versioning, CI/CD pipelines</td>
+          <td>Manual or scripted deployment across environments</td>
+        </tr>
+        <tr>
+          <td>Monitoring</td>
+          <td>dbt Cloud UI, logs, CI alerts</td>
+          <td>Snowsight UI, task history, query logs</td>
+        </tr>
+        <tr>
+          <td>Flexibility</td>
+          <td>Great for modular SQL transformations</td>
+          <td>Great for procedural logic and automation</td>
+        </tr>
+        <tr>
+          <td>Integration</td>
+          <td>Works with Airflow, Dagster, Prefect, dbt Cloud</td>
+          <td>Can be triggered by Airflow, ADF, or REST API</td>
+        </tr>
+      </table>
+      <p></p>
+      <strong>When to Use Each:</strong>
+      <table
+        style="
+          width: 100%;
+          align-items: center;
+          justify-content: center;
+          align-content: center;
+          text-align: center;
+        "
+      >
+        <tr style="background-color: #3498db; color: white">
+          <th>Scenario</th>
+          <th>dbt</th>
+          <th>Snowflake Tasks</th>
+        </tr>
+        <tr>
+          <td>Transforming raw → curated data</td>
+          <td>●</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Running stored procedures or admin tasks</td>
+          <td></td>
+          <td>●</td>
+        </tr>
+        <tr>
+          <td>Testing data quality</td>
+          <td>●</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Refreshing KPIs or snapshots</td>
+          <td></td>
+          <td>●</td>
+        </tr>
+        <tr>
+          <td>Building reusable SQL logic with lineage</td>
+          <td>●</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Automating multi-step orchestration inside Snowflake</td>
+          <td></td>
+          <td>●</td>
+        </tr>
+      </table>
+      <p></p>
+      <strong>Hybrid Strategy (Best of Both Worlds):</strong>
+      <ul>
+        <li>
+          Use <strong>dbt</strong> for complex data transformations, modeling,
+          testing, and documentation.
+        </li>
+        <li>
+          Use <strong>Snowflake Tasks</strong> for scheduling, automating
+          administrative tasks, and orchestrating simple SQL workflows within
+          Snowflake.
+        </li>
+        <li>
+          Combine both by triggering dbt runs from Snowflake Tasks or using
+          external orchestrators to manage end-to-end workflows. Both can be
+          triggered using <strong>Airflow</strong> or
+          <strong>dbt Cloud</strong> jobs for full-stack orchestration
+        </li>
+      </ul>
     </div>
   </body>
 </html>
