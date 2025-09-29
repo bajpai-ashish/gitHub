@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSV to SQL Table (pandas Code)</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <style>
+      body {
+        font-family: Ubuntu, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        color: #333;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f4f4f4;
+      }
+
+      h1,
+      h2 {
+        color: #555;
+      }
+      .token.keyword {
+        color: #5661f3;
+      }
+      .token.string {
+        color: #013d01;
+      }
+      .token.comment {
+        color: #999a9b;
+        font-style: italic;
+      }
+      .token.number {
+        color: #ff0000;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSV to SQL Table (pandas Code)</h1>
+    <p>
+      Below is a sample code snippet that demonstrates how to read a CSV file
+      using pandas and convert it into a SQL table.
+    </p>
+    <p>
+      <strong>Note:</strong> Download CSV File Locations:
+      <a
+        href="https://www.kaggle.com/datasets/olaflundstrom/traffic-census-data"
+        >Traffic census data</a
+      >
+    </p>
+    The Destination SQL Table Schema:<br />
+    <table>
+      <thead>
+        <tr>
+          <th>Column Name</th>
+          <th>Data Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Col_1</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>Col_2</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>Col_3</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>Col_4</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>Col_5</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>Col_6</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>Col_7</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>Col_10</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>Col_9</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>Col_10</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>device_id</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>lane_number</td>
+          <td>STRING</td>
+        </tr>
+        <tr>
+          <td>cross_datetime</td>
+          <td>DATETIME</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_39</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_40_49</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_50_59</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_60_69</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_70_79</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_80_89</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_90_99</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_100_109</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_110_119</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_120_129</td>
+          <td>INTEGER</td>
+        </tr>
+        <tr>
+          <td>speed_kmph_130_more</td>
+          <td>INTEGER</td>
+        </tr>
+      </tbody>
+    </table>
+    <pre style="background: #f4f4f4; padding: 10px; border-radius: 10px">
+    <code class="language-sql">
+CREATE TABLE dbo.tbl_traffic_census(
+Col_1 int NULL, Col_2 int NULL, Col_3 int NULL,
+Col_4 int NULL, Col_5 int NULL, Col_6 int NULL,
+Col_7 int NULL, Col_8 int NULL, Col_9 int NULL,
+Col_10 int NULL, device_id varchar(255) NOT NULL,
+lane_number varchar(255) NOT NULL,
+cross_datetime datetime NOT NULL,
+speed_kmph_39 int NULL, speed_kmph_40_49 int NULL,
+speed_kmph_50_59 int NULL, speed_kmph_60_69 int NULL,
+speed_kmph_70_79 int NULL, speed_kmph_80_89 int NULL,
+speed_kmph_90_99 int NULL, speed_kmph_100_109 int NULL,
+speed_kmph_110_119 int NULL, speed_kmph_120_129 int NULL,
+speed_kmph_130_more int NULL,
+PRIMARY KEY CLUSTERED 
+(device_id ASC, lane_number ASC, cross_datetime ASC)
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, 
+ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, 
+OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON PRIMARY
+);
+    </code></pre>
+    <hr />
+    1. Read the CSV file into a pandas DataFrame.<br />
+    2. Clean the data by removing duplicates and converting data types.<br />
+    Alternatively, we can use tools like the BCP command, import utility, or
+    SSIS packages to load data from files into SQL tables.<br />
+<pre style="background: #f4f4f4; padding: 10px; border-radius: 10px;">
+    <code class="language-python">
+import pandas as pd
+import pyodbc
+
+# Read the CSV file into a DataFrame
+df = pd.read_csv('.../path/filename.csv')
+
+# Clean the data: Remove duplicates
+df_cleaned = df.drop_duplicates(subset=['id', 'kanal', 'aeg'])
+
+# Convert 'aeg' column to datetime
+df_cleaned['aeg'] = pd.to_datetime(df_cleaned['aeg'])
+
+# Convert 'id' and 'kanal' to strings (varchar equivalent)
+df_cleaned['id'] = df_cleaned['id'].astype(str)
+df_cleaned['kanal'] = df_cleaned['kanal'].astype(str)
+
+# Convert other columns to numeric, replacing non-numeric values with NaN and filling with 0
+for col in df_cleaned.columns:
+    if col not in ['aeg', 'id', 'kanal']:  # Exclude 'aeg', 'id', and 'kanal' columns
+        df_cleaned[col] = pd.to_numeric(df_cleaned[col], errors='coerce').fillna(0).astype(int)
+
+# Strip leading/trailing spaces in column names if any
+df_cleaned.columns = df_cleaned.columns.str.strip()
+
+# Step 2: Set up the SQL Server connection
+conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
+                      'SERVER=localhost;'
+                      'DATABASE=<<db name>>;'
+                      'UID=<<user id>>;'
+                      'PWD=<<password>>')
+
+cursor = conn.cursor()
+
+# Step 3: Create the corrected SQL insert query
+insert_query = """
+INSERT INTO [dbo].[tbl_traffic_census] (
+    [Col_1], [Col_2], [Col_3], [Col_4], [Col_5], [Col_6], [Col_7], [Col_8], 
+    [Col_9], [Col_10], [device_id], [lane_number], [cross_datetime], 
+    [speed_kmph_39], [speed_kmph_40_49], [speed_kmph_50_59], [speed_kmph_60_69], 
+    [speed_kmph_70_79], [speed_kmph_80_89], [speed_kmph_90_99], [speed_kmph_100_109], 
+    [speed_kmph_110_119], [speed_kmph_120_129], [speed_kmph_130_more]
+) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+"""
+
+# Step 4: Insert data row by row from the DataFrame into the SQL Server table
+for index, row in df_cleaned.iterrows():
+    cursor.execute(insert_query, 
+                   row['1'], row['2'], row['3'], row['4'], row['5'], 
+                   row['6'], row['7'], row['8'], row['9'], row['10'],
+                   row['id'], row['kanal'], row['aeg'], 
+                   row['<40Kph'], row['40-<50'], row['50-<60'], row['60-<70'], 
+                   row['70-<80'], row['80-<90'], row['90-<100'], row['100-<110'], 
+                   row['110-<120'], row['120-<130'], row['=>130'])
+
+# Step 5: Commit the changes to the database and close the connection
+conn.commit()
+cursor.close()
+conn.close()
+
+print("Data has been successfully inserted into the SQL Server table.")
+    </code>
+    </pre>
+    <hr />
+  </body>
+</html>
