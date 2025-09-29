@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spark Practices Chapter 2</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <style>
+      body {
+        font-family: "Ubuntu", sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        text-align: justify;
+        font-size: 15px;
+      }
+      h2 {
+        color: #575858;
+        text-align: center;
+      }
+      h3 {
+        color: #575858;
+        text-align: left;
+      }
+      h4 {
+        color: #2c3e50;
+        text-align: left;
+      }
+      p {
+        color: #000000;
+        text-align: left;
+        font-size: 15px;
+        font-weight: normal;
+        line-height: 1.2;
+        margin-bottom: 3px;
+      }
+      table {
+        color: #2c3e50;
+        padding: 2px 2px;
+        border-radius: 2px;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 4px;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      code {
+        background-color: #ecf0f1;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 110%;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>RDD (Resilient Distributed Dataset)</h2>
+      <h3>What is RDD?</h3>
+      <p>
+        RDD is the fundamental data structure in Apache Spark. It is an
+        immutable, distributed collection of objects that can be processed in
+        parallel across a cluster. RDDs provide fault tolerance through lineage
+        information, allowing Spark to recompute lost data if a node fails.
+      </p>
+      <p>
+        In spark,
+        <strong
+          >getNumPartitions() is a method used to retrieve the number of
+          partitions in an RDD (Resilient Distributed Dataset)</strong
+        >. Partitions are the fundamental units of parallelism in Spark, and
+        understanding the number of partitions is crucial for optimizing
+        performance and resource utilization.
+      </p>
+    </div>
+    <div>
+      <h3>What Does getNumPartitions() Do?</h3>
+      <ul>
+        <li>
+          It returns an integer representing the number of partitions in the
+          RDD.
+        </li>
+        <li>
+          The getNumPartitions() method returns the total number of partitions
+          that an RDD is divided into.
+        </li>
+        <li>
+          Partitions determine how the data is distributed across the cluster
+          and how many tasks will be executed in parallel.
+        </li>
+        <li>
+          The number of partitions can impact the performance of Spark
+          applications, as it affects the level of parallelism and the
+          distribution of data across the cluster.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Why is it Important?</h3>
+      <table>
+        <tr style="background-color: #3498db; color: white">
+          <th>Parallelism</th>
+          <th>Performance Tuning</th>
+          <th>Debugging</th>
+        </tr>
+        <tr>
+          <td>
+            More partitions can lead to better parallelism, allowing Spark to
+            utilize more CPU cores and memory across the cluster. More
+            partitions mean more tasks can run in parallel, but too many
+            partitions can lead to overhead.
+          </td>
+          <td>
+            Understanding the number of partitions helps in tuning the
+            performance of Spark applications. Too few partitions may lead to
+            underutilization of resources, while too many partitions can cause
+            overhead due to task scheduling.By knowing the number of partitions,
+            you can optimize your Spark job by:
+            <ul>
+              <li>
+                Increasing partitions if the data is skewed or if there are too
+                few tasks.
+              </li>
+              <li>
+                Decreasing partitions if there are too many small tasks, which
+                can cause overhead.
+              </li>
+            </ul>
+          </td>
+          <td>
+            When debugging Spark applications, knowing the number of partitions
+            can help identify issues related to data distribution and
+            processing. It helps in understanding how the data is distributed
+            and whether the partitioning strategy is effective.
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h3>Key Points about getNumPartitions():</h3>
+      <ul>
+        <li>
+          <strong>Return Type:</strong> The method returns an integer value
+          representing the number of partitions in the RDD.
+        </li>
+        <li>
+          <strong>Usage:</strong> You can call this method on any RDD object to
+          determine how many partitions it has. For example:
+          <br />
+          <code>val numPartitions = rdd.getNumPartitions()</code>
+        </li>
+        <li>
+          <strong>Importance:</strong> Knowing the number of partitions helps in
+          understanding how data is distributed across the cluster. It can
+          impact performance, as having too few partitions may lead to
+          underutilization of resources, while too many partitions can cause
+          overhead due to task scheduling.
+        </li>
+        <li>
+          <strong>Default Behavior:</strong> When an RDD is created, Spark
+          automatically determines the number of partitions based on the input
+          data source and the cluster configuration. However, you can also
+          specify the number of partitions explicitly when creating an RDD using
+          methods like <code>parallelize()</code> or <code>textFile()</code>.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Example Usage of getNumPartitions()</h3>
+      <p>
+        Here is a simple example of how to use the getNumPartitions() method in
+        Spark:
+      </p>
+      <pre>
+        <code>
+          // Create an RDD from a list of numbers
+          val data = List(1, 2, 3, 4, 5)
+          val rdd = sc.parallelize(data, 3) // Create RDD with 3 partitions
+
+          // Get the number of partitions
+          val numPartitions = rdd.getNumPartitions()
+
+          // Print the number of partitions
+          println(s"Number of partitions: $numPartitions")
+        </code>
+      </pre>
+      <p>
+        In this example, we create an RDD with 3 partitions and then use the
+        getNumPartitions() method to retrieve and print the number of
+        partitions.
+      </p>
+      <pre>
+        <code>
+            from pyspark import SparkContext
+
+            # Initialize SparkContext
+            sc = SparkContext("local", "RDD Example")
+
+            # Create an RDD from a list of numbers
+            data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            rdd = sc.parallelize(data, 4)  # Create an RDD with 4 partitions
+
+            # Get the number of partitions
+            num_partitions = rdd.getNumPartitions()
+
+            # Print the number of partitions
+            print("Number of partitions:", num_partitions)
+            # Stop the SparkContext
+            sc.stop()
+
+        </code>
+    </pre>
+      <br />The output will be: <br />Number of partitions: 4 <br />This
+      indicates that the RDD has been divided into 4 partitions.
+    </div>
+    <div>
+      <h3>Keypoints:</h3>
+      <ul>
+        <li>
+          Default Partitioning:If you don't specify the number of partitions
+          when creating an RDD, Spark uses the default value, which is typically
+          based on the cluster configuration or the size of the input data.
+        </li>
+        <li>
+          Repartitioning:You can change the number of partitions using methods
+          like <code>repartition()</code> or <code>coalesce()</code>.
+          <pre>
+                    <code>
+rdd_repartitioned = rdd.repartition(8)  # Increase partitions to 8
+print("New number of partitions:", rdd_repartitioned.getNumPartitions())
+                    </code>
+                </pre>
+        </li>
+        <li>
+          The number of partitions can impact the performance of Spark
+          applications, as it affects the level of parallelism and resource
+          utilization.
+        </li>
+        <li>
+          Understanding the number of partitions helps in tuning the performance
+          of Spark applications by optimizing resource usage and minimizing
+          overhead.
+        </li>
+        <li>
+          Knowing the number of partitions can also aid in debugging Spark
+          applications by identifying issues related to data distribution and
+          processing.
+        </li>
+        <li>
+          <strong>Impact on Shuffling</strong>: Wide transformations (e.g.,
+          groupByKey, reduceByKey) may change the number of partitions due to
+          shuffling.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>When to Use <code>getNumPartitions()</code>?</h3>
+      <ul>
+        <li>When you want to inspect the partitioning of your RDD.</li>
+        <li>
+          When you need to optimize performance by adjusting the number of
+          partitions.
+        </li>
+        <li>When debugging skewed data distribution or task imbalances.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>DataFrame vs RDD</h3>
+      <p>
+        DataFrames are the preferred way to work with structured data (like CSV
+        files) in Spark because they offer optimizations and a higher-level API.
+        RDDs are more low-level and are typically used for unstructured data or
+        custom transformations.
+      </p>
+    </div>
+    <div>
+      <h3>Partitioning</h3>
+      <p>
+        By default, the number of partitions is determined by the size of the
+        data and the cluster configuration. You can adjust it using
+        <code>repartition()</code> or <code>coalesce()</code> methods.
+      </p>
+    </div>
+    <div>
+      <h3>Performance</h3>
+      <p>
+        Converting a DataFrame to an RDD can be useful for advanced
+        transformations, but it may lose some of the optimizations provided by
+        the DataFrame API.
+      </p>
+    </div>
+    <div>
+      <h3>Why Repartitioning is Important?</h3>
+      <p>
+        Repartitioning can help balance the workload across the cluster,
+        especially if the data is skewed. It can also improve performance by
+        reducing the amount of data shuffled during wide transformations.
+      </p>
+      <ul>
+        <li>
+          <strong>Parallelism</strong>: More partitions allow Spark to process
+          data in parallel, improving performance.
+        </li>
+        <li>
+          <strong>Resource Utilization</strong>: Proper partitioning ensures
+          that all cluster resources (e.g., CPU cores) are utilized efficiently.
+        </li>
+        <li>
+          <strong>Avoid Skew</strong>: Repartitioning can help avoid data skew,
+          where some partitions are much larger than others.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>How to Choose the Number of Partitions?</h3>
+      <p>
+        The optimal number of partitions depends on the size of the data, the
+        cluster configuration, and the nature of the transformations being
+        performed. A common rule of thumb is to have 2-4 partitions per CPU core
+        in the cluster.
+      </p>
+      <ul>
+        <li>
+          <strong>Rule of Thumb</strong>: A good starting point is to have 2-4
+          partitions per CPU core in your cluster.
+        </li>
+        <li>
+          <strong>Dataset Size</strong>: For larger datasets, increase the
+          number of partitions to ensure each partition is of a manageable size
+          (e.g., 128MB-1GB per partition).
+        </li>
+        <li>
+          <strong>Cluster Configuration</strong>: Consider the total number of
+          cores and memory available in your cluster.
+        </li>
+        <li>
+          <strong>Experimentation</strong>: It may require some experimentation
+          to find the optimal number of partitions for your specific workload.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Conclusion</h3>
+      <p>
+        The getNumPartitions() method is a useful tool for understanding the
+        distribution of data in an RDD and optimizing Spark applications for
+        better performance.
+      </p>
+    </div>
+    <div>
+      <h2>The Sample Code</h2>
+      <iframe
+        src="https://www.kaggle.com/embed/bajpaiashish/python-pyspark-practices-the-basic-1?kernelSessionId=226944905"
+        height="800"
+        style="margin: 0 auto; width: 100%; max-width: 950px"
+        frameborder="0"
+        scrolling="auto"
+        title="Python PySpark Practices (The Basic + 1)"
+      ></iframe>
+    </div>
+  </body>
+</html>
