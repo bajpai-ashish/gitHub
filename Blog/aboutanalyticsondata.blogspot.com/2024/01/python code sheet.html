@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Code Sheet</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <style>
+      code.language-python {
+        font-family: "Ubuntu Mono", monospace;
+        font-size: 0.95rem;
+        white-space: pre-wrap;
+      }
+      body {
+        font-family: "Ubuntu", sans-serif;
+        margin: 0;
+        padding: 1rem;
+        background: #ffffff;
+        color: #333;
+      }
+
+      section {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      .syntax-block {
+        margin-top: 5%;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+
+      .syntax-block h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        border-bottom: 1px solid #eee;
+        vertical-align: top;
+      }
+
+      th {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+
+      pre {
+        margin: 0;
+        background: #f5f2f0;
+        padding: 0.5rem;
+        border-radius: 4px;
+        overflow-x: auto;
+      }
+
+      code {
+        font-family: "Ubuntu Mono", monospace;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div
+        style="
+          font-family: Ubuntu;
+          position: fixed;
+          width: 60%;
+          height: 350px;
+          top: 700px;
+          left: 40%;
+          transform: translate(-50%, -50%);
+          border: none;
+        "
+      >
+        <iframe
+          style="width: 100%; height: 350px; border: none"
+          src="https://onecompiler.com/embed/python/43yckbnzg?hideNew=true&hideLanguageSelection=true&disableCopyPaste=true&theme=auto&hideNewFileOption=true&hideEditorOptions=true"
+        >
+        </iframe>
+      </div>
+
+      <div id="syntax_python"></div>
+      <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+      <!-- PapaParse for CSV parsing -->
+      <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+      <!-- Marked.js for Markdown rendering -->
+      <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+      <script>
+        const sheetURL =
+          "https://docs.google.com/spreadsheets/d/e/2PACX-1vQo5Mex4_v-jSO74fMvtB8uwX1cHhjcs5ic3MABy5qU5gHjHuphK4T-VrCyxCOLL0HEKjOiokkagiBO/pub?gid=0&single=true&output=csv";
+
+        fetch(sheetURL)
+          .then((response) => response.text())
+          .then((csvText) => {
+            const parsed = Papa.parse(csvText, {
+              header: true,
+              skipEmptyLines: true,
+            });
+
+            const rows = parsed.data.filter(
+              (row) =>
+                row.is_display && row.is_display.trim().toLowerCase() === "true"
+            );
+
+            // Group rows by seq_num_div
+            const grouped = {};
+            rows.forEach((row) => {
+              const groupKey = row.seq_num_div.trim();
+              if (!grouped[groupKey]) {
+                grouped[groupKey] = {
+                  heading: row.div_heading.trim(),
+                  items: [],
+                };
+              }
+              grouped[groupKey].items.push({
+                task: row.task_to_do.trim(),
+                code: row.code_on_task.trim(),
+                output: row.output_python.trim(), // Markdown content
+                rowSeq: parseInt(row.seq_num_row.trim()),
+              });
+            });
+
+            const container = document.getElementById("syntax_python");
+
+            Object.keys(grouped)
+              .sort((a, b) => parseInt(a) - parseInt(b))
+              .forEach((groupKey) => {
+                const group = grouped[groupKey];
+
+                const div = document.createElement("div");
+                div.className = "syntax-block";
+                div.style.marginBottom = "2rem";
+                div.style.padding = "1rem";
+                div.style.background = "#f9f9f9";
+                div.style.border = "1px solid #ccc";
+                div.style.borderRadius = "8px";
+
+                const heading = document.createElement("h2");
+                heading.textContent = group.heading;
+                heading.style.marginBottom = "1rem";
+                div.appendChild(heading);
+
+                const table = document.createElement("table");
+                table.style.width = "100%";
+                table.style.borderCollapse = "collapse";
+
+                const thead = document.createElement("thead");
+                thead.innerHTML = `
+            <tr>
+              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Task</th>
+              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Code</th>
+              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Output</th>
+            </tr>`;
+                table.appendChild(thead);
+
+                const tbody = document.createElement("tbody");
+                group.items
+                  .sort((a, b) => a.rowSeq - b.rowSeq)
+                  .forEach((item) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                <td style="padding:8px; border-bottom:1px solid #eee;">${
+                  item.task
+                }</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;"><code>${
+                  item.code
+                }</code></td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${marked.parse(
+                  item.output
+                )}</td>
+              `;
+                    tbody.appendChild(row);
+                  });
+
+                table.appendChild(tbody);
+                div.appendChild(table);
+                container.appendChild(div);
+              });
+          })
+          .catch((error) => {
+            console.error("Error loading syntax blocks:", error);
+            document.getElementById("syntax_python").innerHTML =
+              "<p>Failed to load Python syntax. Please try again later.</p>";
+          });
+      </script>
+    </section>
+  </body>
+</html>
