@@ -1,0 +1,2005 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="Generator" content="Microsoft Word 15 (filtered)" />
+    <style>
+      					<!--
+       /* Font Definitions */
+       @font-face
+      	{font-family:Wingdings;
+      	panose-1:5 0 0 0 0 0 0 0 0 0;}
+      @font-face
+      	{font-family:Mangal;
+      	panose-1:2 4 5 3 5 2 3 3 2 2;}
+      @font-face
+      	{font-family:"Cambria Math";
+      	panose-1:2 4 5 3 5 4 6 3 2 4;}
+      @font-face
+      	{font-family:Aptos;}
+       /* Style Definitions */
+       p.MsoNormal, li.MsoNormal, div.MsoNormal
+      	{margin-top:0in;
+      	margin-right:0in;
+      	margin-bottom:8.0pt;
+      	margin-left:0in;
+      	line-height:115%;
+      	font-size:12.0pt;
+      	font-family:"Aptos",sans-serif;}
+      .MsoPapDefault
+      	{margin-bottom:8.0pt;
+      	line-height:115%;}
+      @page WordSection1
+      	{size:8.5in 11.0in;
+      	margin:1.0in 1.0in 1.0in 1.0in;}
+      div.WordSection1
+      	{page:WordSection1;}
+       /* List Definitions */
+       ol
+      	{margin-bottom:0in;}
+      ul
+      	{margin-bottom:0in;}
+      -->
+    </style>
+  </head>
+  <body lang="EN-US" style="word-wrap: break-word">
+    <div class="WordSection1">
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >Parquet</span
+          >
+        </b>
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;and&nbsp;<b>CSV</b>&nbsp;are two common file formats used for
+          storing and processing data. Each has its own strengths and
+          weaknesses, and the choice between them depends on your specific use
+          case. Below is a detailed comparison of Parquet and CSV:</span
+        >
+      </p>
+      <div class="MsoNormal" align="center" style="text-align: center">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black">
+          <hr
+            size="1"
+            width="100%"
+            noshade
+            style="color: #404040"
+            align="center"
+          />
+        </span>
+      </div>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >1. Overview</span
+          >
+        </b>
+      </p>
+      <table
+        class="MsoTable15Plain3"
+        border="0"
+        cellspacing="0"
+        cellpadding="0"
+        style="border-collapse: collapse"
+      >
+        <tr style="height: 0.3in">
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-bottom: solid #7f7f7f 1pt;
+              padding: 0in 5.4pt 0in 5.4pt;
+              height: 0.3in;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Feature</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-bottom: solid #7f7f7f 1pt;
+              padding: 0in 5.4pt 0in 5.4pt;
+              height: 0.3in;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span
+                  style="
+                    font-family: 'Ubuntu', sans-serif;
+                    color: black;
+                    text-transform: uppercase;
+                  "
+                  >CSV (Comma-Separated Values)</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-bottom: solid #7f7f7f 1pt;
+              padding: 0in 5.4pt 0in 5.4pt;
+              height: 0.3in;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span
+                  style="
+                    font-family: 'Ubuntu', sans-serif;
+                    color: black;
+                    text-transform: uppercase;
+                  "
+                  >Parquet (Columnar Storage Format)</span
+                >
+              </b>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Format</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="background: #f2f2f2; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Row-based (stores data row by row)</span
+              >
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="background: #f2f2f2; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Columnar (stores data column by column)</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Compression</span
+                >
+              </b>
+            </p>
+          </td>
+          <td valign="top" style="padding: 0in 5.4pt 0in 5.4pt">
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Limited or no compression</span
+              >
+            </p>
+          </td>
+          <td valign="top" style="padding: 0in 5.4pt 0in 5.4pt">
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Highly compressed (e.g., Snappy, GZIP, ZSTD)</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Schema</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="background: #f2f2f2; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Schema-less (no metadata about data types)</span
+              >
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="background: #f2f2f2; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Schema-aware (stores metadata about data types)</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Read Performance</span
+                >
+              </b>
+            </p>
+          </td>
+          <td valign="top" style="padding: 0in 5.4pt 0in 5.4pt">
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Slower for large datasets (reads entire rows)</span
+              >
+            </p>
+          </td>
+          <td valign="top" style="padding: 0in 5.4pt 0in 5.4pt">
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Faster for large datasets (reads only needed columns)</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Write Performance</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="background: #f2f2f2; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Faster for small datasets</span
+              >
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="background: #f2f2f2; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Slower for small datasets (due to compression and columnar
+                storage)</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Storage Efficiency</span
+                >
+              </b>
+            </p>
+          </td>
+          <td valign="top" style="padding: 0in 5.4pt 0in 5.4pt">
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Less efficient (stores data as plain text)</span
+              >
+            </p>
+          </td>
+          <td valign="top" style="padding: 0in 5.4pt 0in 5.4pt">
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Highly efficient (compressed and columnar storage)</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            valign="top"
+            style="
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Use Case</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="background: #f2f2f2; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Simple data exchange, small datasets, human-readable</span
+              >
+            </p>
+          </td>
+          <td
+            valign="top"
+            style="background: #f2f2f2; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Big data processing, analytics, large datasets</span
+              >
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <div class="MsoNormal" align="center" style="text-align: center">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black">
+          <hr
+            size="1"
+            width="100%"
+            noshade
+            style="color: #404040"
+            align="center"
+          />
+        </span>
+      </div>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >2. Key Differences</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <table
+        class="MsoTable15Plain5"
+        border="0"
+        cellspacing="0"
+        cellpadding="0"
+        style="border-collapse: collapse"
+      >
+        <tr>
+          <td
+            width="197"
+            valign="top"
+            style="
+              width: 148.1pt;
+              border: none;
+              border-bottom: solid #7f7f7f 1pt;
+              background: white;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              align="left"
+              style="margin-bottom: 0in; text-align: left; line-height: normal"
+            >
+              <b>
+                <i>
+                  <span
+                    style="
+                      font-size: 13pt;
+                      font-family: 'Ubuntu', sans-serif;
+                      color: black;
+                    "
+                    >&nbsp;</span
+                  >
+                </i>
+              </b>
+            </p>
+          </td>
+          <td
+            width="408"
+            valign="top"
+            style="
+              width: 4.25in;
+              border: none;
+              border-bottom: solid #7f7f7f 1pt;
+              background: white;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <b>
+                <i>
+                  <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                    >CSV (Comma-Separated Values)</span
+                  >
+                </i>
+              </b>
+            </p>
+          </td>
+          <td
+            width="504"
+            valign="top"
+            style="
+              width: 5.25in;
+              border: none;
+              border-bottom: solid #7f7f7f 1pt;
+              background: white;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <b>
+                <i>
+                  <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                    >Parquet (Columnar Storage Format)</span
+                  >
+                </i>
+              </b>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            width="197"
+            valign="top"
+            style="
+              width: 148.1pt;
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              background: white;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              align="left"
+              style="margin-bottom: 0in; text-align: left; line-height: normal"
+            >
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Storage Format</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            width="408"
+            valign="top"
+            style="
+              width: 4.25in;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Row-based storage:
+                </span>
+              </b>
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Each row is stored as a line of text, with values separated by
+                commas (or other delimiters).</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Human-readable:
+                </span>
+              </b>
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Easy to view and edit using text editors or spreadsheet
+                software.</span
+              >
+            </p>
+            <p class="MsoNormal" style="margin-bottom: 8pt; line-height: 115%">
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >No metadata:
+                </span>
+              </b>
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Does not store information about data types or schema.</span
+              >
+            </p>
+          </td>
+          <td
+            width="504"
+            valign="top"
+            style="
+              width: 5.25in;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Columnar storage:
+                </span>
+              </b>
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Data is stored column by column, which is more efficient for
+                analytical queries.</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Binary format:
+                </span>
+              </b>
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Not human-readable, optimized for machine processing.</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Schema-aware:
+                </span>
+              </b>
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Stores metadata about data types, making it
+                self-describing.</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            width="197"
+            valign="top"
+            style="
+              width: 148.1pt;
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              background: white;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              align="left"
+              style="margin-bottom: 0in; text-align: left; line-height: normal"
+            >
+              <b>
+                <span
+                  style="
+                    font-size: 13pt;
+                    font-family: 'Ubuntu', sans-serif;
+                    color: black;
+                  "
+                  >Compression</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            width="408"
+            valign="top"
+            style="width: 4.25in; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Typically uncompressed or uses basic compression (e.g.,
+                GZIP).</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Larger file sizes compared to Parquet.</span
+              >
+            </p>
+          </td>
+          <td
+            width="504"
+            valign="top"
+            style="width: 5.25in; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Highly compressed: Uses advanced compression algorithms (e.g.,
+                Snappy, GZIP, ZSTD).</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Smaller file sizes, reducing storage costs and improving I/O
+                performance.</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            width="197"
+            valign="top"
+            style="
+              width: 148.1pt;
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              background: white;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              align="left"
+              style="margin-bottom: 0in; text-align: left; line-height: normal"
+            >
+              <b>
+                <span
+                  style="
+                    font-size: 13pt;
+                    font-family: 'Ubuntu', sans-serif;
+                    color: black;
+                  "
+                  >Performance</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            width="408"
+            valign="top"
+            style="
+              width: 4.25in;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Slower for analytical queries: Reads entire rows, even if only
+                a few columns are needed.</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Suitable for small datasets or simple data exchange.</span
+              >
+            </p>
+          </td>
+          <td
+            width="504"
+            valign="top"
+            style="
+              width: 5.25in;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Faster for analytical queries: Reads only the required columns,
+                reducing I/O.</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Optimized for big data processing and analytics.</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            width="197"
+            valign="top"
+            style="
+              width: 148.1pt;
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              background: white;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              align="left"
+              style="margin-bottom: 0in; text-align: left; line-height: normal"
+            >
+              <b>
+                <span
+                  style="
+                    font-size: 13pt;
+                    font-family: 'Ubuntu', sans-serif;
+                    color: black;
+                  "
+                  >Schema Evolution</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            width="408"
+            valign="top"
+            style="width: 4.25in; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Schema-less: Changes in schema (e.g., adding/removing columns)
+                require manual handling.</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >No support for complex data types (e.g., nested
+                structures).</span
+              >
+            </p>
+          </td>
+          <td
+            width="504"
+            valign="top"
+            style="width: 5.25in; padding: 0in 5.4pt 0in 5.4pt"
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Schema-aware: Supports schema evolution (e.g., adding/removing
+                columns without rewriting the entire dataset).</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Supports complex data types (e.g., arrays, maps, nested
+                structures).</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            width="197"
+            valign="top"
+            style="
+              width: 148.1pt;
+              border: none;
+              border-right: solid #7f7f7f 1pt;
+              background: white;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              align="left"
+              style="margin-bottom: 0in; text-align: left; line-height: normal"
+            >
+              <b>
+                <span
+                  style="
+                    font-size: 13pt;
+                    font-family: 'Ubuntu', sans-serif;
+                    color: black;
+                  "
+                  >Use Cases</span
+                >
+              </b>
+            </p>
+          </td>
+          <td
+            width="408"
+            valign="top"
+            style="
+              width: 4.25in;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Simple data exchange between systems.</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Small datasets or prototyping.</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Human-readable format for manual inspection.</span
+              >
+            </p>
+          </td>
+          <td
+            width="504"
+            valign="top"
+            style="
+              width: 5.25in;
+              background: #f2f2f2;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Big data processing and analytics.</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Large datasets with complex schemas.</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Efficient storage and querying in distributed systems (e.g.,
+                Hadoop, Spark).</span
+              >
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <div class="MsoNormal" align="center" style="text-align: center">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black">
+          <hr
+            size="1"
+            width="100%"
+            noshade
+            style="color: #404040"
+            align="center"
+          />
+        </span>
+      </div>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >3. Pros and Cons</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >CSV</span
+          >
+        </b>
+      </p>
+      <table
+        class="MsoNormalTable"
+        border="0"
+        cellspacing="0"
+        cellpadding="0"
+        style="border-collapse: collapse"
+      >
+        <thead>
+          <tr>
+            <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+              <p class="MsoNormal">
+                <b
+                  ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                    >Pros</span
+                  >
+                </b>
+              </p>
+            </td>
+            <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+              <p class="MsoNormal">
+                <b
+                  ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                    >Cons</span
+                  >
+                </b>
+              </p>
+            </td>
+          </tr>
+        </thead>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Simple and human-readable</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >No compression (large file sizes)</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Easy to create and edit</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >No schema or metadata support</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Supported by almost all tools and systems</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Slow for large datasets and complex queries</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Suitable for small datasets</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Limited support for complex data types</span
+              >
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >Parquet</span
+          >
+        </b>
+      </p>
+      <table
+        class="MsoNormalTable"
+        border="0"
+        cellspacing="0"
+        cellpadding="0"
+        style="border-collapse: collapse"
+      >
+        <thead>
+          <tr>
+            <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+              <p class="MsoNormal">
+                <b
+                  ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                    >Pros</span
+                  >
+                </b>
+              </p>
+            </td>
+            <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+              <p class="MsoNormal">
+                <b
+                  ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                    >Cons</span
+                  >
+                </b>
+              </p>
+            </td>
+          </tr>
+        </thead>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Highly compressed (small file sizes)</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Not human-readable</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Columnar storage (fast for analytics)</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Slower to write (due to compression)</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Schema-aware (supports complex data types)</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Requires tools/libraries to read/write</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Optimized for big data processing</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Overhead for small datasets</span
+              >
+            </p>
+          </td>
+        </tr>
+      </table>
+      <div class="MsoNormal" align="center" style="text-align: center">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black">
+          <hr
+            size="1"
+            width="100%"
+            noshade
+            style="color: #404040"
+            align="center"
+          />
+        </span>
+      </div>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >4. When to Use CSV</span
+          >
+        </b>
+      </p>
+      <ul style="margin-top: 0in" type="disc">
+        <li class="MsoNormal" style="color: black">
+          <b>
+            <span style="font-family: 'Ubuntu', sans-serif"
+              >Small datasets</span
+            >
+          </b>
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >: When working with small datasets that don't require advanced
+            compression or performance optimizations.</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <b>
+            <span style="font-family: 'Ubuntu', sans-serif"
+              >Human-readable format</span
+            >
+          </b>
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >: When you need to manually inspect or edit the data.</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <b>
+            <span style="font-family: 'Ubuntu', sans-serif"
+              >Simple data exchange</span
+            >
+          </b>
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >: When exchanging data with systems that only support CSV.</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <b>
+            <span style="font-family: 'Ubuntu', sans-serif">Prototyping</span>
+          </b>
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >: When quickly prototyping or testing data pipelines.</span
+          >
+        </li>
+      </ul>
+      <div class="MsoNormal" align="center" style="text-align: center">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black">
+          <hr
+            size="1"
+            width="100%"
+            noshade
+            style="color: #404040"
+            align="center"
+          />
+        </span>
+      </div>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >5. When to Use Parquet</span
+          >
+        </b>
+      </p>
+      <ul style="margin-top: 0in" type="disc">
+        <li class="MsoNormal" style="color: black">
+          <b>
+            <span style="font-family: 'Ubuntu', sans-serif"
+              >Big data processing</span
+            >
+          </b>
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >: When working with large datasets in distributed systems (e.g.,
+            Hadoop, Spark).</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <b>
+            <span style="font-family: 'Ubuntu', sans-serif"
+              >Analytical queries</span
+            >
+          </b>
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >: When performing analytical queries that require reading specific
+            columns.</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <b>
+            <span style="font-family: 'Ubuntu', sans-serif"
+              >Storage efficiency</span
+            >
+          </b>
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >: When you need to reduce storage costs and improve I/O
+            performance.</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <b>
+            <span style="font-family: 'Ubuntu', sans-serif"
+              >Complex data types</span
+            >
+          </b>
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >: When working with nested or complex data structures.</span
+          >
+        </li>
+      </ul>
+      <div class="MsoNormal" align="center" style="text-align: center">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black">
+          <hr
+            size="1"
+            width="100%"
+            noshade
+            style="color: #404040"
+            align="center"
+          />
+        </span>
+      </div>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >6. Example Use Cases</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >CSV</span
+          >
+        </b>
+      </p>
+      <ul style="margin-top: 0in" type="disc">
+        <li class="MsoNormal" style="color: black">
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >Exporting data from a database for manual analysis.</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >Sharing small datasets with non-technical users.</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >Loading data into a spreadsheet or simple database.</span
+          >
+        </li>
+      </ul>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >Parquet</span
+          >
+        </b>
+      </p>
+      <ul style="margin-top: 0in" type="disc">
+        <li class="MsoNormal" style="color: black">
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >Storing large datasets in a data lake or data warehouse.</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >Running analytical queries on big data platforms (e.g., Spark,
+            Hive).</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >Optimizing storage and query performance in distributed
+            systems.</span
+          >
+        </li>
+      </ul>
+      <div class="MsoNormal" align="center" style="text-align: center">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black">
+          <hr
+            size="1"
+            width="100%"
+            noshade
+            style="color: #404040"
+            align="center"
+          />
+        </span>
+      </div>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >7. Example Code</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >Reading and Writing CSV in PySpark</span
+          >
+        </b>
+      </p>
+      <table
+        class="MsoTableGrid"
+        border="0"
+        cellspacing="0"
+        cellpadding="0"
+        align="left"
+        style="
+          border-collapse: collapse;
+          border: none;
+          margin-left: 6.75pt;
+          margin-right: 6.75pt;
+        "
+      >
+        <tr>
+          <td
+            width="623"
+            style="
+              width: 467.5pt;
+              background: #156082;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: white"
+                  >Spark Sample Code (CSV)</span
+                >
+              </b>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td width="623" style="width: 467.5pt; padding: 0in 5.4pt 0in 5.4pt">
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >from pyspark.sql import SparkSession</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >&nbsp;</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                ># Initialize Spark session</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >spark = SparkSession.builder.appName(&quot;CSV
+                Example&quot;).getOrCreate()</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >&nbsp;</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                ># Read CSV</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >df_csv = spark.read.csv(&quot;data.csv&quot;, header=True,
+                inferSchema=True)</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >&nbsp;</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                ># Write CSV</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >df_csv.write.csv(&quot;output.csv&quot;, header=True)</span
+              >
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >&nbsp;</span
+          >
+        </b>
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >Reading and Writing Parquet in PySpark</span
+          >
+        </b>
+      </p>
+      <table
+        class="MsoTableGrid"
+        border="0"
+        cellspacing="0"
+        cellpadding="0"
+        align="left"
+        style="
+          border-collapse: collapse;
+          border: none;
+          margin-left: 6.75pt;
+          margin-right: 6.75pt;
+        "
+      >
+        <tr>
+          <td
+            width="623"
+            style="
+              width: 467.5pt;
+              background: #156082;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <b>
+                <span style="font-family: 'Ubuntu', sans-serif; color: white"
+                  >Spark Sample Code (Parquet)</span
+                >
+              </b>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td width="623" style="width: 467.5pt; padding: 0in 5.4pt 0in 5.4pt">
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >from pyspark.sql import SparkSession</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >&nbsp;</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                ># Initialize Spark session</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >spark = SparkSession.builder.appName(&quot;Parquet
+                Example&quot;).getOrCreate()</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >&nbsp;</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                ># Read Parquet</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >df_parquet = spark.read.parquet(&quot;data.parquet&quot;)</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >&nbsp;</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                ># Write Parquet</span
+              >
+            </p>
+            <p
+              class="MsoNormal"
+              style="margin-bottom: 0in; line-height: normal"
+            >
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >df_parquet.write.parquet(&quot;output.parquet&quot;)</span
+              >
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <div class="MsoNormal" align="center" style="text-align: center">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black">
+          <hr
+            size="1"
+            width="100%"
+            noshade
+            style="color: #404040"
+            align="center"
+          />
+        </span>
+      </div>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >8. Summary</span
+          >
+        </b>
+      </p>
+      <table
+        class="MsoNormalTable"
+        border="0"
+        cellspacing="0"
+        cellpadding="0"
+        style="border-collapse: collapse"
+      >
+        <thead>
+          <tr>
+            <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+              <p class="MsoNormal">
+                <b
+                  ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                    >Feature</span
+                  >
+                </b>
+              </p>
+            </td>
+            <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+              <p class="MsoNormal">
+                <b
+                  ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                    >CSV</span
+                  >
+                </b>
+              </p>
+            </td>
+            <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+              <p class="MsoNormal">
+                <b
+                  ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                    >Parquet</span
+                  >
+                </b>
+              </p>
+            </td>
+          </tr>
+        </thead>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <b
+                ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Best For</span
+                >
+              </b>
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Small datasets, human-readable format</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Big data, analytics, storage efficiency</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <b
+                ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Compression</span
+                >
+              </b>
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Limited or none</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Highly compressed</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <b
+                ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Schema</span
+                >
+              </b>
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Schema-less</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Schema-aware</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <b
+                ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Performance</span
+                >
+              </b>
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Slower for large datasets</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Faster for analytical queries</span
+              >
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0in">
+            <p class="MsoNormal">
+              <b
+                ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+                  >Complex Data Types</span
+                >
+              </b>
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Not supported</span
+              >
+            </p>
+          </td>
+          <td style="padding: 0.75pt 0.75pt 0.75pt 0.75pt">
+            <p class="MsoNormal">
+              <span style="font-family: 'Ubuntu', sans-serif; color: black"
+                >Supported</span
+              >
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <div class="MsoNormal" align="center" style="text-align: center">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black">
+          <hr
+            size="1"
+            width="100%"
+            noshade
+            style="color: #404040"
+            align="center"
+          />
+        </span>
+      </div>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+      <p class="MsoNormal">
+        <b
+          ><span style="font-family: 'Ubuntu', sans-serif; color: black"
+            >Conclusion</span
+          >
+        </b>
+      </p>
+      <ul style="margin-top: 0in" type="disc">
+        <li class="MsoNormal" style="color: black">
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >Use&nbsp;<b>CSV</b>&nbsp;for small datasets, simple data exchange,
+            or when human readability is important.</span
+          >
+        </li>
+        <li class="MsoNormal" style="color: black">
+          <span style="font-family: 'Ubuntu', sans-serif"
+            >Use&nbsp;<b>Parquet</b>&nbsp;for big data processing, analytical
+            queries, and efficient storage in distributed systems.</span
+          >
+        </li>
+      </ul>
+      <p class="MsoNormal">
+        <span style="font-family: 'Ubuntu', sans-serif; color: black"
+          >&nbsp;</span
+        >
+      </p>
+    </div>
+  </body>
+</html>

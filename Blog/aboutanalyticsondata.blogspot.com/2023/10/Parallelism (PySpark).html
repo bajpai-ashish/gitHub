@@ -1,0 +1,74 @@
+<html>
+
+<body lang=EN-US style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><span style='font-family:"Ubuntu",sans-serif;color:black'>In
+PySpark,&nbsp;.master&nbsp;is an attribute used when creating a&nbsp;SparkSession&nbsp;to
+specify the cluster manager to which the Spark application will
+connect.&nbsp;It defines where the application will run, whether locally or on
+a cluster.&nbsp;Some common values for&nbsp;.master&nbsp;include:</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='color:black'><span style='font-family:"Ubuntu",sans-serif'>&quot;local&quot;:
+     Runs Spark locally on a single thread.&nbsp;Useful for testing and
+     debugging.</span></li>
+ <li class=MsoNormal style='color:black'><span style='font-family:"Ubuntu",sans-serif'>&quot;local[n]&quot;:
+     Runs Spark locally with&nbsp;n&nbsp;threads.&nbsp;This allows for some
+     level of parallelism on a local machine.</span></li>
+ <li class=MsoNormal style='color:black'><span style='font-family:"Ubuntu",sans-serif'>&quot;spark://host:port&quot;:
+     Connects to a standalone Spark cluster at the specified host and port.</span></li>
+ <li class=MsoNormal style='color:black'><span style='font-family:"Ubuntu",sans-serif'>&quot;yarn&quot;:
+     Connects to a Hadoop YARN cluster.</span></li>
+ <li class=MsoNormal style='color:black'><span style='font-family:"Ubuntu",sans-serif'>&quot;mesos://host:port&quot;:
+     Connects to an Apache Mesos cluster.</span></li>
+</ul>
+
+<p class=MsoNormal><span style='font-family:"Ubuntu",sans-serif;color:black'>The&nbsp;.master&nbsp;attribute
+is set within the&nbsp;SparkSession.builder&nbsp;when creating a&nbsp;SparkSession&nbsp;object.&nbsp;For
+instance:</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=623 style='width:467.5pt;border:solid windowtext 1.0pt;background:
+  black;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
+  style='font-family:"Ubuntu",sans-serif;color:white'>Python</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 style='width:467.5pt;border:solid windowtext 1.0pt;border-top:
+  none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:8.0pt;line-height:115%'><span
+  style='font-family:"Ubuntu",sans-serif;color:black'>from pyspark.sql import SparkSession<br>
+  <br>
+  spark = SparkSession.builder \</span></p>
+  <p class=MsoNormal style='margin-bottom:8.0pt;line-height:115%'><span
+  style='font-family:"Ubuntu",sans-serif;color:black'>    .appName(&quot;My
+  PySpark App&quot;) \</span></p>
+  <p class=MsoNormal style='margin-bottom:8.0pt;line-height:115%'><span
+  style='font-family:"Ubuntu",sans-serif;color:black'>    .master(&quot;local[*]&quot;)
+  \</span></p>
+  <p class=MsoNormal style='margin-bottom:8.0pt;line-height:115%'><span
+  style='font-family:"Ubuntu",sans-serif;color:black'>    .getOrCreate()</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
+  style='font-family:"Ubuntu",sans-serif;color:black'>&nbsp;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span style='font-family:"Ubuntu",sans-serif;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:"Ubuntu",sans-serif;color:black'>In
+this example, `&quot;local[*]&quot; `tells Spark to run locally, using as many
+threads as available cores.</span></p>
+
+<p class=MsoNormal><span style='font-family:"Ubuntu",sans-serif;color:black'>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>

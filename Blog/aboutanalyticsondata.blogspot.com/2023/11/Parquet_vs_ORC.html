@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>ORC vs Parquet Comparison</title>
+				<style>
+        body {
+            font-family: Ubuntu, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .highlight {
+            background-color: #e8f4f8;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            color: #16a085;
+        }
+
+        .section ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+			</head>
+			<body>
+				<h1>ORC vs Parquet Comparison</h1>
+				<div class="section">
+					<h2>1. Overview</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Feature</th>
+								<th>ORC</th>
+								<th>Parquet</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<strong>Developed By</strong>
+								</td>
+								<td>Apache Hive (part of the Hadoop ecosystem)</td>
+								<td>Apache Parquet (part of the Apache ecosystem)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Storage Format</strong>
+								</td>
+								<td>Columnar</td>
+								<td>Columnar</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Compression</strong>
+								</td>
+								<td>Highly compressed (e.g., ZLIB, Snappy)</td>
+								<td>Highly compressed (e.g., Snappy, GZIP)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Schema Evolution</strong>
+								</td>
+								<td>Limited support</td>
+								<td>Limited support</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>ACID Transactions</strong>
+								</td>
+								<td>Supported (via Hive)</td>
+								<td>Not supported</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Use Case</strong>
+								</td>
+								<td>Hadoop ecosystem, Hive</td>
+								<td>General-purpose, cross-platform</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="section">
+					<h2>2. Key Differences</h2>
+					<h3>a. Compression</h3>
+					<ul>
+						<li>
+							<strong>ORC</strong>: Uses advanced compression techniques (e.g., ZLIB, Snappy). Typically achieves higher compression ratios compared to Parquet.</li>
+						<li>
+							<strong>Parquet</strong>: Also uses advanced compression techniques (e.g., Snappy, GZIP). Compression ratios are slightly lower than ORC but still highly efficient.</li>
+					</ul>
+					<h3>b. Performance</h3>
+					<ul>
+						<li>
+							<strong>ORC</strong>: Optimized for Hive and the Hadoop ecosystem. Faster for Hive queries due to native integration.</li>
+						<li>
+							<strong>Parquet</strong>: Optimized for general-purpose big data processing. Faster for Spark and other non-Hive tools.</li>
+					</ul>
+					<h3>c. Schema Evolution</h3>
+					<ul>
+						<li>
+							<strong>ORC</strong>: Limited support for schema evolution. Adding or renaming columns requires rewriting the entire dataset.</li>
+						<li>
+							<strong>Parquet</strong>: Also has limited support for schema evolution. Adding or renaming columns requires rewriting the entire dataset.</li>
+					</ul>
+					<h3>d. ACID Transactions</h3>
+					<ul>
+						<li>
+							<strong>ORC</strong>: Supports ACID transactions when used with Hive. Enables features like updates, deletes, and merges.</li>
+						<li>
+							<strong>Parquet</strong>: Does not support ACID transactions. Primarily used for append-only workloads.</li>
+					</ul>
+					<h3>e. Ecosystem Integration</h3>
+					<ul>
+						<li>
+							<strong>ORC</strong>: Tightly integrated with Hive and the Hadoop ecosystem. Less support in non-Hadoop tools.</li>
+						<li>
+							<strong>Parquet</strong>: Widely supported across multiple platforms (e.g., Spark, Presto, Hive). More versatile for cross-platform use cases.</li>
+					</ul>
+				</div>
+				<div class="section">
+					<h2>3. Use Cases</h2>
+					<h3>ORC</h3>
+					<ul>
+						<li>
+							<strong>Hadoop Ecosystem</strong>: Ideal for Hive-based data warehouses.</li>
+						<li>
+							<strong>ACID Transactions</strong>: Use cases requiring updates, deletes, and merges (via Hive).</li>
+						<li>
+							<strong>High Compression</strong>: Scenarios where storage efficiency is critical.</li>
+					</ul>
+					<h3>Parquet</h3>
+					<ul>
+						<li>
+							<strong>General-Purpose Analytics</strong>: Ideal for big data processing with tools like Spark, Presto, and Hive.</li>
+						<li>
+							<strong>Cross-Platform Use</strong>: Use cases requiring compatibility across multiple platforms.</li>
+						<li>
+							<strong>Append-Only Workloads</strong>: Scenarios where data is primarily appended (e.g., log data).</li>
+					</ul>
+				</div>
+				<div class="section">
+					<h2>4. Pros and Cons</h2>
+					<h3>ORC</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>Pros</th>
+								<th>Cons</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>High compression ratios</td>
+								<td>Limited support outside the Hadoop ecosystem</td>
+							</tr>
+							<tr>
+								<td>ACID transactions with Hive</td>
+								<td>Limited schema evolution capabilities</td>
+							</tr>
+							<tr>
+								<td>Optimized for Hive queries</td>
+								<td>Less versatile for cross-platform use</td>
+							</tr>
+						</tbody>
+					</table>
+					<h3>Parquet</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>Pros</th>
+								<th>Cons</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Widely supported across platforms</td>
+								<td>No ACID transaction support</td>
+							</tr>
+							<tr>
+								<td>Efficient for general-purpose analytics</td>
+								<td>Limited schema evolution capabilities</td>
+							</tr>
+							<tr>
+								<td>Open-source and free</td>
+								<td>Slightly lower compression ratios than ORC</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="section">
+					<h2>5. Summary</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Feature</th>
+								<th>ORC</th>
+								<th>Parquet</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<strong>Compression</strong>
+								</td>
+								<td>Higher compression ratios</td>
+								<td>Slightly lower compression ratios</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Performance</strong>
+								</td>
+								<td>Optimized for Hive</td>
+								<td>Optimized for Spark and general-purpose</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>ACID Transactions</strong>
+								</td>
+								<td>Supported (via Hive)</td>
+								<td>Not supported</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Ecosystem</strong>
+								</td>
+								<td>Hadoop ecosystem</td>
+								<td>Cross-platform</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Use Case</strong>
+								</td>
+								<td>Hive-based data warehouses</td>
+								<td>General-purpose analytics</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="section">
+					<h2>6. Conclusion</h2>
+					<ul>
+						<li>Use <strong>ORC</strong> if you're working in the Hadoop ecosystem, especially with Hive, and need ACID transactions.</li>
+						<li>Use <strong>Parquet</strong> if you need a general-purpose, cross-platform columnar storage format for big data analytics.</li>
+					</ul>
+				</div>
+			</body>
+		</html>
