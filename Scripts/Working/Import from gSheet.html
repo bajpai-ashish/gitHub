@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Quality Checks in Python</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css"
+    />
+    <style>
+      code.language-python {
+        font-family: "Ubuntu Mono", monospace;
+        font-size: 0.95rem;
+        white-space: pre-wrap;
+      }
+      body {
+        font-family: "Ubuntu", sans-serif;
+        margin: 0;
+        padding: 1rem;
+        background: #ffffff;
+        color: #333;
+      }
+
+      section {
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      .syntax-block {
+        margin-top: 5%;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+
+      .syntax-block h2 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+
+      .syntax-block h3 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        border-bottom: 1px solid #eee;
+        vertical-align: top;
+      }
+
+      th {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+
+      pre {
+        margin: 0;
+        background: #f9f9f9;
+        padding: 0.5rem;
+        border-radius: 4px;
+        overflow-x: auto;
+      }
+
+      code {
+        font-family: "Ubuntu Mono", monospace;
+        font-size: 0.95rem;
+      }
+
+      .token.keyword {
+        color: #5c66f3;
+      }
+      .token.string {
+        color: #013d01;
+      }
+      .token.comment {
+        color: #999a9b;
+        font-style: italic;
+      }
+      .token.number {
+        color: #ff0000;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div id="syntax_python"></div>
+      <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+      <!-- PapaParse for CSV parsing -->
+      <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+      <!-- Marked.js for Markdown rendering -->
+      <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+      <script>
+        const sheetURL =
+          "https://docs.google.com/spreadsheets/d/e/2PACX-1vRJ-3ufRDfQqThGyeEY_mHbYdGFg6ohJ-kvhkn0tw4d0-pBfGgFGB7cUW1kz5IG3yXKgrYiwmhJi9qx/pub?gid=0&single=true&output=csv";
+
+        fetch(sheetURL)
+          .then((response) => response.text())
+          .then((csvText) => {
+            const parsed = Papa.parse(csvText, {
+              header: true,
+              skipEmptyLines: true,
+            });
+
+            const rows = parsed.data.filter(
+              (row) =>
+                row.is_display && row.is_display.trim().toLowerCase() === "true"
+            );
+
+            // Group by seq_num_div → sub_div_heading
+            const grouped = {};
+            rows.forEach((row) => {
+              const divKey = row.seq_num_div.trim();
+              const subKey = row.sub_div_heading.trim();
+
+              if (!grouped[divKey]) {
+                grouped[divKey] = {
+                  heading: row.div_heading.trim(),
+                  subGroups: {},
+                };
+              }
+
+              if (!grouped[divKey].subGroups[subKey]) {
+                grouped[divKey].subGroups[subKey] = {
+                  sub_heading: subKey,
+                  items: [],
+                };
+              }
+
+              grouped[divKey].subGroups[subKey].items.push({
+                topic_head: row.contents_head.trim(),
+                topic_detail: row.details.trim(),
+                comments_ifany: String(row.comments_ifany || "").trim(),
+                rowSeq: parseInt(row.seq_num_row.trim()),
+              });
+            });
+
+            const container = document.getElementById("syntax_python");
+
+            Object.keys(grouped)
+              .sort((a, b) => parseInt(b) - parseInt(a))
+              .forEach((divKey) => {
+                const group = grouped[divKey];
+
+                const div = document.createElement("div");
+                div.className = "syntax-block";
+                div.style.marginBottom = ".5rem";
+                div.style.marginTop = "1rem";
+                div.style.padding = "1rem";
+                div.style.background = "#f9f9f9";
+                div.style.border = "1px solid #ccc";
+                div.style.borderRadius = "8px";
+
+                const heading = document.createElement("h2");
+                heading.textContent = group.heading;
+                heading.style.marginBottom = "1rem";
+                div.appendChild(heading);
+
+                Object.keys(group.subGroups).forEach((subKey) => {
+                  const subGroup = group.subGroups[subKey];
+
+                  const subDiv = document.createElement("div");
+                  subDiv.style.marginBottom = "1rem";
+                  subDiv.style.padding = "1rem";
+                  subDiv.style.border = "1px solid #ccc";
+                  subDiv.style.borderRadius = "10px";
+                  subDiv.style.background = "#dee0f5";
+                  subDiv.style.boxShadow = "0 0 4px rgba(0,0,0,0.05)";
+
+                  const subHeading = document.createElement("h3");
+                  subHeading.textContent = subGroup.sub_heading;
+                  subHeading.style.marginBottom = "0.75rem";
+                  subHeading.style.color = "#333";
+                  subHeading.style.fontWeight = "600";
+                  subDiv.appendChild(subHeading);
+
+                  subGroup.items
+                    .sort((a, b) => b.rowSeq - a.rowSeq) // ✅ Descending sort
+                    .forEach((item) => {
+                      const contentBlock = document.createElement("div");
+                      contentBlock.style.marginBottom = "1rem";
+
+                      const head = document.createElement("div");
+                      head.innerHTML = `<strong>${marked.parse(
+                        item.topic_head
+                      )}</strong>`;
+                      head.style.marginBottom = "0.25rem";
+                      contentBlock.appendChild(head);
+
+                      const detail = document.createElement("div");
+                      detail.innerHTML = marked.parse("  " + item.topic_detail);
+                      detail.style.whiteSpace = "pre-wrap";
+                      detail.style.marginBottom = "0.25rem";
+                      contentBlock.appendChild(detail);
+
+                      if (item.comments_ifany) {
+                        const comment = document.createElement("div");
+                        comment.innerHTML = marked.parse(item.comments_ifany);
+                        comment.style.marginTop = "0.25rem";
+                        comment.style.fontStyle = "italic";
+                        comment.style.color = "#444";
+                        comment.style.background = "#f0f0f0";
+                        comment.style.padding = "0.5rem";
+                        comment.style.borderRadius = "6px";
+                        contentBlock.appendChild(comment);
+                      }
+
+                      subDiv.appendChild(contentBlock);
+                    });
+
+                  div.appendChild(subDiv);
+                });
+
+                container.appendChild(div);
+              });
+          })
+          .catch((error) => {
+            console.error("Error loading syntax blocks:", error);
+            document.getElementById("syntax_python").innerHTML =
+              "<p>Failed to load Python syntax. Please try again later.</p>";
+          });
+      </script>
+    </section>
+  </body>
+</html>
