@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQL Function – Number to Words</title>
+
+  <!-- Fonts & Prism -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Ubuntu", sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #0077cc;
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      font-size: 1.5em;
+      flex-shrink: 0;
+    }
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 10px 30px;
+      font-size: 0.9em;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    footer a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+    }
+    .content {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 30px;
+      background-color: #f4f4f4;
+    }
+    .content h2 {
+      margin-bottom: 20px;
+      color: #0077cc;
+    }
+    .content p {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    pre code {
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Recursive SQL Function – Convert Number to Words (INR)
+  </header>
+
+  <div class="content">
+    <p>
+      This function converts numeric amounts into words, useful for check printing and financial documents.
+    </p>
+
+    <pre><code class="language-sql">
+-- Sample SQL Function
+DECLARE @username AS VARCHAR(50)
+CREATE FUNCTION {username}.Nostowords (@Nos AS NUMERIC(15, 2))
+returns VARCHAR(500)
+AS
+  BEGIN
+      DECLARE @SendNo AS INT
+      DECLARE @Values AS VARCHAR(500)
+
+      SET @values = Isnull(@Values, '')
+      SET @SendNo = CONVERT (INT, @Nos)
+
+      IF Len (@SendNo) = 1
+        BEGIN
+            IF @SendNo BETWEEN 0 AND 9
+              BEGIN
+                  IF @SendNo = 0
+                    SET @Values = @Values + 'Zero'
+
+                  IF @SendNo = 1
+                    SET @Values = @Values + 'One'
+
+                  IF @SendNo = 2
+                    SET @Values = @Values + 'Two'
+
+                  IF @SendNo = 3
+                    SET @Values = @Values + 'Three'
+
+                  IF @SendNo = 4
+                    SET @Values = @Values + 'Four'
+
+                  IF @SendNo = 5
+                    SET @Values = @Values + 'Five'
+
+                  IF @SendNo = 6
+                    SET @Values = @Values + 'Six'
+
+                  IF @SendNo = 7
+                    SET @Values = @Values + 'Seven'
+
+                  IF @SendNo = 8
+                    SET @Values = @Values + 'Eight'
+
+                  IF @SendNo = 9
+                    SET @Values = @Values + 'Nine'
+              END
+            ELSE
+              BEGIN
+                  SET @Values = ''
+              END
+        END
+      ELSE IF Len (@SendNo) = 2
+        BEGIN
+            IF @SendNo BETWEEN 10 AND 19
+              BEGIN
+                  IF @SendNo = 10
+                    SET @Values = 'Ten'
+
+                  IF @SendNo = 11
+                    SET @Values = 'Eleven'
+
+                  IF @SendNo = 12
+                    SET @Values = 'Twlve'
+
+                  IF @SendNo = 13
+                    SET @Values = 'Thirteen'
+
+                  IF @SendNo = 14
+                    SET @Values = 'Fourteen'
+
+                  IF @SendNo = 15
+                    SET @Values = 'Fiveteen'
+
+                  IF @SendNo = 16
+                    SET @Values = 'Sixteen'
+
+                  IF @SendNo = 17
+                    SET @Values = 'Seventeen'
+
+                  IF @SendNo = 18
+                    SET @Values = 'Eighteen'
+
+                  IF @SendNo = 19
+                    SET @Values = 'Nineteen'
+              END
+            ELSE
+              BEGIN
+                  IF LEFT(@SendNo, 1) = 2
+                    SET @Values = @Values + 'Twenty'
+                  ELSE IF LEFT(@SendNo, 1) = 3
+                    SET @Values = @Values + 'Thirty'
+                  ELSE IF LEFT(@SendNo, 1) = 4
+                    SET @Values = @Values + 'Forty'
+                  ELSE IF LEFT(@SendNo, 1) = 5
+                    SET @Values = @Values + 'Fifty'
+                  ELSE IF LEFT(@SendNo, 1) = 6
+                    SET @Values = @Values + 'Sixty'
+                  ELSE IF LEFT(@SendNo, 1) = 7
+                    SET @Values = @Values + 'Seventy'
+                  ELSE IF LEFT(@SendNo, 1) = 8
+                    SET @Values = @Values + 'Eighty'
+                  ELSE IF LEFT(@SendNo, 1) = 9
+                    SET @Values = @Values + 'Ninty'
+
+                  IF @SendNo % 10 <> 0
+                    SET @Values = @Values
+                                  + (SELECT {username}.Nostowords(( @SendNo % 10 )))
+              END
+        END
+      ELSE IF Len (@SendNo) = 3
+        BEGIN
+            SET @Values = (SELECT {username}.Nostowords(LEFT(@SendNo, 1)))
+                          + ' Hundred'
+
+            IF ( @SendNo % 100 ) <> 0
+              SET @Values = @Values
+                            + (SELECT {username}.Nostowords(( @SendNo % 100 )))
+        END
+      ELSE IF Len (@SendNo) = 4
+        BEGIN
+            SET @Values = (SELECT {username}.Nostowords(LEFT(@SendNo, 1)))
+                          + ' Thousand'
+
+            IF ( @SendNo % 1000 ) <> 0
+              SET @Values = @Values
+                            + (SELECT {username}.Nostowords(( @SendNo % 1000 )))
+        END
+      ELSE IF Len (@SendNo) = 5
+        BEGIN
+            SET @Values = (SELECT {username}.Nostowords(LEFT(@SendNo, 2)))
+                          + ' Thousand'
+
+            IF ( @SendNo % 1000 ) <> 0
+              SET @Values = @Values
+                            + (SELECT {username}.Nostowords(( @SendNo % 1000 )))
+        END
+      ELSE IF Len (@SendNo) = 6
+        BEGIN
+            SET @Values = (SELECT {username}.Nostowords(LEFT(@SendNo, 1)))
+                          + ' Lakh'
+
+            IF ( @SendNo % 100000 ) <> 0
+              SET @Values = @Values
+                            + (SELECT {username}.Nostowords(( @SendNo % 100000 )))
+        END
+      ELSE IF Len (@SendNo) = 7
+        BEGIN
+            SET @Values = (SELECT {username}.Nostowords(LEFT(@SendNo, 2)))
+                          + ' Lakh'
+
+            IF ( @SendNo % 100000 ) <> 0
+              SET @Values = @Values
+                            + (SELECT {username}.Nostowords(( @SendNo % 100000 )))
+        END
+      ELSE IF Len (@SendNo) = 8
+        BEGIN
+            SET @Values = (SELECT {username}.Nostowords(LEFT(@SendNo, 1)))
+                          + ' Crore'
+
+            IF ( @SendNo % 10000000 ) <> 0
+              SET @Values = @Values
+                            + (SELECT {username}.Nostowords(( @SendNo % 10000000 ))
+                              )
+        END
+      ELSE IF Len (@SendNo) = 9
+        BEGIN
+            SET @Values = (SELECT {username}.Nostowords(LEFT(@SendNo, 2)))
+                          + ' Crore'
+
+            IF ( @SendNo % 10000000 ) <> 0
+              SET @Values = @Values
+                            + (SELECT {username}.Nostowords(( @SendNo % 10000000 ))
+                              )
+        END
+
+      IF CONVERT (INT, @Nos) <> Round(@Nos, 2)
+        BEGIN
+            SET @SendNo = Round (( @Nos - CONVERT (INT, @Nos) ), 2) * 100
+            SET @Values = @Values + 'And'
+                          + (SELECT {username}.Nostowords (@SendNo))
+                          + 'Ps. Only'
+        END
+
+      SET @Values = Replace(@Values, 'Rs.', '')
+      SET @Values = 'Rs. ' + Ltrim(@Values )
+      SET @Values = Replace(@Values, 'Only', '')
+      SET @Values = Rtrim(@Values) + ' Only'
+
+      RETURN ( @Values )
+  END;
+
+Select {username}.Nostowords(152.36);
+    </code></pre>
+
+    <p>Hope this helps you build your own INR-to-words converter.</p>
+    <p>Feel free to email me if you need more details on this.</p>
+  </div>
+
+  <footer>
+    <div>© 2025 Ashish | Built with clarity and modularity</div>
+    <div>
+      <a href="https://sites.google.com/view/blogs-data/homepage">🏠 Home</a>
+      <a href="javascript:history.back()">🔙 Back</a>
+      <a href="#" id="nextBtn" style="display: none;">🔜 Next</a>
+    </div>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const next = params.get("next");
+    if (next) {
+      const nextBtn = document.getElementById("nextBtn");
+      nextBtn.href = next;
+      nextBtn.style.display = "inline";
+    }
+  </script>
+
+</body>
+</html>

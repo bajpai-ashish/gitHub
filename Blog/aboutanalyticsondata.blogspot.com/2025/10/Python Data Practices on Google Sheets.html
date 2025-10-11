@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Data Pratics on Google Sheets</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <style>
+      code.language-python {
+        font-family: "Ubuntu Mono", monospace;
+        font-size: 0.95rem;
+        white-space: pre-wrap;
+      }
+      body {
+        font-family: "Ubuntu", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+      }
+
+      section {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      .syntax-block {
+        margin-top: 5%;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+
+      .syntax-block h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        border-bottom: 1px solid #eee;
+        vertical-align: top;
+      }
+
+      th {
+        background-color: #f0f0f0;
+        text-align: left;
+      }
+
+      pre {
+        margin: 0;
+        background: #f5f2f0;
+        padding: 0.5rem;
+        border-radius: 4px;
+        overflow-x: auto;
+      }
+
+      code {
+        font-family: "Ubuntu Mono", monospace;
+        font-size: 0.95rem;
+      }
+      header {
+        background-color: #0077cc;
+        color: white;
+        padding: 15px 30px;
+        text-align: center;
+        font-size: 1.5em;
+        flex-shrink: 0;
+      }
+      footer {
+        background-color: #333;
+        color: white;
+        padding: 10px 30px;
+        font-size: 0.9em;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      footer a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+      }
+      .content {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 30px;
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <header>📚 Tech Data Blogs</header>
+    <div class="content">
+      <h1>Python Data Practices on Google Sheets</h1>
+      <p>
+        This document showcases various Python data practices applied to Google
+        Sheets data. Each section includes a description of the practice, the
+        corresponding code snippet, and an embedded Kaggle notebook
+        demonstrating the implementation.
+      </p>
+      <div class="syntax-block">
+        <h3>Create JSon cred file using Google Sheets API</h3>
+        <p>
+          In this code below, we demonstrate to connect json cred file to python
+          and open the Google Sheet using the `gspread` library. I have used
+          "https://newsapi.org/" API to fetch the news data and store it in
+          Google Sheet using Python.
+        </p>
+        <iframe
+          src="https://www.kaggle.com/embed/bajpaiashish/sheetgoogle?kernelSessionId=266792925"
+          height="800"
+          style="margin: 0 auto; width: 100%; max-width: 950px"
+          frameborder="0"
+          scrolling="auto"
+          title="sheetGoogle"
+        ></iframe>
+        <hr style="border: 1px solid #ccc" />
+        <iframe
+          src="https://www.kaggle.com/embed/bajpaiashish/sheetgoogle?cellIds=7-9&kernelSessionId=266792925"
+          height="300"
+          style="margin: 0 auto; width: 100%; max-width: 950px"
+          frameborder="0"
+          scrolling="auto"
+          title="sheetGoogle"
+        ></iframe>
+      </div>
+
+      <div class="syntax-block">
+        <h3>Insert Data into Google Sheet Using Python</h3>
+        <p>
+          In this code below, we demonstrate how to insert data into a Google
+          Sheet using Python. The code utilizes the `gspread` library to
+          interact with the Google Sheets API. It authenticates using service
+          account credentials, opens the specified Google Sheet, and appends a
+          new row of data to it.
+        </p>
+        <iframe
+          src="https://www.kaggle.com/embed/bajpaiashish/sheetgoogle?cellIds=1-6&kernelSessionId=266792925"
+          height="300"
+          font-family="Ubuntu Mono, monospace"
+          ;
+          style="margin: 0 auto; width: 100%; max-width: 950px"
+          frameborder="0"
+          scrolling="auto"
+          title="sheetGoogle"
+        ></iframe>
+      </div>
+
+      <iframe
+        src="https://www.kaggle.com/embed/bajpaiashish/sheetgoogle?cellIds=1-5&kernelSessionId=266792925"
+        height="500"
+        style="margin: 0 auto; width: 100%; max-width: 950px"
+        frameborder="0"
+        scrolling="auto"
+        title="sheetGoogle"
+      ></iframe>
+    </div>
+    <footer>
+      <div>© 2025 Ashish | Built with clarity and modularity</div>
+      <div>
+        <a href="https://sites.google.com/view/blogs-data/homepage">🏠 Home</a>
+        <a href="javascript:history.back()">🔙 Back</a>
+        <a href="#" id="nextBtn" style="display: none">🔜 Next</a>
+      </div>
+    </footer>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const next = params.get("next");
+      if (next) {
+        const nextBtn = document.getElementById("nextBtn");
+        nextBtn.href = next;
+        nextBtn.style.display = "inline";
+      }
+    </script>
+  </body>
+</html>

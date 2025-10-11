@@ -1,8 +1,12 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu" /> 
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
     <title>Semi Unpivot Data</title>
   </head>
   <style>
@@ -11,51 +15,97 @@
       margin: 0;
       padding: 20px;
       background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #0077cc;
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      font-size: 1.5em;
+      flex-shrink: 0;
+    }
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 10px 30px;
+      font-size: 0.9em;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    footer a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+    }
+    .content {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 30px;
+      background-color: #f4f4f4;
     }
   </style>
   <body>
-    <h1>Semi Unpivot Data</h1>
-    <p>In this example, we will demonstrate how to semi-unpivot data.</p>
-    <p>We have a source sheet / table containg "<code>Date</code>" and "<code>9_A, 9_B, 9_C, 10_A, 10_B, 10_C</code>" and so on columns. And here 9_A means Grade 9th and A Section.</p>  
-    <p>Now our target is to unpivot this type of data into multiple columns where sections are columns and date and Grade will be rows</p>  
-    <p> So if you see here we are not unpivoting all data we are unpivoting and also keep unpivoted data.</p>
-    <p>I have also seen very interesting topic related with unpivot using Cross Apply. You may refer the link https://www.mssqltips.com/sqlservertip/7835/unpivot-data-sql-server-cross-apply.</p>
+    <header>🔢 Semi Unpivot Data</header>
+    <div class="content">
+      <p>In this example, we will demonstrate how to semi-unpivot data.</p>
+      <p>
+        We have a source sheet / table containg "<code>Date</code>" and "<code
+          >9_A, 9_B, 9_C, 10_A, 10_B, 10_C</code
+        >" and so on columns. And here 9_A means Grade 9th and A Section.
+      </p>
+      <p>
+        Now our target is to unpivot this type of data into multiple columns
+        where sections are columns and date and Grade will be rows
+      </p>
+      <p>
+        So if you see here we are not unpivoting all data we are unpivoting and
+        also keep unpivoted data.
+      </p>
+      <p>
+        I have also seen very interesting topic related with unpivot using Cross
+        Apply. You may refer the link
+        https://www.mssqltips.com/sqlservertip/7835/unpivot-data-sql-server-cross-apply.
+      </p>
 
-    <table border="0" style="border-collapse: collapse; width: 100%">
-      <tr>
-        <th style="width: 60%;">Input Data</th>
-        <th>Output Data</th>
-      </tr>
-      <tr>
-        <td>
-          <iframe
-            width="100%"
-            height="480px"
-            scrolling="no"
-            frameborder="0"
-            allowtransparency="true"
-            allowfullscreen="true"
-            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSQKZVBGfS85zaweGQ4yrM_gDE6TP6L5hXgM6u1YXvZsyATYbO-Bw36Hxm3qmR8vGCl8kLVWQiBvPHy/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"
-          ></iframe>
-        </td>
-        <td>
-          <iframe
-            width="100%"
-            height="480px"
-            scrolling="no"
-            frameborder="0"
-            allowtransparency="true"
-            allowfullscreen="true"
-            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSQKZVBGfS85zaweGQ4yrM_gDE6TP6L5hXgM6u1YXvZsyATYbO-Bw36Hxm3qmR8vGCl8kLVWQiBvPHy/pubhtml?gid=571731358&amp;single=true&amp;widget=true&amp;headers=false"
-          ></iframe>
-        </td>
-      </tr>
+      <table border="0" style="border-collapse: collapse; width: 100%">
+        <tr>
+          <th style="width: 60%">Input Data</th>
+          <th>Output Data</th>
+        </tr>
+        <tr>
+          <td>
+            <iframe
+              width="100%"
+              height="480px"
+              scrolling="no"
+              frameborder="0"
+              allowtransparency="true"
+              allowfullscreen="true"
+              src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSQKZVBGfS85zaweGQ4yrM_gDE6TP6L5hXgM6u1YXvZsyATYbO-Bw36Hxm3qmR8vGCl8kLVWQiBvPHy/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"
+            ></iframe>
+          </td>
+          <td>
+            <iframe
+              width="100%"
+              height="480px"
+              scrolling="no"
+              frameborder="0"
+              allowtransparency="true"
+              allowfullscreen="true"
+              src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSQKZVBGfS85zaweGQ4yrM_gDE6TP6L5hXgM6u1YXvZsyATYbO-Bw36Hxm3qmR8vGCl8kLVWQiBvPHy/pubhtml?gid=571731358&amp;single=true&amp;widget=true&amp;headers=false"
+            ></iframe>
+          </td>
+        </tr>
+      </table>
 
-    </table>
-
-    <p>This is an example we'll trying to unpivot data using T-SQL</p>
-    <p>We will use the following query to unpivot data</p>
-    <div>
+      <p>This is an example we'll trying to unpivot data using T-SQL</p>
+      <p>We will use the following query to unpivot data</p>
+      <div>
         <span style="font-family: Ubuntu"><br /></span>
         <iframe
           style="
@@ -65,7 +115,8 @@
             border: 0px;
             display: block;
             margin: 0px auto;
-            background: transparent;"
+            background: transparent;
+          "
           frameborder="0"
           frameSpacing="0"
           title="SQL Server"
@@ -75,5 +126,24 @@
           width="100%"
         ></iframe>
       </div>
+    </div>
+    <footer>
+      <div>© 2025 Ashish | Built with clarity and modularity</div>
+      <div>
+        <a href="https://sites.google.com/view/blogs-data/homepage">🏠 Home</a>
+        <a href="javascript:history.back()">🔙 Back</a>
+        <a href="#" id="nextBtn" style="display: none">🔜 Next</a>
+      </div>
+    </footer>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const next = params.get("next");
+      if (next) {
+        const nextBtn = document.getElementById("nextBtn");
+        nextBtn.style.display = "inline";
+        nextBtn.href = next;
+      }
+    </script>
   </body>
 </html>

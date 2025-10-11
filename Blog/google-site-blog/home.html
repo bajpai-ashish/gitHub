@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dynamic Blog Index</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <style>
+      body {
+        font-family: "Ubuntu", sans-serif;
+        font-size: medium;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0; /* Remove padding */
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #333;
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        max-width: 1200px;
+        margin: auto;
+      }
+      .grid-item {
+        background-color: #eff6fc;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.295);
+      }
+      .grid-item h2 {
+        margin-top: 0;
+        color: #0077cc;
+        font-size: 1.2em;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+      }
+      .grid-item ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      .grid-item li {
+        margin: 8px 0;
+      }
+      .grid-item a {
+        text-decoration: none;
+        color: #333;
+      }
+      .grid-item a:hover {
+        color: #0077cc;
+        text-decoration: underline;
+      }
+      header {
+        background-color: #0077cc;
+        color: white;
+        padding: 10px 30px;
+        text-align: center;
+        font-size: 1.5em;
+        flex-shrink: 0;
+      }
+      footer {
+        background-color: #333;
+        color: white;
+        padding: 10px 30px;
+        font-size: 0.9em;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      footer a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+      }
+      .content {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 30px;
+        height: 100%; /* Add this line */
+      }
+      #backToTop {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 50px;
+        font-size: 1em;
+        cursor: pointer;
+        display: none; /* Hidden by default */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        transition: opacity 0.3s ease;
+      }
+      #backToTop {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      #backToTop.show {
+        display: block;
+        opacity: 1;
+      }
+
+      #backToTop:hover {
+        background-color: #005fa3;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="backToTop" type="button" title="Go to top">⬆️ Top</button>
+    <script>
+      const backToTopBtn = document.getElementById("backToTop");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.style.display = "block";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      });
+
+      backToTopBtn.addEventListener("click", () => {
+        document.documentElement.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    </script>
+
+    <header>📚 Tech Data Blogs</header>
+
+    <div class="content">
+      <div class="grid-container" id="blog-grid"></div>
+    </div>
+
+    <script>
+      const sheetURL =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vS9H0Yz8woWGoAD0QFD2v1BYfX5enpvW2qjqdqrsT9UCkU7uxMF5axG1cSlEGeeYVbtIXgqMohwnlDs/pub?gid=0&single=true&output=csv";
+
+      fetch(sheetURL)
+        .then((response) => response.text())
+        .then((csv) => {
+          const rows = csv.split("\n").slice(1); // Skip header
+          const categories = {};
+
+          rows.forEach((row) => {
+            const [header, title, link, display] = row.split(",");
+            if (display && display.trim().toLowerCase() === "true") {
+              const cleanHeader = header.trim();
+              const cleanTitle = title.trim();
+              const cleanLink = link.trim();
+              if (!categories[cleanHeader]) categories[cleanHeader] = [];
+              categories[cleanHeader].push({
+                title: cleanTitle,
+                link: cleanLink,
+              });
+            }
+          });
+
+          // Sort headers alphabetically
+          const sortedHeaders = Object.keys(categories).sort();
+
+          const grid = document.getElementById("blog-grid");
+
+          sortedHeaders.forEach((header) => {
+            const posts = categories[header];
+
+            // Sort posts by title within each header
+            posts.sort((a, b) => a.title.localeCompare(b.title));
+
+            const div = document.createElement("div");
+            div.className = "grid-item";
+            div.innerHTML =
+              `<h2>${header}</h2><ul>` +
+              posts
+                .map((p) => `<li><a href="${p.link}">${p.title}</a></li>`)
+                .join("") +
+              `</ul>`;
+            grid.appendChild(div);
+          });
+        });
+    </script>
+
+    <footer>
+      <div>© 2025 Ashish | Built with clarity and modularity</div>
+    </footer>
+  </body>
+</html>
