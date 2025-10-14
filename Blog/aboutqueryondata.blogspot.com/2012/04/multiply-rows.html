@@ -1,26 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Multiplication of Rows</title>
-</head>
-<body>
-    <h2>Python Code for Importing Data:</h2>
-    <div dir="ltr" style="text-align: left;" trbidi="on">
-        <h3 style="font-family: Ubuntu;">Multiplication of Rows:</h3>
-        <div style="font-family: Ubuntu;">
-            In this example, we will demonstrate how to multiply rows in SQL Server using the log/exp operator.:
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <style>
+      body {
+        font-family: "Ubuntu", sans-serif;
+        margin: 0;
+        padding: 1rem;
+        background: #ffffff;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+      }
+      header {
+        background-color: #0077cc;
+        color: white;
+        padding: 15px 30px;
+        text-align: center;
+        font-size: 1.5em;
+        flex-shrink: 0;
+      }
+      footer {
+        background-color: #333;
+        color: white;
+        padding: 10px 30px;
+        font-size: 0.9em;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      footer a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+      }
+      .content {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 30px;
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <header>❎ Multiplication of Rows</header>
+  <body>
+    <div class="content">
+      <div dir="ltr" style="text-align: left" trbidi="on">
+        <h3 style="font-family: Ubuntu">Multiplication of Rows:</h3>
+        <div style="font-family: Ubuntu">
+          In this example, we will demonstrate how to multiply rows in SQL
+          Server using the log/exp operator.:
         </div>
-        <hr style="border: 1px solid #c7c6c6; width: 100%;">
-        <div style="font-family: Ubuntu;">
-                <iframe
-                        style="width: 100%; height: 300px; border: none;"
-                        src="https://onecompiler.com/embed/sqlserver/43ekcw5z9?hideNew=true&hideLanguageSelection=true&hideStdin=true&disableCopyPaste=true&theme=auto">
-            </iframe>
+        <hr style="border: 1px solid #c7c6c6; width: 100%" />
+        <div style="font-family: Ubuntu">
+          <iframe
+            style="width: 100%; height: 300px; border: none"
+            src="https://onecompiler.com/embed/sqlserver/43ekcw5z9?hideNew=true&hideLanguageSelection=true&hideStdin=true&disableCopyPaste=true&theme=auto"
+          >
+          </iframe>
         </div>
-    <p>
-        Alternatively, while loop can do the same thing.
-    </p>
-</body>
+        <p>Alternatively, while loop can do the same thing.</p>
+        <footer>
+          <div>© 2025 Ashish | Built with clarity and modularity</div>
+          <div>
+            <a href="https://sites.google.com/view/blogs-data/homepage"
+              >🏠 Home</a
+            >
+            <a href="javascript:history.back()">🔙 Back</a>
+            <a href="#" id="nextBtn" style="display: none">🔜 Next</a>
+          </div>
+        </footer>
+
+        <script>
+          const params = new URLSearchParams(window.location.search);
+          const next = params.get("next");
+          if (next) {
+            const nextBtn = document.getElementById("nextBtn");
+            nextBtn.style.display = "inline";
+            nextBtn.href = next;
+          }
+        </script>
+      </div>
+    </div>
+  </body>
 </html>
