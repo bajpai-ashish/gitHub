@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mermaid Diagram Example</title>
+    
+  </head>
+  <body>
+    <h1>My Flowchart</h1>
+
+    <pre class="mermaid">
+          ---
+config:
+  layout: "TB"
+  theme: base
+  themeVariables:
+    primaryColor: "#ffc400ff"
+    primaryBorderColor: "#ff6f00ff"
+    primaryTextColor: "#000000ff"
+    secondaryColor: "#ffecb3ff"
+    secondaryBorderColor: "#ff6f00ff"
+    secondaryTextColor: "#971c1cff"
+    tertiaryColor: "#ffffffff"
+    tertiaryBorderColor: "#ffffffff"
+    tertiaryTextColor: "#000000ff"
+    lineColor: "#ff6f00ff"
+    textColor: "#470000ff"  
+
+---
+erDiagram
+  Items {
+    INT item_id PK
+  }
+  Items ||--o{ ItemComponents : contains
+  Items {
+    VARCHAR item_name   "Unique name for the item"
+  }
+  Items {   
+    VARCHAR item_type
+  }
+  Items {
+    VARCHAR item_code
+  }
+  ItemComponents {
+    INT composite_item_id FK
+    INT component_item_id FK
+    INT quantity_required
+  }
+  
+  InventoryMovements {
+    INT movement_id PK
+    INT item_id FK  "items.item_id"
+    VARCHAR movement_type
+    INT quantity
+    TIMESTAMP movement_date
+    INT source_master_id
+    INT source_detail_id
+    TEXT reference_note
+  }
+  Items ||--o{ InventoryMovements : tracked_by
+  SaleMaster {
+    INT sale_id PK
+    DATE sale_date
+  }
+  SaleDetail {
+    INT sale_detail_id PK
+    INT sale_id FK
+    INT item_id FK
+    INT quantity
+    BOOLEAN is_promotional
+  }
+  SaleReturnMaster {
+    INT sale_return_id PK
+    DATE return_date
+  }
+  
+  SaleReturnDetail {
+    INT sale_return_detail_id PK
+    INT sale_return_id FK
+    INT item_id FK
+    INT quantity
+  }
+  PurchaseMaster {
+    INT purchase_id PK
+    DATE purchase_date
+  }
+  PurchaseDetail {
+    INT purchase_detail_id PK
+    INT purchase_id FK
+    INT item_id FK
+    INT quantity
+    DECIMAL unit_price
+  }
+  PurchaseReturnMaster {
+    INT purchase_return_id PK
+    DATE return_date
+  }
+  Items zero or one--zero or many    PurchaseReturnDetail : returned_as
+  PurchaseReturnDetail {
+    INT purchase_return_detail_id PK
+    INT purchase_return_id FK
+    INT item_id FK
+    INT quantity
+  }
+  PromotionalCampaign {
+    INT campaign_id PK
+    VARCHAR campaign_name
+    DATE start_date
+    DATE end_date
+    BOOLEAN is_active
+  }
+  CampaignItems {
+    INT campaign_id FK
+    INT trigger_item_id FK
+    INT reward_item_id FK
+    INT reward_quantity
+    DECIMAL reward_offer
+  }
+  PurchaseInspection {
+    INT inspection_id PK
+    INT purchase_detail_id FK
+    INT inspected_quantity
+    INT damaged_quantity
+    VARCHAR status
+    DATE inspection_date
+  }
+  NonStockItems {
+    INT non_stock_id PK
+    INT source_purchase_detail_id FK
+    INT item_id FK
+    INT quantity
+    VARCHAR classification
+    VARCHAR valuation_method
+    DECIMAL estimated_value
+    BOOLEAN accounting_flag
+  }
+  AccountingAdjustments {
+    INT adjustment_id PK
+    VARCHAR reference_type
+    INT reference_id
+    DECIMAL adjustment_amount
+    TEXT adjustment_reason
+    DATE adjustment_date
+  }
+Items ||--o{ ItemComponents : contains
+  Items ||--o{ InventoryMovements : tracked_by
+  Items ||--o{ SaleDetail : sold_as
+  Items ||--o{ SaleReturnDetail : returned_as
+  Items ||--o{ PurchaseDetail : purchased_as
+  Items ||--o{ PurchaseReturnDetail : returned_as
+  Items ||--o{ CampaignItems : part_of_campaign
+  Items ||--o{ NonStockItems : non_stock
+  SaleMaster ||--|{ SaleDetail : has
+  SaleReturnMaster ||--|{ SaleReturnDetail : has
+  PurchaseMaster ||--|{ PurchaseDetail : has
+  PurchaseReturnMaster ||--|{ PurchaseReturnDetail : has
+  PromotionalCampaign ||--o{ CampaignItems : includes
+  PurchaseDetail ||--o{ PurchaseInspection : inspected
+  PurchaseDetail ||--o{ NonStockItems : generates  
+
+    </pre>
+
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+</html>

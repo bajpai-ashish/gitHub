@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mermaid Lineage Diagram from Google Sheet</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <style>
+      body {
+        font-family: "Ubuntu", sans-serif;
+        margin: 0;
+        padding: 1rem;
+        background: #ffffff;
+        color: #333;
+      }
+
+      pre.mermaid {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        overflow: auto;
+        transform: scale(1); /* Adjust zoom level */
+        transform-origin: top left;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.295);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      details {
+        margin-bottom: 1.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 0.5rem;
+        background: #fdfdfd;
+      }
+
+      summary {
+        font-size: 1.1rem;
+        cursor: pointer;
+        padding: 0.3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>📘 Data Lineage Diagram</h2>
+    <p>This diagram is auto-generated from a Google Sheet.</p>
+    <div id="data_lineage">
+      <p>Loading data Lineage</p>
+    </div>
+
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: false });
+
+      const sheetURL =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZxRxLXUUatfiAua4G0yhc9AD5SpPsStwaW6EWG9HU34PxBO65-fY52PGu50vRZniI5vg_Ea2FMeUO/pub?gid=0&single=true&output=csv";
+
+      fetch(sheetURL)
+        .then((res) => res.text())
+        .then((csvText) => {
+          const parsed = Papa.parse(csvText, {
+            header: true,
+            skipEmptyLines: true,
+            dynamicTyping: true,
+          });
+
+          const lineageRows = parsed.data
+            .filter(
+              (row) => String(row.is_display).trim().toLowerCase() === "true"
+            )
+            .sort(
+              (a, b) => (a.sequence_number || 0) - (b.sequence_number || 0)
+            );
+
+          renderLineageDiagram(lineageRows);
+        })
+        .catch((error) => {
+          console.error("Error loading data model:", error);
+          document.getElementById("data_lineage").innerHTML =
+            "<p>🚨 Failed to load data lineage. Please check the sheet URL or your internet connection.</p>";
+        });
+
+      function renderLineageDiagram(rows) {
+        const container = document.getElementById("data_lineage");
+        container.innerHTML = "";
+
+        const grouped = {};
+        rows.forEach((row) => {
+          const system = row.source_system?.trim() || "Unknown System";
+          if (!grouped[system]) grouped[system] = [];
+          grouped[system].push(row);
+        });
+
+        Object.entries(grouped).forEach(([system, rows]) => {
+          const details = document.createElement("details");
+          details.open = false;
+
+          const summary = document.createElement("summary");
+          summary.innerHTML = `<strong>🔷 Source System: </strong>${system}`;
+          details.appendChild(summary);
+
+          let mermaidContent = "flowchart LR\n";
+          const sourceTables = {};
+          const targetTables = {};
+          const edges = [];
+          const tableStyles = {};
+          let styleIndex = 0;
+
+          rows.forEach((row) => {
+            const srcTable = row.source_table?.trim();
+            const tgtTable = row.target_table?.trim();
+            const srcCol = row.source_column?.trim();
+            const tgtCol = row.target_column?.trim();
+
+            const srcNode = `${srcTable}_${srcCol}`.replace(/\s+/g, "_");
+            const tgtNode = `${tgtTable}_${tgtCol}`.replace(/\s+/g, "_");
+
+            if (!sourceTables[srcTable]) sourceTables[srcTable] = [];
+            if (!targetTables[tgtTable]) {
+              targetTables[tgtTable] = [];
+              tableStyles[tgtTable] = `tbl_${styleIndex++}`;
+            }
+
+            sourceTables[srcTable].push({ id: srcNode, label: srcCol });
+            targetTables[tgtTable].push({ id: tgtNode, label: tgtCol });
+            edges.push(`${srcNode} --> ${tgtNode}`);
+          });
+
+          Object.entries(sourceTables).forEach(([table, cols]) => {
+            mermaidContent += `  subgraph ${table.toUpperCase()}\n`;
+            cols.forEach((col) => {
+              mermaidContent += `    ${col.id}["${col.label}"]\n`;
+            });
+            mermaidContent += "  end\n";
+          });
+
+          Object.entries(targetTables).forEach(([table, cols]) => {
+            const className = tableStyles[table];
+            mermaidContent += `  subgraph ${table.toUpperCase()}\n`;
+            cols.forEach((col) => {
+              mermaidContent += `    ${col.id}["${col.label}"]:::${className}\n`;
+            });
+            mermaidContent += "  end\n";
+          });
+
+          edges.forEach((edge) => {
+            mermaidContent += `  ${edge}\n`;
+          });
+
+          Object.entries(tableStyles).forEach(([table, className], index) => {
+            const colors = [
+              "#FFCDD2",
+              "#F8BBD0",
+              "#E1BEE7",
+              "#D1C4E9",
+              "#C5CAE9",
+              "#BBDEFB",
+              "#B2EBF2",
+              "#C8E6C9",
+              "#DCEDC8",
+              "#FFF9C4",
+              "#FFE0B2",
+              "#FFCCBC",
+            ];
+            const color = colors[index % colors.length];
+            mermaidContent += `  classDef ${className} fill:${color},stroke:${color},color:#000;\n`;
+          });
+
+          const pre = document.createElement("pre");
+          pre.className = "mermaid";
+          pre.textContent = mermaidContent;
+          details.appendChild(pre);
+          container.appendChild(details);
+        });
+        mermaid.run();
+      }
+    </script>
+  </body>
+</html>

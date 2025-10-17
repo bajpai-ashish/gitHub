@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mermaid ER Diagram from Google Sheet</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <style>
+      body {
+        font-family: "Ubuntu", sans-serif;
+        margin: 0;
+        padding: 1rem;
+        background: #ffffff;
+        color: #333;
+      }
+      button {
+        background-color: #ff6f00;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-family: "Ubuntu", sans-serif;
+      }
+      pre.mermaid {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        overflow: auto;
+        transform: scale(1.5); /* Adjust zoom level */
+        transform-origin: top left;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>📘 Data Model Diagram</h2>
+
+    <div id="theme-config">
+      <h3>🎨 Theme Configuration</h3>
+      <table>
+        <tr>
+          <td>Primary</td>
+          <td>
+            <label
+              >Color: <input type="color" id="primaryColor" value="#ffc905"
+            /></label>
+          </td>
+          <td>
+            <label
+              >Border Color:
+              <input type="color" id="primaryBorderColor" value="#ff6f00"
+            /></label>
+          </td>
+          <td>
+            <label
+              >Text Color:
+              <input type="color" id="primaryTextColor" value="#000000"
+            /></label>
+          </td>
+        </tr>
+        <tr>
+          <td>Secondary</td>
+          <td>
+            <label
+              >Color: <input type="color" id="secondaryColor" value="#ffecb3"
+            /></label>
+          </td>
+          <td>
+            <label
+              >Border Color:
+              <input type="color" id="secondaryBorderColor" value="#ff6f00"
+            /></label>
+          </td>
+          <td>
+            <label
+              >Text Color:
+              <input type="color" id="secondaryTextColor" value="#971c1c"
+            /></label>
+          </td>
+        </tr>
+        <tr>
+          <td>Tertiary</td>
+          <td>
+            <label
+              >Color: <input type="color" id="tertiaryColor" value="#ffffff"
+            /></label>
+          </td>
+          <td>
+            <label
+              >Border Color:
+              <input type="color" id="tertiaryBorderColor" value="#ffffff"
+            /></label>
+          </td>
+          <td>
+            <label
+              >Text Color:
+              <input type="color" id="tertiaryTextColor" value="#000000"
+            /></label>
+          </td>
+        </tr>
+        <tr>
+          <td>Line</td>
+          <td>
+            <label>
+              Color: <input type="color" id="lineColor" value="#ff6f00"
+            /></label>
+          </td>
+        </tr>
+        <tr>
+          <td>Text</td>
+          <td>
+            <label>
+              Color: <input type="color" id="textColor" value="#470000"
+            /></label>
+          </td>
+        </tr>
+      </table>
+      <button type="submit" onclick="renderDiagram()">Render Diagram</button>
+
+      <label
+        >Zoom:
+        <input
+          type="range"
+          id="zoomSlider"
+          min="0.5"
+          max="5"
+          step="0.1"
+          value="1"
+      /></label>
+    </div>
+    <div id="data_model">
+      <p>Loading data model...</p>
+    </div>
+
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: false });
+
+      document.getElementById("zoomSlider").addEventListener("input", (e) => {
+        const zoom = e.target.value;
+        document.querySelector(
+          "pre.mermaid"
+        ).style.transform = `scale(${zoom})`;
+      });
+
+      const sheetURL =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRQA23FztCAc3qUvXhZTfVkeRV0-3dKjBKiSIhdL2IyXZpXrGIliRMR6r_SXIWyQ3VyIVAibIVntYxY/pub?gid=0&single=true&output=csv";
+
+      let parsedRows = [];
+
+      fetch(sheetURL)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then((csvText) => {
+          const parsed = Papa.parse(csvText, {
+            header: true,
+            skipEmptyLines: true,
+            dynamicTyping: true,
+          });
+
+          parsedRows = parsed.data.filter(
+            (row) =>
+              row.is_display &&
+              String(row.is_display).trim().toLowerCase() === "true"
+          );
+
+          renderDiagram(); // Initial render
+        })
+        .catch((error) => {
+          console.error("Error loading data model:", error);
+          document.getElementById("data_model").innerHTML =
+            "<p>🚨 Failed to load data model. Please check the sheet URL or your internet connection.</p>";
+        });
+
+      function getThemeConfig() {
+        return `---
+config:
+  layout: "TB"
+  theme: base
+  themeVariables:
+    primaryColor: "${document.getElementById("primaryColor").value}"
+    primaryBorderColor: "${document.getElementById("primaryBorderColor").value}"
+    primaryTextColor: "${document.getElementById("primaryTextColor").value}"
+    secondaryColor: "${document.getElementById("secondaryColor").value}"
+    secondaryBorderColor: "${
+      document.getElementById("secondaryBorderColor").value
+    }"
+    secondaryTextColor: "${document.getElementById("secondaryTextColor").value}"
+    tertiaryColor: "${document.getElementById("tertiaryColor").value}"
+    tertiaryBorderColor: "${
+      document.getElementById("tertiaryBorderColor").value
+    }"
+    tertiaryTextColor: "${document.getElementById("tertiaryTextColor").value}"
+    lineColor: "${document.getElementById("lineColor").value}"
+    textColor: "${document.getElementById("textColor").value}"
+---
+`;
+      }
+
+      function renderDiagram() {
+        const tables = {};
+
+        parsedRows.forEach((row) => {
+          const table = row.table_name?.trim();
+          const column = row.column_name?.trim();
+          if (!table || !column) return;
+
+          if (!tables[table]) tables[table] = new Map();
+
+          const existing = tables[table].get(column);
+          if (!existing) {
+            tables[table].set(column, row);
+          } else {
+            const hasBetterConstraints =
+              !existing.other_constraints && row.other_constraints;
+            const hasBetterType = !existing.column_type && row.column_type;
+            if (hasBetterConstraints || hasBetterType) {
+              const merged = { ...existing };
+              if (hasBetterConstraints)
+                merged.other_constraints = row.other_constraints;
+              if (hasBetterType) merged.column_type = row.column_type;
+              tables[table].set(column, merged);
+            }
+          }
+          window.renderDiagram = renderDiagram;
+          console.log(
+            "Primary Color:",
+            document.getElementById("primaryColor").value
+          );
+          console.log("Theme Config:\n", getThemeConfig());
+        });
+
+        let mermaidContent = "\nerDiagram\n";
+
+        for (const [tableName, columnMap] of Object.entries(tables)) {
+          mermaidContent += `  ${tableName} {\n`;
+          for (const col of columnMap.values()) {
+            const constraint = col.other_constraints
+              ? `"${col.other_constraints}"`
+              : "";
+            mermaidContent += `    ${col.data_type} ${col.column_name} ${
+              col.column_type || ""
+            } ${constraint}\n`;
+          }
+          mermaidContent += "  }\n\n";
+        }
+
+        parsedRows.forEach((row) => {
+          const source = row.table_name?.trim();
+          const target = row.target_table_name?.trim();
+          const sourceJoin = row.source_table_join_type?.trim();
+          const targetJoin = row.target_table_join_type?.trim();
+          const label = row.relationship_label?.trim() || "relates";
+
+          if (source && target && sourceJoin && targetJoin) {
+            mermaidContent += `  ${source} ${sourceJoin}--${targetJoin} ${target} : ${label}\n`;
+          }
+        });
+
+        // ✅ Inject dynamic theme config here
+        const mermaidHeader = getThemeConfig();
+        const fullMermaidDiagram = mermaidHeader + mermaidContent;
+
+        document.getElementById(
+          "data_model"
+        ).innerHTML = `<pre class="mermaid">${fullMermaidDiagram}</pre>`;
+
+        // ✅ Uncomment this when you're ready to render visually
+        mermaid.run();
+      }
+    </script>
+  </body>
+</html>
