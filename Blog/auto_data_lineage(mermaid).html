@@ -104,7 +104,8 @@
           summary.innerHTML = `<strong>🔷 Source System: </strong>${system}`;
           details.appendChild(summary);
 
-          let mermaidContent = "flowchart LR\n";
+          let mermaidContent = "---\nconfig:\n  look: handDrawn\n---\nflowchart LR\n";
+          // let mermaidContent = "flowchart LR\n";
           const sourceTables = {};
           const targetTables = {};
           const edges = [];
@@ -133,6 +134,7 @@
 
           Object.entries(sourceTables).forEach(([table, cols]) => {
             mermaidContent += `  subgraph ${table.toUpperCase()}\n`;
+            mermaidContent += `    style ${table.toUpperCase()} fill:#ffe,stroke:#333,stroke-width:4px\n`;
             cols.forEach((col) => {
               mermaidContent += `    ${col.id}["${col.label}"]\n`;
             });
@@ -142,6 +144,7 @@
           Object.entries(targetTables).forEach(([table, cols]) => {
             const className = tableStyles[table];
             mermaidContent += `  subgraph ${table.toUpperCase()}\n`;
+            mermaidContent += `    style ${table.toUpperCase()} fill:#ffe,stroke:#333,stroke-width:4px\n`;
             cols.forEach((col) => {
               mermaidContent += `    ${col.id}["${col.label}"]:::${className}\n`;
             });
