@@ -1,0 +1,222 @@
+---
+config:
+  layout: dagre
+  theme: redux
+  font-size: 15pt
+  elk:
+    mergeEdges: true
+    cycleBreakingStrategy: MODEL_ORDER
+    nodePlacementStrategy: NETWORK_SIMPLEX
+    look: neo
+---
+erDiagram
+direction BT
+classDef person font-family:tahoma, font-size:15pt, color:darkorchid, stroke:darkorchid, stroke-width:1px;
+classDef production font-family:tahoma, font-size:15pt, color:#2d7373, stroke:#2d7373, stroke-width:1px;
+classDef sales font-family:tahoma, font-size:15pt, color:#4b86c0, stroke:#4b86c0, stroke-width:1px;
+classDef humanresources font-family:tahoma, font-size:15pt, color:#c04b86, stroke:#c04b86, stroke-width:1px;
+classDef purchasing font-family:tahoma, font-size:15pt, color:#c04b4b, stroke:#c04b4b, stroke-width:1px;
+classDef systemtables font-family:tahoma, font-size:15pt, color:#708090, stroke:#708090, stroke-width:1px;
+
+
+
+Address ||--|{StateProvince  : ""
+
+BillOfMaterials}|--||Product  : "ProductAssemblyID = ProductID"
+BillOfMaterials}|--||Product  : "ComponentID = ProductID"
+UnitMeasure ||--||Product  : "SizeUnitMeasureCode = UnitMeasureCode"
+ProductModel ||--|{Product  : "ProductModelID"
+ProductSubcatey ||--|{Product  : "ProductSubcategoryID"
+ProductCostHistory ||--|{Product  : "ProductSubcategoryID"
+
+ProductSubcatey}|--||ProductCatey  : "ProductCategoryID"
+
+ProductDocument}|--||Product  : "ProductID"
+ProductDocument}|--||ProductPhoto  : "ProductPhotoID"
+
+ProductProductPhoto}|--||Product  : "ProductID"
+ProductProductPhoto}|--||Document  : "DocumentNode"
+
+ProductVendor}|--||Product  : "ProductID"
+ProductVendor}|--||UnitMeasure  : "DocumentNode"
+ProductVendor}|--||Vendor  : "BusinessEntityID"
+
+PurchaseOrderDetail }|--||Product  : "ProductID"
+PurchaseOrderDetail }|--||PurchaseOrderHeader  : "PurchaseOrderID"
+
+PurchaseOrderHeader}|--||Employee  : "EmployeeID  = BusinessEntityID"
+PurchaseOrderHeader}|--||Vendor  : "VendorID"
+PurchaseOrderHeader}|--||ShipMethod  : "ShipMethodID"
+
+SalesOrderDetail}|--||SalesOrderHeader  : "SalesOrderID"
+SalesOrderDetail}|--||SpecialOfferProduct  : "ProductID"
+SalesOrderDetail}|--||SpecialOfferProduct  : "SpecialOfferID"
+
+SalesOrderHeader}|--||Address  : "BillToAddressID = AddressID"
+SalesOrderHeader}|--||Address  : "ShipToAddressID = AddressID"
+SalesOrderHeader}|--||CreditCard  : "CreditCardID"
+SalesOrderHeader}|--||Customer  : "CustomerID"
+SalesOrderHeader}|--||CurrencyRate  : "CurrencyRateID"
+SalesOrderHeader}|--||SalesPerson  : "SalesPersonID = BusinessEntityID"
+SalesOrderHeader}|--||ShipMethod  : "ShipMethodID"
+SalesOrderHeader}|--||SalesTerritory  : "TerritoryID"
+
+SalesOrderHeaderSalesReason}|--||SalesOrderHeader  : "SalesOrderID"
+SalesOrderHeaderSalesReason}|--||SalesReason  : "SalesReasonID"
+
+SalesPerson}|--||Employee  : "BusinessEntityID"
+SalesPerson}|--||SalesTerritory  : "TerritoryID"
+
+ProductReview}|--||Product  : "ProductID"
+
+ProductListPriceHistory}|--||Product  : "ProductID"
+
+ProductInventory}|--||Product  : "ProductID"
+ProductInventory}|--||Location  : "LocationID"
+
+ProductModelIllustration }|--||ProductModel  : "ProductModelID"
+ProductModelIllustration }|--||Illustration  : "IllustrationID"
+
+BillOfMaterials }|--||UnitMeasure  : ""
+
+BusinessEntityAddress }|--|| Address : ""
+BusinessEntityAddress }|--|| AddressType : ""
+BusinessEntityAddress }|--|| BusinessEntity : ""
+
+BusinessEntityContact }|--|| Person : ""
+BusinessEntityContact }|--|| BusinessEntity : ""
+BusinessEntityContact }|--|| ContactType : ""
+
+CountryRegion ||--o{ CountryRegionCurrency : ""
+Currency ||--o{ CountryRegionCurrency : ""
+
+Currency ||--o{ CurrencyRate : "From Currency"
+Currency ||--|{ CurrencyRate : "To Currency"
+
+Person ||--o{ PersonPhone : "BusinessEntityID"
+PhoneNumberType ||--|| PersonPhone : "BusinessEntityID"
+
+Person ||--o{ Customer : "Person may be customer"
+Person ||--o{ Employee : "Person may be employee"
+Person ||--o{ EmailAddress : "BusinessEntityID"
+Person ||--|| Password : "BusinessEntityID"
+Person ||--|| BusinessEntity : "BusinessEntityID"
+
+Person ||--o{ PersonCreditCard : "BusinessEntityID"
+CreditCard ||--o{ PersonCreditCard : "CreditCardID"
+
+Department ||--o{ EmployeeDepartmentHistory : "DepartmentID"
+Employee ||--|{ EmployeeDepartmentHistory : "BusinessEntityID"
+Shift ||--|{ EmployeeDepartmentHistory : "Shift ID"
+
+Employee ||--|{ EmployeePayHistory : "BusinessEntityID"
+Employee ||--|{ JobCandidate : "BusinessEntityID"
+
+Store ||--|{ Customer : "will have"
+SalesTerritory ||--|{ Customer : "will have"
+
+Employee ||--|{ Document : "will have"
+
+SalesPersonQuotaHistory}o--|| SalesPerson : "BusinessEntityID"
+SalesTaxRate}o--|| StateProvince : "StateProvinceID"
+StateProvince}o--|| CountryRegion : "CountryRegionCode"
+
+SalesTerritory}o--|| CountryRegion : "CountryRegionCode"
+
+SalesTerritoryHistory}o--|| SalesPerson : "BusinessEntityID"
+SalesTerritoryHistory}o--|| SalesTerritory : "TerritoryID"
+
+Product ||--|{ ShoppingCartItem : "has"
+
+Product ||--|{ SpecialOfferProduct : "has"
+SpecialOffer ||--|{ SpecialOfferProduct : "has"
+
+BusinessEntity ||--|{ Store : "has"
+SalesPerson ||--|{ Store : "has"
+
+Product ||--o{ TransactionHistory : "has"
+
+BusinessEntity ||--|{ vendor : "has"
+
+Product ||--o{ WorkOrder : "has"
+ScrapReason ||--o{ WorkOrder : "has"
+
+Location ||--o{ WorkOrderRouting : "has"
+WorkOrder ||--o{ WorkOrderRouting : "has"
+
+
+
+AWBuildVersion["dbo.AWBuildVersion"]:::systemtables
+
+Address ["Person.Address"]:::person
+AddressType["Person.AddressType"]:::person
+BusinessEntity["Person.BusinessEntity"]:::person
+BusinessEntityAddress["Person.BusinessEntityAddress"]:::person
+BusinessEntityContact["Person.BusinessEntityContact"]:::person
+ContactType ["Person.ContactType"]:::person
+CountryRegion["Person.CountryRegion"]:::person
+EmailAddress["Person.EmailAddress"]:::person
+Password["Person.Password"]:::person
+Person["Person.Person"]:::person
+PersonCreditCard["Person.PersonCreditCard"]:::person
+PersonPhone["Person.PersonPhone"]:::person
+PhoneNumberType["Person.PhoneNumberType"]:::person
+StateProvince["Person.StateProvince"]:::person
+
+CountryRegionCurrency["Sales.CountryRegionCurrency"]:::sales
+CreditCard["Sales.CreditCard"]:::sales
+Currency["Sales.Currency"]:::sales
+CurrencyRate["Sales.CurrencyRate"]:::sales
+Customer["Sales.Customer"]:::sales
+SalesOrderDetail["Sales.SalesOrderDetail"]:::sales
+SalesOrderHeader["Sales.SalesOrderHeader"]:::sales
+SalesOrderHeaderSalesReason["Sales.SalesOrderHeaderSalesReason"]:::sales
+SalesPerson["Sales.SalesPerson"]:::sales
+SalesPersonQuotaHistory["Sales.SalesPersonQuotaHistory"]:::sales
+SalesReason["Sales.SalesReason"]:::sales
+SalesTaxRate["Sales.SalesTaxRate"]:::sales
+SalesTerritory["Sales.SalesTerritory"]:::sales
+SalesTerritoryHistory["Sales.SalesTerritoryHistory"]:::sales
+ShoppingCartItem["Sales.ShoppingCartItem"]:::sales
+SpecialOffer["Sales.SpecialOffer"]:::sales
+SpecialOfferProduct["Sales.SpecialOfferProduct"]:::sales
+Store["Sales.Store"]:::sales
+
+Department["HumanResources.Department"]:::humanresources
+Employee["HumanResources.Employee"]:::humanresources
+EmployeeDepartmentHistory["HumanResources.EmployeeDepartmentHistory"]:::humanresources
+EmployeePayHistory["HumanResources.EmployeePayHistory"]:::humanresources
+JobCandidate["HumanResources.JobCandidate"]:::humanresources
+
+BillOfMaterials ["Production.BillOfMaterials"]:::production
+Culture["Production.Culture"]:::production
+Document["Production.Document"]:::production
+Illustration["Production.Illustration"]:::production
+Location["Production.Location"]:::production
+Product["Production.Product"]:::production
+ProductCatey["Production.ProductCategory"]:::production
+ProductCostHistory["Production.ProductCostHistory"]:::production
+ProductDescription["Production.ProductDescription"]:::production
+ProductDocument["Production.ProductDocument"]:::production
+ProductInventory["Production.ProductInventory"]:::production
+ProductListPriceHistory["Production.ProductListPriceHistory"]:::production
+ProductModel["Production.ProductModel"]:::production
+ProductModelIllustration["Production.ProductModelIllustration"]:::production
+ProductModelProductDescriptionCulture["Production.ProductModelProductDescriptionCulture"]:::production
+ProductPhoto["Production.ProductPhoto"]:::production
+ProductProductPhoto["Production.ProductProductPhoto"]:::production
+ProductReview["Production.ProductReview"]:::production
+ProductSubcatey["Production.ProductSubCategory"]:::production
+ScrapReason["Production.ScrapReason"]:::production
+Shift["Production.Shift"]:::production
+TransactionHistory["Production.TransactionHistory"]:::production
+TransactionHistoryArchive["Production.TransactionHistoryArchive"]:::production
+UnitMeasure["Production.UnitMeasure"]:::production
+WorkOrder["Production.WorkOrder"]:::production
+WorkOrderRouting["Production.WorkOrderRouting"]:::production
+
+ProductVendor["Purchasing.ProductVendor"]:::purchasing
+PurchaseOrderDetail["Purchasing.PurchaseOrderDetail"]:::purchasing
+PurchaseOrderHeader["Purchasing.PurchaseOrderHeader"]:::purchasing
+ShipMethod["Purchasing.ShipMethod"]:::purchasing
+Vendor["Purchasing.Vendor"]:::purchasing

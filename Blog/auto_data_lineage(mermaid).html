@@ -104,7 +104,8 @@
           summary.innerHTML = `<strong>🔷 Source System: </strong>${system}`;
           details.appendChild(summary);
 
-          let mermaidContent = "---\nconfig:\n  look: handDrawn\n---\nflowchart LR\n";
+          let mermaidContent =
+            "---\nconfig:\n  look: handDrawn\n---\nflowchart LR\n";
           // let mermaidContent = "flowchart LR\n";
           const sourceTables = {};
           const targetTables = {};
@@ -118,18 +119,34 @@
             const srcCol = row.source_column?.trim();
             const tgtCol = row.target_column?.trim();
 
+            console.log("tgtTable value:", tgtTable);
+            console.log("tgtCol value:", tgtCol);
+
             const srcNode = `${srcTable}_${srcCol}`.replace(/\s+/g, "_");
             const tgtNode = `${tgtTable}_${tgtCol}`.replace(/\s+/g, "_");
 
             if (!sourceTables[srcTable]) sourceTables[srcTable] = [];
-            if (!targetTables[tgtTable]) {
-              targetTables[tgtTable] = [];
-              tableStyles[tgtTable] = `tbl_${styleIndex++}`;
+
+            if (
+              tgtTable &&
+              tgtTable !== "undefined" &&
+              tgtCol &&
+              tgtCol !== "undefined"
+            ) {
+              if (!targetTables[tgtTable]) {
+                targetTables[tgtTable] = [];
+                tableStyles[tgtTable] = `tbl_${styleIndex++}`;
+              }
+
+              targetTables[tgtTable].push({ id: tgtNode, label: tgtCol });
+
+              if (tgtNode !== "undefined_undefined") {
+                console.log("tgtNode raw value:", tgtNode);
+                edges.push(`${srcNode} ----> ${tgtNode}`);
+              }
             }
 
             sourceTables[srcTable].push({ id: srcNode, label: srcCol });
-            targetTables[tgtTable].push({ id: tgtNode, label: tgtCol });
-            edges.push(`${srcNode} --> ${tgtNode}`);
           });
 
           Object.entries(sourceTables).forEach(([table, cols]) => {
