@@ -1,0 +1,852 @@
+---
+config:
+  layout: dagre
+  theme: redux
+  font-size: 15pt
+  elk:
+    mergeEdges: true
+    cycleBreakingStrategy: MODEL_ORDER
+    nodePlacementStrategy: NETWORK_SIMPLEX
+    look: neo
+---
+erDiagram
+direction TB
+classDef person font-family:tahoma, font-size:15pt, color:darkorchid, stroke:darkorchid, stroke-width:1px;
+classDef production font-family:tahoma, font-size:15pt, color:#2d7373, stroke:#2d7373, stroke-width:1px;
+classDef sales font-family:tahoma, font-size:15pt, color:#4b86c0, stroke:#4b86c0, stroke-width:1px;
+classDef humanresources font-family:tahoma, font-size:15pt, color:#c04b86, stroke:#c04b86, stroke-width:1px;
+classDef purchasing font-family:tahoma, font-size:15pt, color:#c04b4b, stroke:#c04b4b, stroke-width:1px;
+classDef systemtables font-family:tahoma, font-size:15pt, color:#708090, stroke:#708090, stroke-width:1px;
+Address ||--|{StateProvince  : ""
+
+BillOfMaterials}|--||Product  : "ProductAssemblyID = ProductID"
+BillOfMaterials}|--||Product  : "ComponentID = ProductID"
+UnitMeasure ||--||Product  : "SizeUnitMeasureCode = UnitMeasureCode"
+ProductModel ||--|{Product  : "ProductModelID"
+ProductSubcatey ||--|{Product  : "ProductSubcategoryID"
+ProductCostHistory ||--|{Product  : "ProductSubcategoryID"
+
+ProductSubcatey}|--||ProductCatey  : "ProductCategoryID"
+
+ProductDocument}|--||Product  : "ProductID"
+ProductDocument}|--||ProductPhoto  : "ProductPhotoID"
+
+ProductProductPhoto}|--||Product  : "ProductID"
+ProductProductPhoto}|--||Document  : "DocumentNode"
+
+ProductVendor}|--||Product  : "ProductID"
+ProductVendor}|--||UnitMeasure  : "DocumentNode"
+ProductVendor}|--||Vendor  : "BusinessEntityID"
+
+PurchaseOrderDetail }|--||Product  : "ProductID"
+PurchaseOrderDetail }|--||PurchaseOrderHeader  : "PurchaseOrderID"
+
+PurchaseOrderHeader}|--||Employee  : "EmployeeID  = BusinessEntityID"
+PurchaseOrderHeader}|--||Vendor  : "VendorID"
+PurchaseOrderHeader}|--||ShipMethod  : "ShipMethodID"
+
+SalesOrderDetail}|--||SalesOrderHeader  : "SalesOrderID"
+SalesOrderDetail}|--||SpecialOfferProduct  : "ProductID"
+SalesOrderDetail}|--||SpecialOfferProduct  : "SpecialOfferID"
+
+SalesOrderHeader}|--||Address  : "BillToAddressID = AddressID"
+SalesOrderHeader}|--||Address  : "ShipToAddressID = AddressID"
+SalesOrderHeader}|--||CreditCard  : "CreditCardID"
+SalesOrderHeader}|--||Customer  : "CustomerID"
+SalesOrderHeader}|--||CurrencyRate  : "CurrencyRateID"
+SalesOrderHeader}|--||SalesPerson  : "SalesPersonID = BusinessEntityID"
+SalesOrderHeader}|--||ShipMethod  : "ShipMethodID"
+SalesOrderHeader}|--||SalesTerritory  : "TerritoryID"
+
+SalesOrderHeaderSalesReason}|--||SalesOrderHeader  : "SalesOrderID"
+SalesOrderHeaderSalesReason}|--||SalesReason  : "SalesReasonID"
+
+SalesPerson}|--||Employee  : "BusinessEntityID"
+SalesPerson}|--||SalesTerritory  : "TerritoryID"
+
+ProductReview}|--||Product  : "ProductID"
+
+ProductListPriceHistory}|--||Product  : "ProductID"
+
+ProductInventory}|--||Product  : "ProductID"
+ProductInventory}|--||Location  : "LocationID"
+
+ProductModelIllustration }|--||ProductModel  : "ProductModelID"
+ProductModelIllustration }|--||Illustration  : "IllustrationID"
+
+BillOfMaterials }|--||UnitMeasure  : ""
+
+BusinessEntityAddress }|--|| Address : ""
+BusinessEntityAddress }|--|| AddressType : ""
+BusinessEntityAddress }|--|| BusinessEntity : ""
+
+BusinessEntityContact }|--|| Person : ""
+BusinessEntityContact }|--|| BusinessEntity : ""
+BusinessEntityContact }|--|| ContactType : ""
+
+CountryRegion ||--o{ CountryRegionCurrency : ""
+Currency ||--o{ CountryRegionCurrency : ""
+
+Currency ||--o{ CurrencyRate : "From Currency"
+Currency ||--|{ CurrencyRate : "To Currency"
+
+Person ||--o{ PersonPhone : "BusinessEntityID"
+PhoneNumberType ||--|| PersonPhone : "BusinessEntityID"
+
+Person ||--o{ Customer : "Person may be customer"
+Person ||--o{ Employee : "Person may be employee"
+Person ||--o{ EmailAddress : "BusinessEntityID"
+Person ||--|| Password : "BusinessEntityID"
+Person ||--|| BusinessEntity : "BusinessEntityID"
+
+Person ||--o{ PersonCreditCard : "BusinessEntityID"
+CreditCard ||--o{ PersonCreditCard : "CreditCardID"
+
+Department ||--o{ EmployeeDepartmentHistory : "DepartmentID"
+Employee ||--|{ EmployeeDepartmentHistory : "BusinessEntityID"
+Shift ||--|{ EmployeeDepartmentHistory : "Shift ID"
+
+Employee ||--|{ EmployeePayHistory : "BusinessEntityID"
+Employee ||--|{ JobCandidate : "BusinessEntityID"
+
+Store ||--|{ Customer : "will have"
+SalesTerritory ||--|{ Customer : "will have"
+
+Employee ||--|{ Document : "will have"
+
+SalesPersonQuotaHistory}o--|| SalesPerson : "BusinessEntityID"
+SalesTaxRate}o--|| StateProvince : "StateProvinceID"
+StateProvince}o--|| CountryRegion : "CountryRegionCode"
+
+SalesTerritory}o--|| CountryRegion : "CountryRegionCode"
+
+SalesTerritoryHistory}o--|| SalesPerson : "BusinessEntityID"
+SalesTerritoryHistory}o--|| SalesTerritory : "TerritoryID"
+
+Product ||--|{ ShoppingCartItem : "has"
+
+Product ||--|{ SpecialOfferProduct : "has"
+SpecialOffer ||--|{ SpecialOfferProduct : "has"
+
+BusinessEntity ||--|{ Store : "has"
+SalesPerson ||--|{ Store : "has"
+
+Product ||--o{ TransactionHistory : "has"
+
+BusinessEntity ||--|{ vendor : "has"
+
+Product ||--o{ WorkOrder : "has"
+ScrapReason ||--o{ WorkOrder : "has"
+
+Location ||--o{ WorkOrderRouting : "has"
+WorkOrder ||--o{ WorkOrderRouting : "has"
+
+ProductDescription ||--o{ ProductModelProductDescriptionCulture : "has"
+Culture ||--o{ ProductModelProductDescriptionCulture : "has"
+ProductModel ||--o{ ProductModelProductDescriptionCulture : "has"
+
+
+
+Address ["Person.Address"]:::person{
+    int    AddressID   PK   "IDENTITY NOT FOR REPLICATION NOT NULL"
+    nvarchar   AddressLine1        "NOT NULL"
+    nvarchar   AddressLine2      
+    nvarchar   City        "NOT NULL"
+    int    StateProvinceID     "NOT NULL"
+    nvarchar   PostalCode      "NOT NULL"
+    geography  SpatialLocation   
+    uniqueidentifier   rowguid     "NOT NULL DEFAULT (NEWID())"
+    datetime   ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+AddressType["Person.AddressType"]:::person{
+    int    AddressTypeID    PK       "IDENTITY NOT NULL"
+    Name   Name        "NOT NULL"
+    uniqueidentifier   rowguid     "NOT NULL DEFAULT (NEWID())"
+    datetime   ModifiedDate        "NOT NULL DEFAULT (GETDATE())"
+}
+
+BusinessEntity["Person.BusinessEntity"]:::person{
+	int BusinessEntityID    PK    "IDENTITY (1, 1) REPLICATION NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+BusinessEntityAddress["Person.BusinessEntityAddress"]:::person{
+	int BusinessEntityID    PK  "NOT NULL"
+    int AddressID   PK  "NOT NULL"
+    int AddressTypeID   PK  "NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+BusinessEntityContact["Person.BusinessEntityContact"]:::person{
+	int BusinessEntityID    PK  "NOT NULL"
+    int PersonID    PK  "NOT NULL"
+    int ContactTypeID   PK   "NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ContactType ["Person.ContactType"]:::person{
+    int ContactTypeID   PK   "IDENTITY (1, 1)"
+    Name    Name    "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+CountryRegion["Person.CountryRegion"]:::person{
+    nvarchar   CountryRegionCode    PK   " NOT NULL"
+    Name   Name    "NOT NULL"
+    datetime   ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+EmailAddress["Person.EmailAddress"]:::person{
+	int BusinessEntityID    PK   "NOT NULL"
+	int EmailAddressID  PK  "IDENTITY (1, 1)"
+    nvarchar    EmailAddress
+    uniqueidentifier    rowguid "NEWID()"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+Password["Person.Password"]:::person{
+	int BusinessEntityID    PK    "NOT NULL"
+    varchar PasswordHash    "NOT NULL"
+    varchar PasswordSalt    "NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+Person["Person.Person"]:::person{
+    int BusinessEntityID    PK  "NOT NULL"
+	nchar   PersonType  "NOT NULL CHECK (PersonType IS NULL 
+                        OR UPPER(PersonType) IN 
+                        ('SC', 'VC', 'IN', 'EM', 'SP', 'GC'))"
+    NameStyle   NameStyle   "NOT NULL DEFAULT (0)"
+    nvarchar    Title   " NULL"
+    Name    FirstName   "NOT NULL"
+    Name    MiddleName
+    Name    LastName    "NOT NULL"
+    nvarchar    Suffix
+    int EmailPromotion  "NOT NULL DEFAULT (0) CHECK 
+                        (EmailPromotion BETWEEN 0 AND 2)"
+    XML AdditionalContactInfo   "Person.AdditionalContactInfoSchemaCollection)"
+    XML Demographics    "Person.IndividualSurveySchemaCollection"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+PersonCreditCard["Person.PersonCreditCard"]:::person{
+    int BusinessEntityID    PK    "Composite Key"
+    int CreditCardID    PK    "Composite Key"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+PersonPhone["Person.PersonPhone"]:::person{
+    int BusinessEntityID    PK    "Composite Key"
+	Phone   PhoneNumber PK "Composite Key"
+	int PhoneNumberTypeID   PK   "Composite Key"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+PhoneNumberType["Person.PhoneNumberType"]:::person{
+	int PhoneNumberTypeID   PK  "IDENTITY (1, 1)"
+	Name    Name    "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+
+}
+
+StateProvince["Person.StateProvince"]:::person{
+
+    int StateProvinceID PK "IDENTITY (1, 1)"
+    nchar   StateProvinceCode   "NOT NULL"
+    nvarchar    CountryRegionCode   " NOT NULL"
+    Flag    IsOnlyStateProvinceFlag "NOT NULL"
+    Name    Name    "NOT NULL"
+    int TerritoryID "NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+BillOfMaterials ["Production.BillOfMaterials"]:::production{
+    int BillOfMaterialsID   PK  "IDENTITY (1, 1)"
+    int ProductAssemblyID       "NULL CHECK (ProductAssemblyID <> ComponentID)"
+    int ComponentID     "NOT NULL"
+    datetime    StartDate       "NOT NULL DEFAULT (GETDATE())"
+    datetime    EndDate     "CHECK ((EndDate > StartDate) OR (EndDate IS NULL))"
+    nchar   UnitMeasureCode       "NOT NULL"
+    smallint    BOMLevel        "NOT NULL CHECK (((ProductAssemblyID IS NULL) 
+                                AND (BOMLevel = 0) AND (PerAssemblyQty = 1.00)) 
+                                OR ((ProductAssemblyID IS NOT NULL) AND (BOMLevel >= 1)))"
+    decimal PerAssemblyQty       "NOT NULL DEFAULT (1.00) CHECK (PerAssemblyQty >= 1.00)"
+    datetime    ModifiedDate        "NOT NULL DEFAULT (GETDATE())"
+}
+
+Culture["Production.Culture"]:::production{
+    nchar   CultureID   PK   "NOT NULL"
+    Name    Name    "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+Document["Production.Document"]:::production{
+    hierarchyid DocumentNode    PK
+	**computed**  DocumentLevel   "DocumentNode.GetLevel()"
+    nvarchar    Title   "NOT NULL"
+	int Owner   "NOT NULL"
+	bit FolderFlag  "NOT NULL DEFAULT (0)"
+    nvarchar    FileName    "NOT NULL"
+    nvarchar    FileExtension   "NOT NULL"
+    nchar   Revision    "NOT NULL"
+    int ChangeNumber    "NOT NULL DEFAULT (0)"
+    tinyint Status  "NOT NULL CHECK (Status BETWEEN 1 AND 3)"
+    nvarchar    DocumentSummary
+    varbinary   Document
+    uniqueidentifier    rowguid "NEWID()"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+Illustration["Production.Illustration"]:::production{
+    int IllustrationID  PK  "IDENTITY (1, 1)"
+    XML Diagram "NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+
+}
+
+Location["Production.Location"]:::production{
+    smallint    LocationID PK  "IDENTITY (1, 1)"
+    Name    Name    "NOT NULL"
+    smallmoney  CostRate    "NOT NULL DEFAULT (0.00)
+                            CHECK (CostRate >= 0.00)"
+    decimal Availability    "NOT NULL DEFAULT (0.00)
+                            CHECK (Availability >= 0.00)"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+Product["Production.Product"]:::production{
+    int ProductID   PK   "IDENTITY (1, 1)"
+    Name    Name    "NOT NULL"
+    nvarchar    ProductNumber   " NOT NULL"
+    Flag    MakeFlag    "NOT NULL DEFAULT (1)"
+    Flag    FinisheddsFlag  "NOT NULL DEFAULT (1)"
+    nvarchar    Color   " NULL"
+    smallint    SafetyStockLevel    "NOT NULL CHECK (SafetyStockLevel > 0)"
+    smallint    ReorderPoint    "NOT NULL CHECK (ReorderPoint > 0)"
+    money   StandardCost    "NOT NULL CHECK (StandardCost >= 0.00)"
+    money   ListPrice   "NOT NULL CHECK (ListPrice >= 0.00)"
+    nvarchar    Size    "  NULL"
+    nchar   SizeUnitMeasureCode "  NULL"
+    nchar   WeightUnitMeasureCode   "NULL"
+    decimal Weight  " NULL CHECK (Weight > 0.00)"
+    int DaysToManufacture   "NOT NULL CHECK (DaysToManufacture >= 0)"
+    nchar   ProductLine "CHECK (UPPER(ProductLine) IN ('S', 'T', 'M', 'R') OR ProductLine IS NULL)"
+    nchar   Class   "CHECK (UPPER(Class) IN ('L', 'M', 'H') OR Class IS NULL)"
+    nchar   Style   "CHECK (UPPER(Style) IN ('W', 'M', 'U') OR Style IS NULL)"
+    int ProductSubCategoryID   FK
+    int ProductModelID  FK
+    datetime    SellStartDate   "NOT NULL"
+    datetime    SellEndDate "CHECK ((SellEndDate >= SellStartDate) OR (SellEndDate IS NULL))"
+    datetime    DiscontinuedDate    "NULL"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductCatey["Production.ProductCategory"]:::production{
+    int ProductCategoryID  PK  "IDENTITY (1, 1)"
+    Name    Name    "NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductCostHistory["Production.ProductCostHistory"]:::production{
+    int ProductID   PK   "Composite Key"
+    datetime    StartDate   PK   "Composite Key"
+    datetime    EndDate "CHECK ((EndDate >= StartDate)
+                        OR (EndDate IS NULL))"
+    money   StandardCost    "NOT NULL CHECK (StandardCost >= 0.00)"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductDescription["Production.ProductDescription"]:::production{
+    int ProductDescriptionID    PK    "IDENTITY (1, 1)"
+    nvarchar    Description "NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductDocument["Production.ProductDocument"]:::production{
+    int ProductID PK   "Composite Key"
+    hierarchyid DocumentNode PK    "Composite Key"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+
+}
+
+ProductInventory["Production.ProductInventory"]:::production{
+    int ProductID   PK   "Composite Key"
+    smallint    LocationID  PK  "Composite Key"
+    nvarchar    Shelf   " NOT NULL CHECK ((Shelf LIKE 'A-Za-z') OR (Shelf = 'N/A'))"
+    tinyint Bin "NOT NULL CHECK (Bin BETWEEN 0 AND 100"
+    smallint    Quantity    "NOT NULL DEFAULT (0)"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductListPriceHistory["Production.ProductListPriceHistory"]:::production{
+    int ProductID   PK   "Composite Key"
+    datetime    StartDate   PK   "Composite Key"
+    datetime    EndDate "CHECK ((EndDate >= StartDate) OR (EndDate IS NULL))"
+    money   ListPrice   "NOT NULL CHECK (ListPrice > 0.00"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductModel["Production.ProductModel"]:::production{
+    int    ProductModelID   PK  "IDENTITY (1, 1)"
+    Name   Name    "NOT NULL"
+    xml CatalogDescription   "ref: (Production.ProductDescriptionSchemaCollection)"
+    xml Instructions "ref: (Production.ManuInstructionsSchemaCollection)"
+    uniqueidentifier   rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime   ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductModelIllustration["Production.ProductModelIllustration"]:::production{
+    int ProductModelID  PK  "Composite Key"
+    int IllustrationID  PK  "Composite Key"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductModelProductDescriptionCulture["Production.ProductModelProductDescriptionCulture"]:::production{
+    int ProductModelID  PK  "Composite Key"
+    int ProductDescriptionID    PK    "Composite Key"
+    nchar   CultureID   PK   "Composite Key"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductPhoto["Production.ProductPhoto"]:::production{
+    int ProductPhotoID  PK "IDENTITY (1, 1)"
+    varbinary   ThumbNailPhoto
+    nvarchar    ThumbnailPhotoFileName
+    varbinary   LargePhoto
+    nvarchar    LargePhotoFileName
+    datetime    ModifiedDate "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductProductPhoto["Production.ProductProductPhoto"]:::production{
+    int ProductID   PK "Composite Key"
+    int ProductPhotoID  PK "Composite Key"
+    Flag    Primary "NOT NULL DEFAULT (0)"
+    datetime    ModifiedDate "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductReview["Production.ProductReview"]:::production{
+    int ProductReviewID PK  "IDENTITY (1, 1)"
+    int ProductID   "NOT NULL"
+    Name    ReviewerName    "NOT NULL"
+    datetime    ReviewDate  "NOT NULL DEFAULT (GETDATE())"
+    nvarchar    EmailAddress    "  NOT NULL"
+    int Rating  "NOT NULL CHECK (Rating BETWEEN 1 AND 5)"
+    nvarchar    Comments
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductSubcatey["Production.ProductSubCategory"]:::production{
+    int ProductSubCategoryID   PK   "IDENTITY (1, 1)"
+    int ProductCategoryID  FK  "NOT NULL"
+    Name    Name    "NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ScrapReason["Production.ScrapReason"]:::production{
+    smallint    ScrapReasonID   PK "IDENTITY (1, 1)"
+    Name    Name "NOT NULL"
+    datetime    ModifiedDate "NOT NULL DEFAULT (GETDATE())"
+}
+
+Shift["Production.Shift"]:::production{
+    tinyint ShiftID PK "IDENTITY (1, 1)"
+    Name    Name    "NOT NULL"
+    time    StartTime   "NOT NULL"
+    time    EndTime "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+TransactionHistory["Production.TransactionHistory"]:::production{
+    int TransactionID   PK   "IDENTITY (100000, 1),"
+    int ProductID   "NOT NULL,"
+    int ReferenceOrderID    "NOT NULL,"
+    int ReferenceOrderLineID    "NOT NULL"
+    datetime    TransactionDate "NOT NULL"
+    nchar   TransactionType "  NOT NULL,"
+    int Quantity    "NOT NULL,"
+    money   ActualCost  "NOT NULL,"
+    datetime    ModifiedDate    "NOT NULL"
+   
+}
+
+TransactionHistoryArchive["Production.TransactionHistoryArchive"]:::production{
+    int TransactionID   PK   "NOT NULL,"
+    int ProductID   "NOT NULL,"
+    int ReferenceOrderID    "NOT NULL,"
+    int ReferenceOrderLineID    "NOT NULL"
+    datetime    TransactionDate "NOT NULL"
+    nchar   TransactionType "  NOT NULL,"
+    int Quantity    "NOT NULL,"
+    money   ActualCost  "NOT NULL,"
+    datetime    ModifiedDate    "NOT NULL"
+   
+}
+
+UnitMeasure["Production.UnitMeasure"]:::production{
+    nchar   UnitMeasureCode PK
+    Name    Name    "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+WorkOrder["Production.WorkOrder"]:::production{
+    int WorkOrderID PK "IDENTITY (1, 1)"
+    int ProductID   "NOT NULL,"
+    int OrderQty    "NOT NULL,"
+    **computed**  StockedQty  "ISNULL(OrderQty - ScrappedQty, 0),"
+    smallint    ScrappedQty "NOT NULL,"
+    datetime    StartDate   "NOT NULL,"
+    datetime    EndDate "NULL,"
+    datetime    DueDate "NOT NULL,"
+    smallint    ScrapReasonID   "NULL,"
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+WorkOrderRouting["Production.WorkOrderRouting"]:::production{
+    int WorkOrderID PK "Composite Key"
+    int ProductID   PK   "Composite Key"
+    smallint    OperationSequence   PK   "Composite Key"
+    smallint    LocationID  "NOT NULL"
+    datetime    ScheduledStartDate  "NOT NULL"
+    datetime    ScheduledEndDate    "NOT NULL"
+    datetime    ActualStartDate "NULL"
+    datetime    ActualEndDate   "NULL"
+    decimal ActualResourceHrs
+    money   PlannedCost "NOT NULL"
+    money   ActualCost
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+CountryRegionCurrency["Sales.CountryRegionCurrency"]:::sales{
+    nvarchar    CountryRegionCode   PK   "NOT NULL"
+    nchar   CurrencyCode    PK    " NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+CreditCard["Sales.CreditCard"]:::sales{
+    int CreditCardID    PK    "IDENTITY (1, 1)"
+    nvarchar    CardType    "NOT NULL"
+    nvarchar    CardNumber  "NOT NULL"
+    tinyint ExpMonth    "NOT NULL"
+    smallint    ExpYear "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+Currency["Sales.Currency"]:::sales{
+    nchar   CurrencyCode    PK  "NOT NULL"
+    Name    Name    "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+CurrencyRate["Sales.CurrencyRate"]:::sales{
+    int CurrencyRateID  PK  "IDENTITY (1, 1)"
+    datetime    CurrencyRateDate    "NOT NULL"
+    nchar   FromCurrencyCode    FK    " NOT NULL"
+    nchar   ToCurrencyCode  FK  "   NOT NULL"
+    money   AverageRate "NOT NULL"
+    money   EndOfDayRate    "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+Customer["Sales.Customer"]:::sales{
+	int    CustomerID  PK   "IDENTITY (1, 1) A customer may either be a person, a store, or a person who works for a store"
+	int    PersonID    UK   "NULL If this customer represents a person, this is non-null"
+    int    StoreID FK   "If the customer is a store, or is associated with a store then this is non-null."
+    int    TerritoryID  FK
+    **computed**   AccountNumber   "ISNULL('AW' + dbo.ufnLeadingZeros(CustomerID), '')"
+    uniqueidentifier   rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime   ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+SalesOrderDetail["Sales.SalesOrderDetail"]:::sales{
+    int SalesOrderID    PK    "NOT NULL"
+    int SalesOrderDetailID  PK  "IDENTITY (1, 1)"
+    nvarchar    CarrierTrackingNumber
+    smallint    OrderQty    "NOT NULL CHECK (OrderQty > 0)"
+    int ProductID   "NOT NULL"
+    int SpecialOfferID  "NOT NULL"
+    money   UnitPrice   "NOT NULL CHECK (UnitPrice >= 0.00)"
+    money   UnitPriceDiscount   "NOT NULL DEFAULT (0.0) CHECK (UnitPriceDiscount >= 0.00)"
+    **computed**  LineTotal   "ISNULL(UnitPrice * (1.0 - UnitPriceDiscount) * OrderQty, 0.0)"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+SalesOrderHeader["Sales.SalesOrderHeader"]:::sales{
+    int SalesOrderID    PK    "IDENTITY (1, 1)"
+    tinyint RevisionNumber  "NOT NULL DEFAULT (0)"
+    datetime    OrderDate   "NOT NULL DEFAULT (GETDATE())"
+    datetime    DueDate "NOT NULL CHECK (DueDate >= OrderDate)"
+    datetime    ShipDate    "CHECK ((ShipDate >= OrderDate) OR (ShipDate IS NULL))"
+    tinyint Status  "NOT NULL DEFAULT (1) CHECK (Status BETWEEN 0 AND 8)"
+    Flag    OnlineOrderFlag "NOT NULL DEFAULT (1)"
+    **computed**  SalesOrderNumber    "ISNULL(N'SO' + CONVERT(nvarchar(23), SalesOrderID), 
+                                        N'*** ERROR ***')"
+    OrderNumber PurchaseOrderNumber
+    AccountNumber   AccountNumber
+    int CustomerID  "NOT NULL"
+    int SalesPersonID
+    int TerritoryID
+    int BillToAddressID "NOT NULL"
+    int ShipToAddressID "NOT NULL"
+    int ShipMethodID    "NOT NULL"
+    int CreditCardID
+    varchar CreditCardApprovalCode
+    int CurrencyRateID
+    money   SubTotal    "NOT NULL DEFAULT (0.00) CHECK (SubTotal >= 0.00)"
+    money   TaxAmt  "NOT NULL DEFAULT (0.00) CHECK (TaxAmt >= 0.00)"
+    money   Freight "NOT NULL DEFAULT (0.00) CHECK (Freight >= 0.00)"
+    **computed**  TotalDue    "ISNULL(SubTotal + TaxAmt + Freight, 0)"
+    nvarchar    Comment
+    uniqueidentifier    rowguid "ROWGUIDCOL NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+SalesOrderHeaderSalesReason["Sales.SalesOrderHeaderSalesReason"]:::sales{
+    int SalesOrderID    PK    "Composite Key"
+    int SalesReasonID   PK   "Composite Key"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+SalesPerson["Sales.SalesPerson"]:::sales{
+    int BusinessEntityID    PK    "NOT NULL"
+    int TerritoryID
+    money   SalesQuota  "CHECK (SalesQuota > 0.00)"
+    money   Bonus   "NOT NULL DEFAULT (0.00) CHECK (Bonus >= 0.00)"
+    smallmoney  CommissionPct   "NOT NULL DEFAULT (0.00) CHECK (CommissionPct >= 0.00)"
+    money   SalesYTD    "NOT NULL DEFAULT (0.00) CHECK (SalesYTD >= 0.00)"
+    money   SalesLastYear   "NOT NULL DEFAULT (0.00) CHECK (SalesLastYear >= 0.00)"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+SalesPersonQuotaHistory["Sales.SalesPersonQuotaHistory"]:::sales{
+    int BusinessEntityID    PK "Composite Key"
+    datetime    QuotaDate   PK "Composite Key"
+    money   SalesQuota "NOT NULL CHECK (SalesQuota > 0.00"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate "NOT NULL DEFAULT (GETDATE())"
+}
+
+SalesReason["Sales.SalesReason"]:::sales{
+    int SalesReasonID   PK   "IDENTITY (1, 1)"
+    Name    Name    "NOT NULL"
+    Name    ReasonType  "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+SalesTaxRate["Sales.SalesTaxRate"]:::sales{
+    int SalesTaxRateID  PK  "IDENTITY (1, 1)"
+    int StateProvinceID "NOT NULL"
+    tinyint TaxType "NOT NULL CHECK (TaxType BETWEEN 1 AND 3)"
+    smallmoney  TaxRate "NOT NULL DEFAULT (0.00)"
+    Name    Name    "NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL DEFAULT (NEWID())"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+SalesTerritory["Sales.SalesTerritory"]:::sales{
+     int    TerritoryID PK "IDENTITY (1, 1)"
+     Name   Name    "NOT NULL"
+     nvarchar   CountryRegionCode   " NOT NULL"
+     nvarchar   Group   " NOT NULL"
+     money  SalesYTD    "NOT NULL DEFAULT (0.00)"
+     money  SalesLastYear   "NOT NULL DEFAULT (0.00)"
+     money  CostYTD "NOT NULL DEFAULT (0.00)"
+     money  CostLastYear    "NOT NULL DEFAULT (0.00)"
+     uniqueidentifier   rowguid "ROWGUIDCOL NOT NULL DEFAULT (NEWID())"
+     datetime   ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+SalesTerritoryHistory["Sales.SalesTerritoryHistory"]:::sales{
+    int    BusinessEntityID PK    "Composite Key  -- A sales person"
+    datetime   StartDate    PK   "Composite Key"
+    int    TerritoryID  PK "Composite Key"
+    datetime   EndDate "NULL"
+    uniqueidentifier   rowguid "DEFAULT (NEWID())"
+    datetime   ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ShoppingCartItem["Sales.ShoppingCartItem"]:::sales{
+
+    int ShoppingCartItemID PK "IDENTITY (1, 1)"
+    nvarchar    ShoppingCartID  "NOT NULL"
+    int Quantity    "NOT NULL"
+    int ProductID   "NOT NULL"
+    datetime    DateCreated "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+SpecialOffer["Sales.SpecialOffer"]:::sales{
+    int SpecialOfferID  PK  "IDENTITY (1, 1)"
+    nvarchar    Description "   NOT NULL"
+    smallmoney  DiscountPct "NOT NULL"
+    nvarchar    Type    "  NOT NULL"
+    nvarchar    Catey   " NOT NULL"
+    datetime    StartDate   "NOT NULL"
+    datetime    EndDate "NOT NULL"
+    int MinQty  "NOT NULL"
+    int MaxQty  "NULL"
+    uniqueidentifier    rowguid "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+SpecialOfferProduct["Sales.SpecialOfferProduct"]:::sales{
+    int SpecialOfferID  PK  "Composite Key"
+    int ProductID   PK   "Composite Key"
+    uniqueidentifier    rowguid "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+Store["Sales.Store"]:::sales{
+    int BusinessEntityID    PK    "NOT NULL,"
+    Name    Name    "NOT NULL,"
+    int SalesPersonID   "NULL,"
+    XML Demographics    "Ref: Sales.StoreSurveySchemaCollection,"
+    uniqueidentifier    rowguid "ROWGUIDCOL NOT NULL"
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+Department["HumanResources.Department"]:::humanresources{
+    smallint    DepartmentID    PK    "IDENTITY (1, 1)"
+    Name    Name    "NOT NULL"
+    Name    GroupName   "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+Employee["HumanResources.Employee"]:::humanresources{
+    int BusinessEntityID    PK    "NOT NULL"
+    nvarchar    NationalIDNumber    "NOT NULL"
+    nvarchar    LoginID "NOT NULL,   "
+    hierarchyid OrganizationNode  
+	AS  OrganizationLevel   "OrganizationNode.GetLevel()"
+    nvarchar    JobTitle    "NOT NULL"
+    date    BirthDate   "NOT NULL CHECK (BirthDate BETWEEN '1930-01-01' AND DATEADD(YEAR, -18, GETDATE()))"
+    nchar   MaritalStatus   "NOT NULL CHECK (UPPER(MaritalStatus) IN ('M', 'S')) -- Married or Single"
+    nchar   Gender  "NOT NULL CHECK (UPPER(Gender) IN ('M', 'F')), -- Male or Female"
+    date    HireDate    "NOT NULL CHECK (HireDate BETWEEN '1996-07-01' AND DATEADD(DAY, 1, GETDATE()))"
+    Flag    SalariedFlag    "NOT NULL DEFAULT (1)"
+    smallint    VacationHours   "NOT NULL DEFAULT (0) CHECK (VacationHours BETWEEN -40 AND 240)"
+    smallint    SickLeaveHours  "NOT NULL DEFAULT (0) CHECK (SickLeaveHours BETWEEN 0 AND 120)"
+    Flag    CurrentFlag "NOT NULL DEFAULT (1)"
+    uniqueidentifier    rowguid "NEWID()"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+EmployeeDepartmentHistory["HumanResources.EmployeeDepartmentHistory"]:::humanresources{
+     int    BusinessEntityID    PK    "Composite Key 1"
+     date   StartDate   PK   "Composite Key 2"
+     smallint   DepartmentID    PK    "Composite Key 3"
+     tinyint    ShiftID PK "Composite Key 4"
+     date   EndDate "CHECK ((EndDate >= StartDate) OR (EndDate IS NULL))"
+     datetime   ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+    
+}
+
+EmployeePayHistory["HumanResources.EmployeePayHistory"]:::humanresources{
+    int BusinessEntityID    PK    "Composite Key"
+    datetime    RateChangeDate  PK  "Composite Key"
+    money   Rate    "NOT NULL CHECK (Rate BETWEEN 6.50 AND 200.00)"
+    tinyint PayFrequency    "NOT NULL CHECK (PayFrequency IN (1, 2)), -- 1 = monthly salary, 2 = biweekly salary"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+JobCandidate["HumanResources.JobCandidate"]:::humanresources{
+    int JobCandidate    PK  "IDENTITY (1, 1)"
+    int BusinessEntityID  
+    XML HRResumeSchemaCollection "NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+AWBuildVersion["dbo.AWBuildVersion"]:::systemtables{
+    tinyint SystemInformationID PK     "IDENTITY NOT NULL"
+    Version Database        "nvarchar   NOT NULL"
+    datetime    VersionDate     "NOT NULL"
+    datetime    ModifiedDate        "NOT NULL DEFAULT (GETDATE())"
+}
+
+ProductVendor["Purchasing.ProductVendor"]:::purchasing{
+    int ProductID   PK   "Composite Key"
+    int BusinessEntityID    PK    "Composite Key"
+    int AverageLeadTime "NOT NULL CHECK (AverageLeadTime >= 1)"
+    money   StandardPrice   "NOT NULL CHECK (StandardPrice > 0.00)"
+    money   LastReceiptCost "CHECK (LastReceiptCost > 0.00)"
+    datetime    LastReceiptDate "NULL"
+    int MinOrderQty "NOT NULL CHECK (MinOrderQty >= 1)"
+    int MaxOrderQty "NOT NULL CHECK (MaxOrderQty >= 1)"
+    int OnOrderQty  "CHECK (OnOrderQty >= 0)"
+    nchar   UnitMeasureCode "  NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+PurchaseOrderDetail["Purchasing.PurchaseOrderDetail"]:::purchasing{
+    int PurchaseOrderID PK "NOT NULL"
+    int PurchaseOrderDetailID   PK   "IDENTITY (1, 1)"
+    datetime    DueDate "NOT NULL"
+    smallint    OrderQty    "NOT NULL CHECK (OrderQty > 0)"
+    int ProductID   "NOT NULL"
+    money   UnitPrice   "NOT NULL CHECK (UnitPrice >= 0.00)"
+    **computed**  LineTotal   "ISNULL(OrderQty * UnitPrice, 0.00)"
+    decimal ReceivedQty "NOT NULL CHECK (ReceivedQty >= 0.00)"
+    decimal RejectedQty "NOT NULL CHECK (RejectedQty >= 0.00"
+    **computed**  StockedQty  "ISNULL(ReceivedQty - RejectedQty, 0.00)"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+PurchaseOrderHeader["Purchasing.PurchaseOrderHeader"]:::purchasing{
+    int PurchaseOrderID PK "IDENTITY (1, 1)"
+    tinyint RevisionNumber  "NOT NULL DEFAULT (0)"
+    tinyint Status  "NOT NULL DEFAULT (1) CHECK (Status BETWEEN 1 AND 4) 
+                    **1 = Pending; 
+                    2 = Approved; 
+                    3 = Rejected; 
+                    4 = Complete**"
+    int EmployeeID  "NOT NULL"
+    int VendorID    "NOT NULL"
+    int ShipMethodID    "NOT NULL"
+    datetime    OrderDate   "NOT NULL DEFAULT (GETDATE())"
+    datetime   ShipDate    "CHECK ((ShipDate >= OrderDate) OR (ShipDate IS NULL))"
+    money   SubTotal    "NOT NULL DEFAULT (0.00) CHECK (SubTotal >= 0.00)"
+    money   TaxAmt  "NOT NULL DEFAULT (0.00) CHECK (TaxAmt >= 0.00)"
+    money   Freight "NOT NULL DEFAULT (0.00) CHECK (Freight >= 0.00)"
+    **computed**  TotalDue    "ISNULL(SubTotal + TaxAmt + Freight, 0) PERSISTED NOT NULL"
+    datetime    ModifiedDate    "NOT NULL DEFAULT (GETDATE())"
+}
+
+ShipMethod["Purchasing.ShipMethod"]:::purchasing{
+    int ShipMethodID    PK    "IDENTITY (1, 1)"
+    Name    Name    "NOT NULL,"
+    money   ShipBase    "NOT NULL"
+    money   ShipRate    "NOT NULL"
+    uniqueidentifier    rowguid "NOT NULL"
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+Vendor["Purchasing.Vendor"]:::purchasing{
+    int BusinessEntityID    PK
+    AccountNumber   AccountNumber   "NOT NULL,"
+    Name    Name    "NOT NULL,"
+    tinyint CreditRating    "NOT NULL,"
+    Flag    PreferredVendorStatus   "NOT NULL"
+    Flag    ActiveFlag  "NOT NULL"
+    nvarchar    PurchasingWebServiceURL "   NULL,"
+    datetime    ModifiedDate    "NOT NULL"
+}
+
+AWBuildVersion["dbo.AWBuildVersion"]:::systemtables{
+    tinyint SystemInformationID PK     "IDENTITY NOT NULL"
+    Version Database        "nvarchar   NOT NULL"
+    datetime    VersionDate     "NOT NULL"
+    datetime    ModifiedDate        "NOT NULL DEFAULT (GETDATE())"
+}
