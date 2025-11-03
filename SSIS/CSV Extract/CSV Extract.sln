@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36623.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "Table to CSV", "Table to CSV\Table to CSV.dtproj", "{9C71BBD5-FC4D-98CA-9397-29E5E5591452}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C71BBD5-FC4D-98CA-9397-29E5E5591452}.Development|Default.ActiveCfg = Development
+		{9C71BBD5-FC4D-98CA-9397-29E5E5591452}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3351B4E7-B641-45C4-823E-82172D21C3DB}
+	EndGlobalSection
+EndGlobal
