@@ -4,28 +4,99 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mermaid Diagram Example</title>
-    
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+      body {
+        font-family: "Ubuntu", sans-serif;
+        margin: 0;
+        padding: 1rem;
+        background: #ffffff;
+        color: #333;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      button {
+        display: block;
+        margin-bottom: 5px;
+      }
+      /* The container is set to display: flex */
+      .three-column-flex-container {
+        display: flex;
+        /* Optional: Ensures columns take up available space */
+        justify-content: space-between;
+        gap: 20px; /* Space between columns */
+        width: 100%;
+      }
+
+      /* The child elements (columns) are sized evenly */
+      .column {
+        /* This property ensures all three columns are equal width */
+        flex: 1;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+      }
+
+      .top-center-box {
+        width: 600px; /* or any fixed width */
+        margin: 0 auto; /* centers horizontally */
+        position: relative;
+        top: 0; /* aligns to top */
+      }
+
+      #scrollContent {
+        transform-origin: center;
+        transition: transform 0.2s ease-in-out;
+      }
+    </style>
   </head>
   <body>
-    <h1>My Flowchart</h1>
+    <div>
+      <h1><center>Inventory Module</center></h1>
+      <label><center>➖ Zoom ➕</center></label>
+      <center>
+        <input
+          type="range"
+          id="zoomSlider"
+          min="0.5"
+          max="5"
+          step="0.1"
+          value="1"
+        />
+      </center>
+    </div>
 
-    <pre class="mermaid">
+    <div
+      class="top-center-box"
+      style="overflow: auto; height: auto; width: 90%; justify-content: center"
+    >
+      <pre class="mermaid">
           ---
 config:
   layout: "TB"
   theme: base
   themeVariables:
-    primaryColor: "#ffc400ff"
-    primaryBorderColor: "#ff6f00ff"
-    primaryTextColor: "#000000ff"
-    secondaryColor: "#ffecb3ff"
-    secondaryBorderColor: "#ff6f00ff"
-    secondaryTextColor: "#971c1cff"
-    tertiaryColor: "#ffffffff"
-    tertiaryBorderColor: "#ffffffff"
-    tertiaryTextColor: "#000000ff"
-    lineColor: "#ff6f00ff"
-    textColor: "#470000ff"  
+    primaryColor : "#ffc400ff"
+    primaryBorderColor : "#ff6f00ff"
+    primaryTextColor : "#000000ff"
+    secondaryColor : "#ffecb3ff"
+    secondaryBorderColor : "#ff6f00ff"
+    secondaryTextColor : "#971c1cff"
+    tertiaryColor : "#ffffffff"
+    tertiaryBorderColor : "#ffffffff"
+    tertiaryTextColor : "#000000ff"
+    lineColor : "#ff6f00ff"
+    textColor : "#470000ff"  
 
 ---
 erDiagram
@@ -43,7 +114,8 @@ erDiagram
     VARCHAR item_code
   }
   ItemComponents {
-    INT composite_item_id FK
+    INT composite_item_id FK "This is child 
+                              table"
     INT component_item_id FK
     INT quantity_required
   }
@@ -159,11 +231,82 @@ Items ||--o{ ItemComponents : contains
   PurchaseDetail ||--o{ PurchaseInspection : inspected
   PurchaseDetail ||--o{ NonStockItems : generates  
 
-    </pre>
-
+    </pre
+      >
+    </div>
+    <div class="three-column-flex-container">
+      <div class="column">
+        <table style="width: 100%">
+          <tr>
+            <td>Master - Header</td>
+            <td>
+              <label>
+                Color : <input type="color" id="c7e8e0" value="#c7e8e0"
+              /></label>
+            </td>
+            <td>Master - Detail</td>
+            <td>
+              <label>
+                Color : <input type="color" id="e9ddc6" value="#e9ddc6"
+              /></label>
+            </td>
+          </tr>
+          <tr>
+            <td>Transation - Header</td>
+            <td>
+              <label>
+                Color : <input type="color" id="cce3cf" value="#cce3cf"
+              /></label>
+            </td>
+            <td>Transation - Detail</td>
+            <td>
+              <label>
+                Color : <input type="color" id="dee3cc" value="#dee3cc"
+              /></label>
+            </td>
+          </tr>
+          <tr>
+            <td>Views</td>
+            <td>
+              <label>
+                Color : <input type="color" id="b45757" value="#b45757"
+              /></label>
+            </td>
+            <td>Link / Ref Tables</td>
+            <td>
+              <label>
+                Color : <input type="color" id="51484f" value="#51484f"
+              /></label>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="column">Column 2 Content</div>
+      <div class="column">Column 3 Content</div>
+    </div>
     <script type="module">
       import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
       mermaid.initialize({ startOnLoad: true });
+      document.getElementById("zoomSlider").addEventListener("input", (e) => {
+        const zoom = e.target.value;
+        document.querySelector(
+          "pre.mermaid"
+        ).style.transform = `scale(${zoom})`;
+      });
+      window.addEventListener("load", () => {
+        const container = document.getElementById("scrollContainer");
+        const content = document.getElementById("scrollContent");
+
+        // Scroll to center horizontally
+        container.scrollLeft =
+          (content.scrollWidth - container.clientWidth) / 2;
+
+        // Scroll to center vertically (optional)
+        container.scrollTop =
+          (content.scrollHeight - container.clientHeight) / 2;
+      });
+
+      mermaid.run();
     </script>
   </body>
 </html>
