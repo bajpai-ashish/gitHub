@@ -1,0 +1,84 @@
+flowchart LR
+Address_City --> city_city
+states_Name --> city_state_province
+states_StateProvinceCode --> city_subregion
+CountryRegion_Name --> city_country
+SalesTerritory_Name --> city_sales_territory
+SalesTerritory_CountryRegionCode --> city_region
+SalesTerritory_Group --> city_continent
+
+city_city_staging_key ins1@-- UPSERT --> Dim_city_city_staging_key
+city_city ins2@-- UPSERT --> Dim_city_city
+city_state_province ins3@-- UPSERT --> Dim_city_state_province
+city_country ins4@-- UPSERT --> Dim_city_country
+city_continent ins5@-- UPSERT --> Dim_city_continent
+city_sales_territory ins6@-- UPSERT --> Dim_city_sales_territory
+city_region ins7@-- UPSERT --> Dim_city_region
+city_subregion ins8@-- UPSERT --> Dim_city_subregion
+ins1@{animation: fast}
+ins2@{animation: fast}
+ins3@{animation: fast}
+ins4@{animation: fast}
+ins5@{animation: fast}
+ins6@{animation: fast}
+ins7@{animation: fast}
+ins8@{animation: fast}
+
+Address_StateProvinceID j1@o-.JOIN.-o states_StateProvinceID
+j1@{animation: slow}
+SalesTerritory_TerritoryID j3@o-.JOIN.-o states_TerritoryID
+j3@{animation: slow}
+CountryRegion_CountryRegionCode j2@o-.JOIN.-o states_CountryRegionCode
+j2@{animation: slow}
+
+    subgraph city staging
+        direction LR
+        city_city_staging_key[City Staging Key] 
+        city_city[City] 
+        city_state_province[State Province] 
+        city_country[Country] 
+        city_continent[Continent] 
+        city_sales_territory[Sales Territory] 
+        city_region[Region] 
+        city_subregion[Subregion] 
+         
+    end
+    subgraph Dimension.City
+        direction LR
+        Dim_city_city_staging_key[City Staging Key] 
+        Dim_city_city[City] 
+        Dim_city_state_province[State Province] 
+        Dim_city_country[Country] 
+        Dim_city_continent[Continent] 
+        Dim_city_sales_territory[Sales Territory] 
+        Dim_city_region[Region] 
+        Dim_city_subregion[Subregion] 
+         
+    end
+    subgraph Source
+        subgraph Person.Address
+            direction LR
+            Address_StateProvinceID[StateProvinceID]
+            Address_City[City]
+        end
+        subgraph Person.StateProvince
+            direction LR
+            states_Name[Name]
+            states_StateProvinceCode[Subregion] 
+            states_StateProvinceID[StateProvinceID] 
+            states_TerritoryID[TerritoryID] 
+            states_CountryRegionCode[CountryRegionCode] 
+        end
+        subgraph Person.CountryRegion
+            direction LR
+            CountryRegion_CountryRegionCode[CountryRegionCode]
+            CountryRegion_Name[Country]
+        end
+        subgraph Sales.SalesTerritory
+            direction LR
+            SalesTerritory_TerritoryID
+            SalesTerritory_Name[Name]
+            SalesTerritory_CountryRegionCode[CountryRegionCode]
+            SalesTerritory_Group[Group]
+        end
+    end

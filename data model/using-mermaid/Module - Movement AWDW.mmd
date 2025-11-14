@@ -1,0 +1,113 @@
+---
+config:
+  layout: dagre
+  font-size: 15pt
+  elk:
+    mergeEdges: true
+    cycleBreakingStrategy: MODEL_ORDER
+    nodePlacementStrategy: NETWORK_SIMPLEX
+    look: neo
+---
+erDiagram
+direction LR
+classDef movement font-family:tahoma, font-size:15pt, color:darkorchid, stroke:darkorchid, stroke-width:1px, fill:#c7e8e0;
+classDef order font-family:tahoma, font-size:15pt, color:#c04b86, stroke:#c04b86, stroke-width:1px, fill:#e9ddc6;
+classDef purchase font-family:tahoma, font-size:15pt, color:#2d7373, stroke:#2d7373, stroke-width:1px, fill:#cce3cf;
+classDef sale font-family:tahoma, font-size:15pt, color:#4b86c0, stroke:#4b86c0, stroke-width:1px, fill:#dee3cc;
+classDef stock_holding font-family:tahoma, font-size:15pt, color:#fbe9ee, stroke:#fbe9ee, stroke-width:1px, fill:#b45757;
+classDef transaction font-family:tahoma, font-size:15pt, color:#ffffcc, stroke:#ffffcc, stroke-width:1px, fill:#51484f;
+classDef dimension font-family:tahoma, font-size:15pt, color:#8B2E62, stroke:#8B2E62, stroke-width:1px, fill:#44c17b;
+classDef integration font-family:tahoma, font-size:15pt, color:#f3eaef, stroke:#f3eaef, stroke-width:1px, fill:#531b3a;
+
+date ||--|{ movement :"Date Key"
+customer ||--|{ movement :"Customer Key"
+stock_item ||--|{ movement :"Stock Item Key"
+supplier ||--|{ movement :"Supplier Key"
+transaction_type ||--|{ movement :"Transaction Type Key"
+
+movement["Fact.Movement"]:::movement{
+    int movement_key    UK    "DW key for a row in the Movement fact"
+    date    date_key    FK    "Transaction date"
+    int stock_item_key  FK  "Stock item for this purchase order"
+    int customer_key    FK    "Customer (if applicable)"
+    int supplier_key    FK    "Supplier (if applicable)"
+    int transaction_type_key    "Type of transaction"
+    int wwi_stock_item_transaction_id   "Stock item transaction ID in source system"
+    int wwi_invoice_id  "Invoice ID in source system"
+    int wwi_purchase_order_id   "Purchase order ID in source system"
+    int quantity    "Quantity of stock movement (positive is incoming stock, negative is outgoing)"
+    int lineage_key "Lineage Key for the data load for this row"
+}
+
+customer["Dimension.Customer"]:::dimension{
+    int customer_key    PK  "DW key for the customer dimension"
+    int wwi_customer_id     "Numeric ID used for reference to a customer within the WWI database"
+    string  customer        "Customer's full name (usually a trading name)"
+    string  bill_to_customer        "Bill to customer's full name"
+    string  category        "Customer's category"
+    string  buying_group        "Customer's buying group"
+    string  primary_contact     "Primary contact"
+    string  postal_code     "Delivery postal code for the customer"
+    timestamp   valid_from      "Valid from this date and time"
+    timestamp   valid_to        "Valid until this date and time"
+    int lineage_key     "Lineage Key for the data load for this row"
+}
+date["Dimension.Date"]:::dimension{
+    date    date    PK  "DW key for date dimension (actual date is used for key)"
+    int day_number      "Day of the month"
+    string  day     "Day name"
+    string  month       "Month name (ie September)"
+    string  short_month     "Short month name (ie Sep)"
+    int calendar_month_number       "Calendar month number"
+    string  calendar_month_label        "Calendar month label (ie CY2015Jun)"
+    int calendar_year       "Calendar year (ie 2015)"
+    string  calendar_year_label     "Calendar year label (ie CY2015)"
+    int fiscal_month_number     "Fiscal month number"
+    string  fiscal_month_label      "Fiscal month label (ie FY2015Feb)"
+    int fiscal_year     "Fiscal year (ie 2016)"
+    string  fiscal_year_label       "Fiscal year label (ie FY2015)"
+    int iso_week_number     "ISO week number (ie 25)"
+}
+stock_item["Dimension.Stock Item"]:::dimension {
+    int stock_item_key  PK  "DW key for the stock item dimension"
+    int wwi_stock_item_id   "Numeric ID used for reference to a stock item within the WWI database"
+    string  stock_item  "Full name of a stock item (but not a full description)"
+    string  color   "Color (optional) for this stock item"
+    string  selling_package "Usual package for selling units of this stock item"
+    string  buying_package  "Usual package for selling outers of this stock item (ie cartons, boxes, etc.)"
+    string  brand   "Brand for the stock item (if the item is branded)"
+    string  size    "Size of this item (eg: 100mm)"
+    int lead_time_days  "Number of days typically taken from order to receipt of this stock item"
+    int quantity_per_outer  "Quantity of the stock item in an outer package"
+    bool    is_chiller_stock    "Does this stock item need to be in a chiller?"
+    string  barcode "Barcode for this stock item"
+    number    tax_rate    "Tax rate to be applied"
+    number    unit_price  "Selling price (ex-tax) for one unit of this product"
+    number    recommended_retail_price    "Recommended retail price for this stock item"
+    number    typical_weight_per_unit "Typical weight for one unit of this product (packaged)"
+    varbinary(MAX)  photo   "Photo of the product"
+    timestamp   valid_from  "Valid from this date and time"
+    timestamp   valid_to    "Valid until this date and time"
+    int lineage_key "Lineage Key for the data load for this row"
+}
+supplier["Dimension.Supplier"]:::dimension{
+    int supplier_key    PK    "DW key for the supplier dimension"
+    int wwi_supplier_id "Numeric ID used for reference to a supplier within the WWI database"
+    string  supplier    "Supplier's full name (usually a trading name)"
+    string  category    "Supplier's category"
+    string  primary_contact "Primary contact"
+    string  supplier_reference  "Supplier reference for our organization (might be our account number at the supplier)"
+    int payment_days    "Number of days for payment of an invoice (ie payment terms)"
+    string  postal_code "Delivery postal code for the supplier"
+    timestamp   valid_from  "Valid from this date and time"
+    timestamp   valid_to    "Valid until this date and time"
+    int lineage_key "Lineage Key for the data load for this row"
+}
+transaction_type["Dimension.Transaction Type"]:::dimension{
+    int transaction_type_key    PK    "DW key for the transaction type dimension"
+    int wwi_transaction_type_id "Numeric ID used for reference to a transaction type within the WWI database"
+    string  transaction_type    "Full name of the transaction type"
+    timestamp   valid_from  "Valid from this date and time"
+    timestamp   valid_to    "Valid until this date and time"
+    int lineage_key "Lineage Key for the data load for this row"
+}
