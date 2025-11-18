@@ -1,0 +1,546 @@
+{
+  "version": "1.0.0",
+  "darkMode": false,
+  "gridEnabling": false,
+  "detailLevel": "All",
+  "tablePositions": [
+    {
+      "name": "city",
+      "schemaName": "dimension",
+      "x": 1248,
+      "y": 1016
+    },
+    {
+      "name": "customer",
+      "schemaName": "dimension",
+      "x": 968,
+      "y": 656
+    },
+    {
+      "name": "date",
+      "schemaName": "dimension",
+      "x": 648,
+      "y": 1008
+    },
+    {
+      "name": "employee",
+      "schemaName": "dimension",
+      "x": 552,
+      "y": 624
+    },
+    {
+      "name": "payment_method",
+      "schemaName": "dimension",
+      "x": 1040,
+      "y": 88
+    },
+    {
+      "name": "stock_item",
+      "schemaName": "dimension",
+      "x": 936,
+      "y": 1488
+    },
+    {
+      "name": "supplier",
+      "schemaName": "dimension",
+      "x": 1624,
+      "y": 680
+    },
+    {
+      "name": "transaction_type",
+      "schemaName": "dimension",
+      "x": 1712,
+      "y": 1168
+    },
+    {
+      "name": "movement",
+      "schemaName": "fact",
+      "x": 1560,
+      "y": 1480
+    },
+    {
+      "name": "order",
+      "schemaName": "fact",
+      "x": 200,
+      "y": 48
+    },
+    {
+      "name": "purchase",
+      "schemaName": "fact",
+      "x": 1312,
+      "y": 344
+    },
+    {
+      "name": "sale",
+      "schemaName": "fact",
+      "x": 216,
+      "y": 1392
+    },
+    {
+      "name": "transaction",
+      "schemaName": "fact",
+      "x": 48,
+      "y": 736
+    },
+    {
+      "name": "stock_holding",
+      "schemaName": "fact",
+      "x": 752,
+      "y": 288
+    }
+  ],
+  "tableGroupCollapseStates": [],
+  "stickyNoteLayouts": [],
+  "referencePaths": [
+    {
+      "firstFieldNames": [
+        "date"
+      ],
+      "firstTableName": "date",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "date_key"
+      ],
+      "secondTableName": "movement",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "stock_item_key"
+      ],
+      "firstTableName": "stock_item",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "stock_item_key"
+      ],
+      "secondTableName": "movement",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "customer_key"
+      ],
+      "firstTableName": "customer",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "customer_key"
+      ],
+      "secondTableName": "movement",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "customer_key"
+      ],
+      "firstTableName": "customer",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "bill_to_customer_key"
+      ],
+      "secondTableName": "movement",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "supplier_key"
+      ],
+      "firstTableName": "supplier",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "supplier_key"
+      ],
+      "secondTableName": "movement",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "transaction_type_key"
+      ],
+      "firstTableName": "transaction_type",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "transaction_type_key"
+      ],
+      "secondTableName": "movement",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "city_key"
+      ],
+      "firstTableName": "city",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "city_key"
+      ],
+      "secondTableName": "order",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "customer_key"
+      ],
+      "firstTableName": "customer",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "customer_key"
+      ],
+      "secondTableName": "order",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "stock_item_key"
+      ],
+      "firstTableName": "stock_item",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "stock_item_key"
+      ],
+      "secondTableName": "order",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "date"
+      ],
+      "firstTableName": "date",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "order_date_key"
+      ],
+      "secondTableName": "order",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "date"
+      ],
+      "firstTableName": "date",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "picked_date_key"
+      ],
+      "secondTableName": "order",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "employee_key"
+      ],
+      "firstTableName": "employee",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "salesperson_key"
+      ],
+      "secondTableName": "order",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "employee_key"
+      ],
+      "firstTableName": "employee",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "picker_key"
+      ],
+      "secondTableName": "order",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "date"
+      ],
+      "firstTableName": "date",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "date_key"
+      ],
+      "secondTableName": "purchase",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "supplier_key"
+      ],
+      "firstTableName": "supplier",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "supplier_key"
+      ],
+      "secondTableName": "purchase",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "stock_item_key"
+      ],
+      "firstTableName": "stock_item",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "stock_item_key"
+      ],
+      "secondTableName": "purchase",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "city_key"
+      ],
+      "firstTableName": "city",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "city_key"
+      ],
+      "secondTableName": "sale",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "customer_key"
+      ],
+      "firstTableName": "customer",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "customer_key"
+      ],
+      "secondTableName": "sale",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "customer_key"
+      ],
+      "firstTableName": "customer",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "bill_to_customer_key"
+      ],
+      "secondTableName": "sale",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "stock_item_key"
+      ],
+      "firstTableName": "stock_item",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "stock_item_key"
+      ],
+      "secondTableName": "sale",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "date"
+      ],
+      "firstTableName": "date",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "invoice_date_key"
+      ],
+      "secondTableName": "sale",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "date"
+      ],
+      "firstTableName": "date",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "delivery_date_key"
+      ],
+      "secondTableName": "sale",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "employee_key"
+      ],
+      "firstTableName": "employee",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "salesperson_key"
+      ],
+      "secondTableName": "sale",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "date"
+      ],
+      "firstTableName": "date",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "date_key"
+      ],
+      "secondTableName": "transaction",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "customer_key"
+      ],
+      "firstTableName": "customer",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "customer_key"
+      ],
+      "secondTableName": "transaction",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "customer_key"
+      ],
+      "firstTableName": "customer",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "bill_to_customer_key"
+      ],
+      "secondTableName": "transaction",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "supplier_key"
+      ],
+      "firstTableName": "supplier",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "supplier_key"
+      ],
+      "secondTableName": "transaction",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "transaction_type_key"
+      ],
+      "firstTableName": "transaction_type",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "transaction_type_key"
+      ],
+      "secondTableName": "transaction",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "payment_method_key"
+      ],
+      "firstTableName": "payment_method",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "payment_method_key"
+      ],
+      "secondTableName": "transaction",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "stock_item_key"
+      ],
+      "firstTableName": "stock_item",
+      "firstSchemaName": "dimension",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "stock_item_key"
+      ],
+      "secondTableName": "stock_holding",
+      "secondSchemaName": "fact",
+      "secondRelation": "*",
+      "checkPoints": []
+    }
+  ]
+}

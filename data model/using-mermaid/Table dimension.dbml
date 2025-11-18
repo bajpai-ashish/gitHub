@@ -1,0 +1,224 @@
+Table dimension.city
+{
+city_key int [primary key]
+wwi_city_id int
+city string
+state_province string
+country string
+continent string
+sales_territory string
+region string
+subregion string
+location string
+latest_recorded_population int
+valid_from timestamp
+valid_to timestamp
+lineage_key int
+}
+Table dimension.customer
+{
+customer_key int [primary key]
+wwi_customer_id int
+customer string
+bill_to_customer string
+category string
+buying_group string
+primary_contact string
+postal_code string
+valid_from timestamp
+valid_to timestamp
+lineage_key int
+}
+Table dimension.date
+{
+date date
+day_number int
+day string
+month string
+short_month string
+calendar_month_number int
+calendar_month_label string
+calendar_year int
+calendar_year_label string
+fiscal_month_number int
+fiscal_month_label string
+fiscal_year int
+fiscal_year_label string
+iso_week_number int
+}
+Table dimension.employee
+{
+employee_key int [primary key]
+wwi_employee_id int
+employee string
+preferred_name string
+is_salesperson bool
+photo varbinary
+valid_from timestamp
+valid_to timestamp
+lineage_key int
+}
+Table dimension.payment_method
+{
+payment_method_key int [primary key]
+wwi_payment_method_id int
+payment_method string
+valid_from timestamp
+valid_to timestamp
+lineage_key int
+}
+Table dimension.stock_item
+{
+stock_item_key int [primary key]
+wwi_stock_item_id int
+stock_item string
+color string
+selling_package string
+buying_package string
+brand string
+size string
+lead_time_days int
+quantity_per_outer int
+is_chiller_stock bool
+barcode string
+tax_rate number
+unit_price number
+recommended_retail_price number
+typical_weight_per_unit number
+photo varbinary
+valid_from timestamp
+valid_to timestamp
+lineage_key int
+}
+Table dimension.supplier
+{
+supplier_key int [primary key]
+wwi_supplier_id int
+supplier string
+category string
+primary_contact string
+supplier_reference string
+payment_days int
+postal_code string
+valid_from timestamp
+valid_to timestamp
+lineage_key int
+}
+Table dimension.transaction_type
+{
+transaction_type_key int [primary key]
+wwi_transaction_type_id int
+transaction_type string
+valid_from timestamp
+valid_to timestamp
+lineage_key int
+}
+
+Table fact.movement
+{
+movement_key int [primary key]
+date_key date [Ref: > dimension.date.date]
+stock_item_key int [Ref: > dimension.stock_item.stock_item_key]
+customer_key int [Ref: > dimension.customer.customer_key]
+bill_to_customer_key int [Ref: > dimension.customer.customer_key]
+supplier_key int [Ref: > dimension.supplier.supplier_key]
+transaction_type_key int [Ref: > dimension.transaction_type.transaction_type_key]
+wwi_stock_item_transaction_id int
+wwi_invoice_id int
+wwi_purchase_order_id int
+quantity int
+lineage_key int
+}
+Table fact.order
+{
+order_key int [primary key]
+city_key int [Ref: > dimension.city.city_key]
+customer_key int [Ref: > dimension.customer.customer_key]
+stock_item_key int [Ref: > dimension.stock_item.stock_item_key]
+order_date_key date [Ref: > dimension.date.date]
+picked_date_key date [Ref: > dimension.date.date]
+salesperson_key int [Ref: > dimension.employee.employee_key]
+picker_key int [Ref: > dimension.employee.employee_key]
+wwi_order_id int
+wwi_backorder_id int
+description string
+package string
+quantity int
+unit_price number
+tax_rate number
+total_excluding_tax number
+tax_amount number
+total_including_tax number
+lineage_key int
+}
+Table fact.purchase
+{
+purchase_key int [primary key]
+date_key date [Ref: > dimension.date.date]
+supplier_key int [Ref: > dimension.supplier.supplier_key]
+stock_item_key int [Ref: > dimension.stock_item.stock_item_key]
+wwi_purchase_order_id int
+ordered_outers int
+ordered_quantity int
+received_outers int
+package string
+is_order_finalized bit
+lineage_key int
+}
+Table fact.sale
+{
+sale_key int [primary key]
+city_key int [Ref: > dimension.city.city_key]
+customer_key int [Ref: > dimension.customer.customer_key]
+bill_to_customer_key int [Ref: > dimension.customer.customer_key]
+stock_item_key int [Ref: > dimension.stock_item.stock_item_key] 
+invoice_date_key date [Ref: > dimension.date.date]
+delivery_date_key date [Ref: > dimension.date.date]
+salesperson_key int [Ref: > dimension.employee.employee_key]
+wwi_invoice_id int
+description string
+package string
+quantity int
+unit_price number
+tax_rate number
+total_excluding_tax number
+tax_amount number
+profit number
+total_including_tax number
+total_dry_items int
+total_chiller_items int
+lineage_key int
+}
+Table fact.transaction
+{
+transaction_key int [primary key]
+date_key date [Ref: > dimension.date.date]
+customer_key int [Ref: > dimension.customer.customer_key]
+bill_to_customer_key int [Ref: > dimension.customer.customer_key]
+supplier_key int [Ref: > dimension.supplier.supplier_key]
+transaction_type_key int [Ref: > dimension.transaction_type.transaction_type_key]
+payment_method_key int [Ref: > dimension.payment_method.payment_method_key]
+wwi_customer_transaction_id int
+wwi_supplier_transaction_id int
+wwi_invoice_id int
+wwi_purchase_order_id int
+supplier_invoice_number string
+total_excluding_tax number
+tax_amount number
+total_including_tax number
+outstanding_balance number
+is_finalized bool
+lineage_key int
+}
+Table fact.stock_holding
+{
+stock_holding_key int [primary key]
+stock_item_key int [Ref: > dimension.stock_item.stock_item_key]
+quantity_on_hand int
+bin_location string
+last_stocktake_quantity int
+last_cost_price number
+reorder_level int
+target_stock_level int
+lineage_key int
+}
