@@ -1,0 +1,5 @@
+digraph {
+	A [label=Extract]
+	B [label=Transform]
+	A -> B
+}

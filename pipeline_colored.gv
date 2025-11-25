@@ -1,0 +1,8 @@
+// Pipeline DAG
+digraph {
+	E [label=Extract fillcolor=lightblue shape=box style=filled]
+	T [label=Transform fillcolor=lightgreen shape=ellipse style=filled]
+	L [label=Load fillcolor=orange shape=diamond style=filled]
+	E -> T [color=blue]
+	T -> L [color=red]
+}
