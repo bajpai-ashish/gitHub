@@ -1,0 +1,187 @@
+flowchart
+direction LR
+
+Employee_BusinessEntityID -- INSERT --> staging_BusinessEntityID
+Person_Title -- INSERT --> staging_Title
+Person_FirstName -- INSERT --> staging_FirstName
+Person_MiddleName -- INSERT --> staging_MiddleName
+Person_LastName -- INSERT --> staging_LastName
+Person_Suffix -- INSERT --> staging_Suffix
+Employee_JobTitle -- INSERT --> staging_JobTitle
+PersonPhone_PhoneNumber -- INSERT --> staging_PhoneNumber
+PhoneNumberType_Name -- INSERT --> staging_PhoneNumberType
+EmailAddress_EmailAddress -- INSERT --> staging_EmailAddress
+Person_EmailPromotion -- INSERT --> staging_EmailPromotion
+Address_AddressLine1 -- INSERT --> staging_AddressLine1
+Address_AddressLine2 -- INSERT --> staging_AddressLine2
+Address_City -- INSERT --> staging_City
+StateProvince_Name -- INSERT --> staging_StateProvinceName
+Address_PostalCode -- INSERT --> staging_PostalCode
+CountryRegion_Name -- INSERT --> staging_CountryRegionName
+Person_AdditionalContactInfo -- INSERT --> staging_AdditionalContactInfo
+
+staging_BusinessEntityID ins1@-- UPSERT -->dimension_BusinessEntityID
+staging_Title ins2@-- UPSERT -->dimension_Title
+staging_FirstName ins3@-- UPSERT -->dimension_FirstName
+staging_MiddleName ins4@-- UPSERT -->dimension_MiddleName
+staging_LastName ins5@-- UPSERT -->dimension_LastName
+staging_Suffix ins6@-- UPSERT -->dimension_Suffix
+staging_JobTitle ins7@-- UPSERT -->dimension_JobTitle
+staging_PhoneNumber ins8@-- UPSERT -->dimension_PhoneNumber
+staging_PhoneNumberType ins9@-- UPSERT -->dimension_PhoneNumberType
+staging_EmailAddress ins10@-- UPSERT -->dimension_EmailAddress
+staging_EmailPromotion in11@-- UPSERT -->dimension_EmailPromotion
+staging_AddressLine1 ins12@-- UPSERT -->dimension_AddressLine1
+staging_AddressLine2 ins13@-- UPSERT -->dimension_AddressLine2
+staging_City ins14@-- UPSERT -->dimension_City
+staging_StateProvinceName ins15@-- UPSERT -->dimension_StateProvinceName
+staging_PostalCode ins16@-- UPSERT -->dimension_PostalCode
+staging_CountryRegionName ins17@-- UPSERT -->dimension_CountryRegionName
+staging_AdditionalContactInfo ins18@-- UPSERT -->dimension_AdditionalContactInfo
+
+ins1@{animation: fast}
+ins2@{animation: fast}
+ins3@{animation: fast}
+ins4@{animation: fast}
+ins5@{animation: fast}
+ins6@{animation: fast}
+ins7@{animation: fast}
+ins8@{animation: fast}
+ins9@{animation: fast}
+ins10@{animation: fast}
+in11@{animation: fast}
+ins12@{animation: fast}
+ins13@{animation: fast}
+ins14@{animation: fast}
+ins15@{animation: fast}
+ins16@{animation: fast}
+ins17@{animation: fast}
+ins18@{animation: fast}
+
+
+Person_BusinessEntityID j1@ o-.Join.-o Employee_BusinessEntityID
+BusinessEntityAddress_BusinessEntityID j2@ o-.Join.-o Employee_BusinessEntityID
+Address_AddressID j3@ o-.Join.-o BusinessEntityAddress_AddressID
+StateProvince_StateProvinceID j4@ o-.Join.-o Address_StateProvinceID
+CountryRegion_CountryRegionCode j5@ o-.Join.-o StateProvince_CountryRegionCode
+PersonPhone_BusinessEntityID j6@ o-.Join.-o Person_BusinessEntityID
+PersonPhone_PhoneNumberTypeID j7@ o-.Join.-o PhoneNumberType_PhoneNumberTypeID
+Person_BusinessEntityID j8@ o-.Join.-o EmailAddress_BusinessEntityID
+j1@{animation: slow}
+j2@{animation: slow}
+j3@{animation: slow}
+j4@{animation: slow}
+j5@{animation: slow}
+j6@{animation: slow}
+j7@{animation: slow}
+j8@{animation: slow}
+
+
+
+subgraph source
+    subgraph HumanResources.Employee
+        direction TB
+        Employee_JobTitle[JobTitle]
+        Employee_BusinessEntityID[BusinessEntityID]
+    end
+    subgraph Person.Person
+        direction TB
+        Person_BusinessEntityID[BusinessEntityID] 
+        Person_Title[Title]
+        Person_FirstName[FirstName]
+        Person_MiddleName[MiddleName]
+        Person_LastName[LastName]
+        Person_Suffix[Suffix]
+        Person_EmailPromotion[EmailPromotion]
+        Person_AdditionalContactInfo[AdditionalContactInfo]
+    end
+    subgraph Person.BusinessEntityAddress
+        direction TB
+        BusinessEntityAddress_BusinessEntityID[BusinessEntityID] 
+        BusinessEntityAddress_AddressID[AddressID]
+    end
+    subgraph Person.PhoneNumberType
+        direction TB
+        PhoneNumberType_Name[Name]
+        PhoneNumberType_PhoneNumberTypeID[PhoneNumberTypeID]
+    end
+    subgraph Person.Address
+        direction TB
+        Address_AddressID[AddressID]
+        Address_StateProvinceID[StateProvinceID]
+        Address_AddressLine1[AddressLine1]
+        Address_AddressLine2[AddressLine2]
+        Address_City[City]
+        Address_PostalCode[PostalCode]
+    end
+    subgraph Person.StateProvince
+        StateProvince_Name[Name]
+        StateProvince_StateProvinceID[StateProvinceID]
+        StateProvince_CountryRegionCode[CountryRegionCode]
+    end
+    subgraph Person.CountryRegion
+        CountryRegion_Name[Name]
+        CountryRegion_CountryRegionCode[CountryRegionCode]
+    end
+    subgraph Person.PersonPhone
+        PersonPhone_PhoneNumber[PhoneNumber]
+        PersonPhone_BusinessEntityID[BusinessEntityID]
+        PersonPhone_PhoneNumberTypeID[PhoneNumberTypeID]
+    end
+    subgraph Person.PhoneNumberType
+        PhoneNumberType_Name[PhoneNumberType]
+        PhoneNumberType_PhoneNumberTypeID[PhoneNumberTypeID]
+    end
+    subgraph Person.EmailAddress
+        direction TB
+        EmailAddress_EmailAddress[EmailAddress]
+        EmailAddress_BusinessEntityID[BusinessEntityID]
+        EmailAddress_BusinessEntityID[BusinessEntityID]
+    end
+end
+subgraph destination
+    subgraph staging_employees        
+        staging_BusinessEntityID[BusinessEntityID]
+        staging_Title[Title]
+        staging_FirstName[FirstName]
+        staging_MiddleName[MiddleName]
+        staging_LastName[LastName]
+        staging_Suffix[Suffix]
+        staging_JobTitle[JobTitle]
+        staging_PhoneNumber[PhoneNumber]
+        staging_PhoneNumberType[PhoneNumberType]
+        staging_EmailAddress[EmailAddress]
+        staging_EmailPromotion[EmailPromotion]
+        staging_AddressLine1[AddressLine1]
+        staging_AddressLine2[AddressLine2]
+        staging_City[City]
+        staging_StateProvinceName[StateProvinceName]
+        staging_PostalCode[PostalCode]
+        staging_CountryRegionName[CountryRegionName]
+        staging_AdditionalContactInfo[AdditionalContactInfo]
+    end
+    subgraph dimension_employees
+        dimension_BusinessEntityID[BusinessEntityID]
+        dimension_Title[Title]
+        dimension_FirstName[FirstName]
+        dimension_MiddleName[MiddleName]
+        dimension_LastName[LastName]
+        dimension_Suffix[Suffix]
+        dimension_JobTitle[JobTitle]
+        dimension_PhoneNumber[PhoneNumber]
+        dimension_PhoneNumberType[PhoneNumberType]
+        dimension_EmailAddress[EmailAddress]
+        dimension_EmailPromotion[EmailPromotion]
+        dimension_AddressLine1[AddressLine1]
+        dimension_AddressLine2[AddressLine2]
+        dimension_City[City]
+        dimension_StateProvinceName[StateProvinceName]
+        dimension_PostalCode[PostalCode]
+        dimension_CountryRegionName[CountryRegionName]
+        dimension_AdditionalContactInfo[AdditionalContactInfo]
+        dimension_recordHash[RecordHash]
+        dimension_ValidFrom[ValidFrom]
+        dimension_ValidTo[ValidTo]
+        dimension_isActive[isActive]
+    end
+end
