@@ -1,0 +1,61 @@
+flowchart
+
+CSV --> RawCSV
+JSON --Flatten--> TableJSON
+RawCSV --No data Conversion-->TableCSV
+TAB1 --Data Transformation--> Table1
+TAB2 --Data Transformation--> Table2
+TableCSV --Data Cleaning--> Table3
+TableJSON --Data Cleaning--> Table4
+
+Table1 --> UserTable1
+Table2 --> UserTable2
+Table3 --> UserTable3
+Table4 --> UserTable4
+
+subgraph Sources
+    subgraph LangingFolder[Landing Folder]
+        direction TB
+        CSV[CSV]
+        JSON[JSon]
+    end
+    subgraph TAB[Database]
+        direction TB
+        TAB1[Table 1]
+        TAB2[Table 2]
+    end
+end
+
+subgraph Raw Layer
+    subgraph A[Start]
+        direction TB
+        RawCSV[Raw CSV]
+    end
+end
+subgraph Bronze Layer
+    subgraph BronzeCatalog
+        direction TB
+        TableCSV[CSV Table]
+        TableJSON[JSON Table]
+    end
+end
+subgraph Silver Layer
+    subgraph SilverCatalog
+        direction TB
+        Table1[Table 1]
+        Table2[Table 2]
+        Table3[Table 3]
+        Table4[Table 4]
+    end
+end
+subgraph Gold Layer
+    subgraph GoldCatalog
+        direction TB
+        UserTable1[Table 1]
+        UserTable2[Table 2]
+        UserTable3[Table 3]
+        UserTable4[Table 4]
+    end
+end
+
+    
