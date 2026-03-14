@@ -1,0 +1,312 @@
+erDiagram
+    direction BT
+
+    %% -----------------------
+    %% HUBS (Business Keys)
+    %% -----------------------
+
+    HubCustomer {
+        string CustomerHK PK
+        string CustomerBK  "Customer Natural Key"
+        datetime LoadDate
+        string RecordSource
+    }
+
+    HubParty {
+        string PartyHK PK
+        string PartyBK  "Global/Master Party ID"
+        datetime LoadDate
+        string RecordSource
+    }
+
+    HubAccount {
+        string AccountHK PK
+        string AccountBK "Account Number"
+        datetime LoadDate
+        string RecordSource
+    }
+
+    HubAddress {
+        string AddressHK PK
+        string AddressBK "Address Natural Key"
+        datetime LoadDate
+        string RecordSource
+    }
+
+    HubProduct {
+        string ProductHK PK
+        string ProductBK "SKU/ProductCode"
+        datetime LoadDate
+        string RecordSource
+    }
+
+    HubInteraction {
+        string InteractionHK PK
+        string InteractionBK "Event ID / Session ID"
+        datetime LoadDate
+        string RecordSource
+    }
+
+    HubCampaign {
+        string CampaignHK PK
+        string CampaignBK "Campaign Code"
+        datetime LoadDate
+        string RecordSource
+    }
+
+    HubHousehold {
+        string HouseholdHK PK
+        string HouseholdBK "Household Natural ID"
+        datetime LoadDate
+        string RecordSource
+    }
+
+    %% -----------------------
+    %% LINKS (Relationships)
+    %% -----------------------
+
+    LinkCustomerParty {
+        string CustPartyHK PK
+        string CustomerHK FK
+        string PartyHK FK
+        datetime LoadDate
+        string RecordSource
+    }
+
+    LinkCustomerAccount {
+        string CustAcctHK PK
+        string CustomerHK FK
+        string AccountHK FK
+        datetime LoadDate
+        string RecordSource
+    }
+
+    LinkCustomerAddress {
+        string CustAddrHK PK
+        string CustomerHK FK
+        string AddressHK FK
+        datetime LoadDate
+        string RecordSource
+    }
+
+    LinkCustomerProduct {
+        string CustProdHK PK
+        string CustomerHK FK
+        string ProductHK FK
+        datetime LoadDate
+        string RecordSource
+    }
+
+    LinkCustomerInteraction {
+        string CustInterHK PK
+        string CustomerHK FK
+        string InteractionHK FK
+        datetime LoadDate
+        string RecordSource
+    }
+
+    LinkCustomerCampaign {
+        string CustCampHK PK
+        string CustomerHK FK
+        string CampaignHK FK
+        datetime LoadDate
+        string RecordSource
+    }
+
+    LinkHouseholdCustomer {
+        string HHCustHK PK
+        string HouseholdHK FK
+        string CustomerHK FK
+        datetime LoadDate
+        string RecordSource
+    }
+
+    %% -----------------------
+    %% SATELLITES (Hubs)
+    %% -----------------------
+
+    SatCustomerProfile {
+        string CustomerHK FK
+        string FullName
+        string Gender
+        date DateOfBirth
+        string MaritalStatus
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+    SatCustomerContact {
+        string CustomerHK FK
+        string Email
+        string Phone
+        string PreferredChannel
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+    SatCustomerDemographics {
+        string CustomerHK FK
+        string AgeGroup
+        string IncomeBracket
+        string Occupation
+        string EducationLevel
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+    SatCustomerPreferences {
+        string CustomerHK FK
+        boolean EmailOptIn
+        boolean SmsOptIn
+        boolean PushOptIn
+        boolean AdPersonalization
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+    SatCustomerIdentityResolution {
+        string CustomerHK FK
+        string SourceSystemID
+        string ExternalID
+        string MatchScore
+        string GoldenRecordID
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+    SatCustomerBehaviorAggregates {
+        string CustomerHK FK
+        decimal LifetimeValue
+        decimal TotalSpend
+        int VisitCount
+        int PurchaseFrequency
+        datetime LastPurchaseDate
+        string ChurnScore
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+
+    %% -----------------------
+    %% SATELLITES (Other Hubs)
+    %% -----------------------
+
+    SatAccountDetails {
+        string AccountHK FK
+        string AccountType
+        string AccountStatus
+        date OpenDate
+        date CloseDate
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+    SatAddressDetails {
+        string AddressHK FK
+        string AddressLine1
+        string AddressLine2
+        string City
+        string State
+        string Country
+        string PostalCode
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+    SatProductDetails {
+        string ProductHK FK
+        string ProductName
+        string Category
+        string Brand
+        string SubCategory
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+    SatInteractionDetails {
+        string InteractionHK FK
+        string InteractionType
+        string Channel
+        string DeviceType
+        datetime InteractionTimestamp
+        string MetadataJson
+        datetime LoadDate
+        string HashDiff
+    }
+
+    SatCampaignResponse {
+        string CampaignHK FK
+        string ResponseType
+        string Channel
+        date ResponseDate
+        datetime LoadDate
+        string HashDiff
+    }
+
+    SatHouseholdAttributes {
+        string HouseholdHK FK
+        string HouseholdType
+        int HouseholdSize
+        decimal HouseholdIncome
+        datetime EffectiveStart
+        datetime EffectiveEnd
+        string HashDiff
+        datetime LoadDate
+    }
+
+    %% -----------------------
+    %% RELATIONSHIPS
+    %% -----------------------
+
+    HubCustomer ||--o{ SatCustomerProfile : "profile history"
+    HubCustomer ||--o{ SatCustomerContact : "contact history"
+    HubCustomer ||--o{ SatCustomerDemographics : "demographic history"
+    HubCustomer ||--o{ SatCustomerPreferences : "preferences history"
+    HubCustomer ||--o{ SatCustomerIdentityResolution : "identity resolution history"
+    HubCustomer ||--o{ SatCustomerBehaviorAggregates : "behavior metrics"
+
+    HubAccount ||--o{ SatAccountDetails : "account details"
+    HubAddress ||--o{ SatAddressDetails : "address details"
+    HubProduct ||--o{ SatProductDetails : "product details"
+    HubInteraction ||--o{ SatInteractionDetails : "interaction details"
+    HubCampaign ||--o{ SatCampaignResponse : "campaign responses"
+    HubHousehold ||--o{ SatHouseholdAttributes : "household attributes"
+
+    HubCustomer ||--o{ LinkCustomerParty : "is a party"
+    HubParty ||--o{ LinkCustomerParty : "has customer"
+
+    HubCustomer ||--o{ LinkCustomerAccount : "owns"
+    HubAccount ||--o{ LinkCustomerAccount : "belongs to"
+
+    HubCustomer ||--o{ LinkCustomerAddress : "associated with"
+    HubAddress ||--o{ LinkCustomerAddress : "belongs to"
+
+    HubCustomer ||--o{ LinkCustomerProduct : "related to product"
+    HubProduct ||--o{ LinkCustomerProduct : "related to customer"
+
+    HubCustomer ||--o{ LinkCustomerInteraction : "has interaction"
+    HubInteraction ||--o{ LinkCustomerInteraction : "linked to customer"
+
+    HubCustomer ||--o{ LinkCustomerCampaign : "in campaign"
+    HubCampaign ||--o{ LinkCustomerCampaign : "belongs to customer"
+
+    HubHousehold ||--o{ LinkHouseholdCustomer : "household member"
+    HubCustomer ||--o{ LinkHouseholdCustomer : "belongs to household"

@@ -1,0 +1,37 @@
+erDiagram
+    direction LR
+    Party ||--o{ Party_Role : has
+    Party ||--o{ Party_Address : has
+    Party ||--o{ Party_Contact : has
+
+    Party_Role ||--o{ Policy_Party : plays
+    Policy ||--o{ Policy_Party : involves
+
+    Policy ||--o{ Policy_Version : has
+
+    Policy ||--o{ Policy_Coverage : has
+    Coverage ||--o{ Policy_Coverage : applied_to
+    Coverage ||--o{ Coverage_Component : has
+
+    Policy ||--o{ Policy_Risk_Item : has
+    Risk_Item ||--o{ Risk_Assessment : assessed_by
+
+    Policy ||--o{ Premium : has
+    Policy ||--o{ Premium_Schedule : has
+
+    Policy ||--o{ Billing_Account : has
+    Billing_Account ||--o{ Invoice : generates
+    Invoice ||--o{ Payment : receives
+
+    Policy ||--o{ Commission : pays
+
+    Policy ||--o{ Claim : has
+    Claim ||--o{ Claim_Incident : has
+    Claim ||--o{ Claim_Party : involves
+    Claim ||--o{ Claim_Transaction : has
+    Claim ||--o{ Claim_Coverage : applies_to
+
+    Policy ||--o{ Cession : has
+    Cession ||--o{ Reinsurance_Contract : ceded_to
+    Reinsurance_Contract ||--o{ Reinsurance_Statement : produces
+    Reinsurance_Statement ||--o{ Reinsurance_Settlement : settles

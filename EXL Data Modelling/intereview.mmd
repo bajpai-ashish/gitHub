@@ -1,0 +1,95 @@
+erDiagram
+    direction TB
+
+    customer_h {
+        string customer_key
+        string load_key 
+        string load_date
+    }
+    dim_date {
+        int datekey
+        string date 
+        string day
+        string month
+        string year
+    }
+    customer_s {
+        string customer_key
+        string customer_id 
+        string name
+        string email
+        date date_of_birth
+        string address
+        string postcode
+        string contact
+        string hash_diff
+    }
+    product_h {
+        string product_key
+        string load_key 
+        string load_date
+    }
+    product_s {
+        string product_key
+        string product_id 
+        string name
+        string catagory
+        string brand
+        string hash_diff
+    }
+    store_h {
+        string store_key
+        string load_key 
+        string load_date
+    }
+    store_s {
+        string store_key
+        string store_id 
+        string store_name
+        string state
+        string location
+        string type
+        string hash_diff
+    }
+    fact_sales_h {
+        string fact_Key
+        string load_key 
+        string load_date
+    }
+    fact_sales_orders_s {
+        string fact_Key
+        string sales_key
+        string customer_key
+        string product_key
+        string store_key
+        date create_date
+        date ship_date
+        float quntity
+        float discount
+    }
+    link_customer_order {
+        string customer_key
+        string fact_Key
+    }
+    link_product_order {
+        string product_key
+        string fact_Key
+    }
+    link_store_order {
+        string store_key
+        string fact_Key
+    }
+
+    customer_h ||--|| customer_s : ""
+    product_h ||--|| product_s : ""
+    store_h ||--|| store_s : ""
+    fact_sales_h ||--|| fact_sales_orders_s : ""
+    link_customer_order ||--|| fact_sales_h : ""
+    link_customer_order ||--|| customer_h : ""
+    link_product_order ||--|| fact_sales_h : ""
+    link_product_order ||--|| product_h : ""
+    link_store_order ||--|| fact_sales_h : ""
+    link_store_order ||--|| store_h : ""
+    dim_date ||--o{ fact_sales_orders_s : "create date"
+    dim_date ||--o{ fact_sales_orders_s : "shipped date"
+    

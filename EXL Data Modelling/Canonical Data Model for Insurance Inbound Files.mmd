@@ -1,0 +1,82 @@
+flowchart LR
+
+    PRDInbound -->|load data into| PRDEntities    
+    policydomainInbound -->|load data into| policydomain_policyentities    
+    
+
+    subgraph PRD [Party & Relationship Domain]
+        subgraph PRDEntities [Entities]
+            direction BT
+            subgraph Party [Party]
+                party_id["party_id"]
+                party_type["party_type (Person, Organization)"]
+                name["name fields"]
+                identifiers["identifiers (PAN, SSN, Tax ID, etc.)"]
+                demographic["demographic attributes"]
+            end
+            subgraph Party_Role[Party_Role]
+                role_type["Role Type (Policyholder, Insured, Beneficiary, Agent, Adjuster, Broker, Claimant)"]
+                efftive_date["Effective Date"]
+                end_date["End Date"]
+            end
+            Party_Address
+            Party_Contact
+            Party_Relationship["Party_Relationship (e.g., parent–child, employer–employee)"]
+        end
+        subgraph PRDInbound [Inbound Files]
+            direction BT
+            PRDInbound_Customer[Customer master]
+            PRDInbound_Broker[Broker/agent files]
+            PRDInbound_Beneficiary[Beneficiary files]
+            PRDInbound_CustomerID[Customer Identity files]
+        end
+    end
+    subgraph policydomain [Policy Domain]
+        direction LR
+        subgraph policydomain_policyentities [Entities]
+            subgraph Policy [Policy]
+                Policy_policy_id["policy_id"]
+                Policy_product_id["product_id"]
+                Policy_policy_type["line of business (Auto, Home, Life, Health, etc.)"]
+                Policy_policy_status["policy_status  (Active, Cancelled, Lapsed, etc.)"]
+                Policy_effective_date["effective_date"]
+                Policy_expiration_date["expiration_date"]
+                Policy_coverage_details["coverage details"]
+                Policy_premium_details["premium details"]
+            end
+            subgraph Policy_Role[Policy_Role]
+                Policy_Role_role_type["Role Type (Policyholder, Insured, Beneficiary, Agent, Adjuster, Broker, Claimant)"]
+                Policy_Role_efftive_date["Effective Date"]
+                Policy_Role_end_date["End Date"]
+            end
+            subgraph Policy_Version[Policy Version]
+                Policy_Version_version_no["version_no"]
+                Policy_Version_transaction_type["transaction_type (New Business, Endorsement, Renewal, Cancellation)"]
+                Policy_Version_effective_date["effective dates"]
+            end
+            subgraph Policy_Party
+                direction TB
+                Policy_Party_policyholder["policyholder / patry_id"]
+                Policy_Party_insured["insured"]
+                Policy_Party_party_type["agent/broker"]
+            end
+            subgraph Policy_Risk_Item
+                direction TB
+                Policy_Risk_Item_riskType["risk_type (Vehicle, Property, Life, Health)"]
+                Policy_Risk_Item_characteristics["risk characteristics"]
+            end
+            Policy_Coverage
+            Policy_Premium
+            Policy_Claim
+        end
+        subgraph policydomainInbound [Inbound Files]
+            policydomainInbound_New["New business"]
+            policydomainInbound_Issuance["Issuance"]
+            policydomainInbound_Endorsements["Endorsements"]
+            policydomainInbound_Renewals["Renewals"]
+            policydomainInbound_Cancellations["Cancellations"]
+            policydomainInbound_Policy["Policy master"]
+            policydomainInbound_Risk["Risk object file"]
+        end
+    end
+    
