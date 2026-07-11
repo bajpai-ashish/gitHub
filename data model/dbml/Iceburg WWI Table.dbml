@@ -1,0 +1,253 @@
+Table reporting.Fact.Purchase {
+    Purchase_Key	bigint
+    Date_Key	date
+    Supplier_Key	int
+    Stock_Item_Key	int
+    WWI_Purchase_Order_ID	int
+    Ordered_Outers	int
+    Ordered_Quantity	int
+    Received_Outers	int
+    Package	string
+    Is_Order_Finalized	boolean
+    Lineage_Key	int
+}
+Table reporting.Fact.Stock_Holding{
+Stock_Holding_Key	bigint
+Stock_Item_Key	int
+Quantity_On_Hand	int
+Bin_Location	string
+Last_Stocktake_Quantity	int
+Last_Cost_Price	decimal(18,2)
+Reorder_Level	int
+Target_Stock_Level	int
+Lineage_Key	int
+}
+Table reporting.Fact.Order{
+Order_Key	bigint
+City_Key	int
+Customer_Key	int
+Stock_Item_Key	int
+Order_Date_Key	date
+Picked_Date_Key	date
+Salesperson_Key	int
+Picker_Key	int
+WWI_Order_ID	int
+WWI_Backorder_ID	int
+Description	string
+Package	string
+Quantity	int
+Unit_Price	decimal(18,2)
+Tax_Rate	decimal(18,3)
+Total_Excluding_Tax	decimal(18,2)
+Tax_Amount	decimal(18,2)
+Total_Including_Tax	decimal(18,2)
+Lineage_Key	int
+}
+Table reporting.Fact.Movement{
+Movement_Key	bigint
+Date_Key	date
+Stock_Item_Key	int
+Customer_Key	int
+Supplier_Key	int
+Transaction_Type_Key	int
+WWI_Stock_Item_Transaction_ID	int
+WWI_Invoice_ID	int
+WWI_Purchase_Order_ID	int
+Quantity	int
+Lineage_Key	int
+}
+Table reporting.Fact.Sale{
+Sale_Key	bigint
+City_Key	int
+Customer_Key	int
+Bill_To_Customer_Key	int
+Stock_Item_Key	int
+Invoice_Date_Key	date
+Delivery_Date_Key	date
+Salesperson_Key	int
+WWI_Invoice_ID	int
+Description	string
+Package	string
+Quantity	int
+Unit_Price	decimal(18,2)
+Tax_Rate	decimal(18,3)
+Total_Excluding_Tax	decimal(18,2)
+Tax_Amount	decimal(18,2)
+Profit	decimal(18,2)
+Total_Including_Tax	decimal(18,2)
+Total_Dry_Items	int
+Total_Chiller_Items	int
+Lineage_Key	int
+}
+Table reporting.Dimension.payment_method{
+Payment_Method_Key	int
+WWI_Payment_Method_ID	int
+Payment_Method	string
+Valid_From	timestamp
+Valid_To	timestamp
+Lineage_Key	int
+}
+Table reporting.Dimension.supplier{
+Supplier_Key	int
+WWI_Supplier_ID	int
+Supplier	string
+Category	string
+Primary_Contact	string
+Supplier_Reference	string
+Payment_Days	int
+Postal_Code	string
+Valid_From	timestamp
+Valid_To	timestamp
+Lineage_Key	int
+}
+Table reporting.Dimension.city{
+City_Key	int
+WWI_City_ID	int
+City	string
+State_Province	string
+Country	string
+Continent	string
+Sales_Territory	string
+Region	string
+Subregion	string
+Location	binary
+Latest_Recorded_Population	bigint
+Valid_From	timestamp
+Valid_To	timestamp
+Lineage_Key	int
+}
+Table reporting.Dimension.stock_item{
+Stock_Item_Key	int
+WWI_Stock_Item_ID	int
+Stock_Item	string
+Color	string
+Selling_Package	string
+Buying_Package	string
+Brand	string
+Size	string
+Lead_Time_Days	int
+Quantity_Per_Outer	int
+Is_Chiller_Stock	boolean
+Barcode	string
+Tax_Rate	decimal(18,3)
+Unit_Price	decimal(18,2)
+Recommended_Retail_Price	decimal(18,2)
+Typical_Weight_Per_Unit	decimal(18,3)
+Photo	binary
+Valid_From	timestamp
+Valid_To	timestamp
+Lineage_Key	int
+}
+Table reporting.Dimension.customer{
+Customer_Key	int
+WWI_Customer_ID	int
+Customer	string
+Bill_To_Customer	string
+Category	string
+Buying_Group	string
+Primary_Contact	string
+Postal_Code	string
+Valid_From	timestamp
+Valid_To	timestamp
+Lineage_Key	int
+}
+Table reporting.Dimension.date{
+Date	date
+Day_Number	int
+Day	string
+Month	string
+Short_Month	string
+Calendar_Month_Number	int
+Calendar_Month_Label	string
+Calendar_Year	int
+Calendar_Year_Label	string
+Fiscal_Month_Number	int
+Fiscal_Month_Label	string
+Fiscal_Year	int
+Fiscal_Year_Label	string
+ISO_Week_Number	int
+}
+Table reporting.Dimension.transaction_type{
+Transaction_Type_Key	int [primary key]
+WWI_Transaction_Type_ID	int
+Transaction_Type	string
+Valid_From	timestamp
+Valid_To	timestamp
+Lineage_Key	int
+}
+Table reporting.Dimension.employee{
+Employee_Key	int [primary key]
+WWI_Employee_ID	int
+Employee	string
+Preferred_Name	string
+Is_Salesperson	boolean
+Photo	binary
+Valid_From	timestamp
+Valid_To	timestamp
+Lineage_Key	int
+}
+Table reporting.Fact.Transaction{
+Transaction_Key	bigint [primary key]
+Date_Key	date [ref: > reporting.Dimension.date.Date]
+Customer_Key	int [ref: > reporting.Dimension.customer.Customer_Key]
+Bill_To_Customer_Key	int
+Supplier_Key	int
+Transaction_Type_Key	int
+Payment_Method_Key	int
+WWI_Customer_Transaction_ID	int
+WWI_Supplier_Transaction_ID	int
+WWI_Invoice_ID	int
+WWI_Purchase_Order_ID	int
+Supplier_Invoice_Number	string
+Total_Excluding_Tax	decimal(18,2)
+Tax_Amount	decimal(18,2)
+Total_Including_Tax	decimal(18,2)
+Outstanding_Balance	decimal(18,2)
+Is_Finalized	boolean
+Lineage_Key	int
+}
+
+
+Ref: reporting.Dimension.customer.Customer_Key < reporting.Fact.Sale.Customer_Key
+
+Ref: reporting.Dimension.customer.Customer_Key < reporting.Fact.Order.Customer_Key
+
+Ref: reporting.Dimension.customer.Customer_Key < reporting.Fact.Movement.Customer_Key
+
+Ref: reporting.Dimension.payment_method.Payment_Method_Key < reporting.Fact.Transaction.Payment_Method_Key
+
+Ref: reporting.Dimension.supplier.Supplier_Key < reporting.Fact.Movement.Supplier_Key
+
+Ref: reporting.Dimension.supplier.Supplier_Key < reporting.Fact.Transaction.Supplier_Key
+
+Ref: reporting.Dimension.supplier.Supplier_Key < reporting.Fact.Purchase.Supplier_Key
+
+Ref: reporting.Dimension.city.City_Key < reporting.Fact.Sale.City_Key
+
+Ref: reporting.Dimension.city.City_Key < reporting.Fact.Order.City_Key
+
+Ref: reporting.Dimension.stock_item.Stock_Item_Key < reporting.Fact.Movement.Stock_Item_Key
+
+Ref: reporting.Dimension.stock_item.Stock_Item_Key < reporting.Fact.Order.Stock_Item_Key
+
+Ref: reporting.Dimension.stock_item.Stock_Item_Key < reporting.Fact.Purchase.Stock_Item_Key
+
+Ref: reporting.Dimension.stock_item.Stock_Item_Key < reporting.Fact.Stock_Holding.Stock_Item_Key
+
+Ref: reporting.Dimension.stock_item.Stock_Item_Key < reporting.Fact.Sale.Stock_Item_Key
+
+Ref: reporting.Dimension.date.Date < reporting.Fact.Purchase.Date_Key
+
+Ref: reporting.Dimension.date.Date < reporting.Fact.Order.Order_Date_Key
+
+Ref: reporting.Dimension.date.Date < reporting.Fact.Order.Picked_Date_Key
+
+Ref: reporting.Dimension.date.Date < reporting.Fact.Movement.Date_Key
+
+Ref: reporting.Dimension.transaction_type.Transaction_Type_Key < reporting.Fact.Transaction.Transaction_Type_Key
+
+Ref: reporting.Dimension.transaction_type.Transaction_Type_Key < reporting.Fact.Movement.Transaction_Type_Key
+
+Ref: reporting.Dimension.employee.Employee_Key < reporting.Fact.Order.Salesperson_Key
+
+Ref: reporting.Dimension.employee.Employee_Key < reporting.Fact.Sale.Salesperson_Key
