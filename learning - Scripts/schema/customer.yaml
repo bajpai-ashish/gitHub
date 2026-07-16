@@ -1,0 +1,25 @@
+cubes:
+  - name: customer
+    sql: SELECT * FROM reporting.Dimension.customer # Agnostic path to data
+
+    dimensions:
+      - name: customer_key
+        sql: customer_key
+        type: number
+        primary_key: true
+        public: false # Hide surrogate keys from the AI agent to avoid confusion
+
+      - name: name
+        sql: customer
+        type: string
+        description: "The official name of the customer company or individual."
+
+      - name: category
+        sql: category
+        type: string
+        description: "The business category classification of the customer."
+
+      - name: buying_group
+        sql: buying_group
+        type: string
+        description: "The corporate buying group or franchise affiliation."

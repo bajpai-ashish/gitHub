@@ -1,0 +1,36 @@
+cubes:
+  - name: sales
+    sql: SELECT * FROM reporting.Fact.Sale
+
+    # DBML: Ref: reporting.Dimension.customer.Customer_Key < reporting.Fact.Sale.Customer_Key
+    joins:
+      - name: customer
+        relationship: belongs_to
+        sql: "{CUBE}.customer_key = {customer}.customer_key"
+
+    dimensions:
+      - name: sale_key
+        sql: sale_key
+        type: number
+        primary_key: true
+        public: false
+
+      - name: description
+        sql: description
+        type: string
+
+    measures:
+      - name: total_quantity
+        sql: quantity
+        type: sum
+        description: "Total physical item count sold."
+
+      - name: total_excluding_tax
+        sql: total_excluding_tax
+        type: sum
+        description: "Net revenue generated before taxes."
+
+      - name: total_profit
+        sql: profit
+        type: sum
+        description: "Total net profit margin made on sales."

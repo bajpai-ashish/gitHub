@@ -1,0 +1,26 @@
+cubes:
+  - name: date_dim
+    sql: SELECT * FROM reporting.Dimension.date
+
+    dimensions:
+      - name: date_key
+        sql: date
+        type: time
+        primary_key: true
+        public: true # Keep this public so the agent can filter on exact dates if needed
+        description: "The primary calendar date field."
+
+      - name: calendar_month
+        sql: calendar_month_label
+        type: string
+        description: "The calendar month name (e.g., CY2026-Jan)."
+
+      - name: calendar_year
+        sql: calendar_year
+        type: number
+        description: "The 4-digit calendar year (e.g., 2026)."
+
+      - name: fiscal_year
+        sql: fiscal_year_label
+        type: string
+        description: "The official corporate fiscal year label."
