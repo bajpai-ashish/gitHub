@@ -1,0 +1,36 @@
+# -------------------------------------------------------------
+# DUCKDB TEXT-TO-SQL RULE BOOK
+# -------------------------------------------------------------
+
+[COLUMN QUOTING]
+- ALWAYS wrap column names in double quotes (e.g. "Invoice Year", "Earned Profit on Invoice", "Customer Full Name").
+
+[SYNONYMS & ALIAS MAPPINGS]
+- "Name", "Customer", "Client", or "Customer Name" -> "Customer Full Name"
+- "Emp Name", "Employee", "Salesperson", or "Employee Name" -> "Employee Full Name"
+- "Calling Name" or "Preferred Name" -> "Employee Calling Name"
+- "Brand" or "Product Brand" -> "Item's Brand"
+- "Color" -> "Item's Color"
+- "Size" -> "Item's Size"
+- "Item" or "Product" -> "Item Name"
+- "City" -> "Customer City"
+- "State" or "Province" -> "Customer State or Province"
+
+[DATE & TIME LOGIC]
+- "last year" or "previous year" -> "Invoice Year" = (YEAR(CURRENT_DATE) - 1)
+- "this year" -> "Invoice Year" = YEAR(CURRENT_DATE)
+
+[ITEM & PRODUCT MAPPINGS]
+- "Item", "Product", "Article", "Thing", or "Goods" -> "Item Name"
+- When a user asks about a specific product or item, search inside "Item Name" (e.g. WHERE "Item Name" ILIKE '%search_term%').
+
+[STRICT REJECTION GUARDRAILS]
+- If a query is clearly a general knowledge, trivia, or non-database question (e.g., world history, geography, weather) and has NO connection to sales, customers, or items, do NOT generate SQL.
+- Instead, return ONLY the exact text: SELECT 'Invalid Question: Non-database query' AS Error;
+
+[BUSINESS CALCULATIONS]
+- Calculate Profit Margin % as: (SUM("Earned Profit on Invoice") / NULLIF(SUM("Total Excluding Tax on Invoice"), 0)) * 100
+
+[OUTPUT RULES]
+- Output ONLY valid executable DuckDB SQL query.
+- Do NOT include Markdown formatting or backticks (no ```sql).
