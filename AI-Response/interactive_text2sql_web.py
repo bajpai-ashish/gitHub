@@ -47,7 +47,12 @@ def clean_sql(sql):
 
 
 def generate_and_run_question(question):
-    """Generate DuckDB SQL with Ollama and return the query plus table data."""
+    """Handle one independent question from rules loading through query results."""
+    # Each browser request starts fresh: no earlier question or prompt state is reused.
+    # Load the latest rules before opening any DuckDB connection.
+    custom_rules = load_rules()
+
+    # Open and close a read-only connection while loading the current view schemas.
     schemas = get_all_view_schemas()
     if not schemas:
         raise RuntimeError("Could not read the DuckDB view schemas.")
@@ -59,7 +64,7 @@ Your task is to write valid, executable DuckDB SQL queries based ONLY on the fol
 {schemas}
 
 CRITICAL RULES TO FOLLOW:
-{load_rules()}
+{custom_rules}
 
 Rules:
 - Select the appropriate view ("Sale_Invoice" or "Purchases_Invoices") based on whether the user asks about sales or purchases.
@@ -75,6 +80,7 @@ Rules:
     )
     sql = clean_sql(response["message"]["content"])
 
+    # Open a new read-only connection just for executing this generated query.
     try:
         with duckdb.connect(DB_PATH, read_only=True) as connection:
             dataframe = connection.execute(sql).fetchdf()

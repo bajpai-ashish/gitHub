@@ -13,6 +13,7 @@
 
 [COLUMN QUOTING]
 - ALWAYS wrap column names in double quotes (e.g. "Invoice Year", "Earned Profit on Invoice", "Customer Full Name").
+- For every query, including queries using only one view, prefix every column with its source view name or table alias.
 
 [VIEW ROUTING RULES]
 - "Sale_Invoice": Use for queries about sales, customers, profit, revenue, sales representatives/employees, and selling quantities.
@@ -55,6 +56,7 @@
   * ALWAYS prefix shared column names with their respective view name (e.g. "Sale_Invoice"."Item Name", "Purchases_Invoices"."Item ID").
   * Use explicit table aliases if joining (e.g., FROM "Sale_Invoice" s JOIN "Purchases_Invoices" p ON s."Item ID" = p."Item ID").
 - When selecting shared columns in a JOIN query, explicitly state which view's column to pick (e.g. COALESCE(s."Item Name", p."Item Name") AS "Item Name" OR s."Item Name").
+
 
 [OUTPUT RULES]
 - Output ONLY valid executable DuckDB SQL query.
