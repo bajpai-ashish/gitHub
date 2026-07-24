@@ -1,6 +1,6 @@
 import os
 import ollama
-from db_helper import get_view_schema, execute_query, VIEW_NAME
+from db_helper import get_all_view_schemas, execute_query, VIEW_NAMES
 
 RULES_FILE = "rules.txt"
 
@@ -15,8 +15,8 @@ def load_rules():
 
 def main():
     # 1. Load schema from db_helper
-    columns_str = get_view_schema()
-    if not columns_str:
+    all_schemas = get_all_view_schemas()
+    if not all_schemas:
         print("Exiting application due to database error.")
         return
 
@@ -26,18 +26,21 @@ def main():
     # 3. Construct the system prompt
     system_schema_prompt = f"""
 You are an expert DuckDB SQL Developer.
-Your task is to write valid, executable DuckDB SQL queries based ONLY on the following view schema:
+Your task is to write valid, executable DuckDB SQL queries based ONLY on the following available view schemas:
 
-VIEW "{VIEW_NAME}" (
-{columns_str}
-);
+{all_schemas}
 
 CRITICAL RULES TO FOLLOW:
 {custom_rules}
+
+Rules:
+- Select the appropriate view ("Sale_Invoice" or "Purchases_Invoices") based on whether the user asks about sales or purchases.
+- Output ONLY raw executable DuckDB SQL without markdown backticks (no ```sql) or explanations.
 """
 
     print("\n" + "="*60)
-    print("🤖 Local AI Text-to-SQL Interactive Session Started!")
+    print("🤖 Local AI Multi-View Text-to-SQL Session Started!")
+    print(f"Registered Views: {', '.join(VIEW_NAMES)}")
     print(f"Loaded rules from '{RULES_FILE}' successfully.")
     print("Type your questions below. Type 'End' or 'exit' to quit.")
     print("="*60 + "\n")

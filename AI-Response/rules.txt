@@ -2,31 +2,46 @@
 # DUCKDB TEXT-TO-SQL RULE BOOK
 # -------------------------------------------------------------
 
+[VIEW ROUTING & ENTITY RULES]
+- CUSTOMER ACTIONS -> Always use "Sale_Invoice"
+  * Phrases like "customer bought", "customer purchased", "customer orders", "sales to customer" MUST query "Sale_Invoice".
+  * Reason: "Customer Full Name" and "Customer City" only exist in "Sale_Invoice".
+
+- COMPANY/SUPPLIER ACTIONS -> Always use "Purchases_Invoices"
+  * Phrases like "we bought", "we purchased", "orders from supplier", "vendor orders", "procurement" MUST query "Purchases_Invoices".
+  * Reason: "Supplier Name" and "Supplier Code" only exist in "Purchases_Invoices".
+
 [COLUMN QUOTING]
 - ALWAYS wrap column names in double quotes (e.g. "Invoice Year", "Earned Profit on Invoice", "Customer Full Name").
 
-[SYNONYMS & ALIAS MAPPINGS]
-- "Name", "Customer", "Client", or "Customer Name" -> "Customer Full Name"
-- "Emp Name", "Employee", "Salesperson", or "Employee Name" -> "Employee Full Name"
-- "Calling Name" or "Preferred Name" -> "Employee Calling Name"
-- "Brand" or "Product Brand" -> "Item's Brand"
-- "Color" -> "Item's Color"
-- "Size" -> "Item's Size"
-- "Item" or "Product" -> "Item Name"
-- "City" -> "Customer City"
-- "State" or "Province" -> "Customer State or Province"
+[VIEW ROUTING RULES]
+- "Sale_Invoice": Use for queries about sales, customers, profit, revenue, sales representatives/employees, and selling quantities.
+- "Purchases_Invoices": Use for queries about purchases, suppliers, purchase orders, ordered outers, received outers, and procurement.
 
-[DATE & TIME LOGIC]
-- "last year" or "previous year" -> "Invoice Year" = (YEAR(CURRENT_DATE) - 1)
-- "this year" -> "Invoice Year" = YEAR(CURRENT_DATE)
+[COLUMN & SYNONYM MAPPINGS - PURCHASES]
+- "Supplier", "Vendor", "Supplier Name" -> "Supplier Name"
+- "Purchase Date", "Order Date" -> "Purchase Date"
+- "Purchase Year" -> "Purchase Year"
+- "Purchase Month" -> "Purchase Month"
+- "Ordered Quantity", "Quantity Ordered" -> "Ordered Quantity"
+- "Received Quantity", "Received Outers" -> "Received Outers"
 
-[ITEM & PRODUCT MAPPINGS]
-- "Item", "Product", "Article", "Thing", or "Goods" -> "Item Name"
-- When a user asks about a specific product or item, search inside "Item Name" (e.g. WHERE "Item Name" ILIKE '%search_term%').
+[COLUMN & SYNONYM MAPPINGS - SHARED / ITEMS]
+- "Item", "Product", "Stock Item" -> "Item Name"
+- "Brand" -> "Item Brand" (Purchases_Invoices) or "Item's Brand" (Sale_Invoice)
+- "Color" -> "Item Color" (Purchases_Invoices) or "Item's Color" (Sale_Invoice)
+- "Size" -> "Item Size" (Purchases_Invoices) or "Item's Size" (Sale_Invoice)
+
+[DATE LOGIC]
+- "last year" -> "Purchase Year" = (YEAR(CURRENT_DATE) - 1) [for purchases] OR "Invoice Year" = (YEAR(CURRENT_DATE) - 1) [for sales]
+- "this year" -> "Purchase Year" = YEAR(CURRENT_DATE) [for purchases] OR "Invoice Year" = YEAR(CURRENT_DATE) [for sales]
+- "last week" -> "Invoice Date" >= (CURRENT_DATE - INTERVAL '7 DAYS') [for Sale_Invoice] OR "Purchase Date" >= (CURRENT_DATE - INTERVAL '7 DAYS') [for Purchases_Invoices]
+- "last year" -> "Invoice Year" = (YEAR(CURRENT_DATE) - 1) [for Sale_Invoice] OR "Purchase Year" = (YEAR(CURRENT_DATE) - 1) [for Purchases_Invoices]
+- "this year" -> "Invoice Year" = YEAR(CURRENT_DATE) [for Sale_Invoice] OR "Purchase Year" = YEAR(CURRENT_DATE) [for Purchases_Invoices]
 
 [STRICT REJECTION GUARDRAILS]
-- If a query is clearly a general knowledge, trivia, or non-database question (e.g., world history, geography, weather) and has NO connection to sales, customers, or items, do NOT generate SQL.
-- Instead, return ONLY the exact text: SELECT 'Invalid Question: Non-database query' AS Error;
+- If a query is a general knowledge or non-database question, return ONLY:
+  SELECT 'Invalid Question: Non-database query' AS Error;
 
 [BUSINESS CALCULATIONS]
 - Calculate Profit Margin % as: (SUM("Earned Profit on Invoice") / NULLIF(SUM("Total Excluding Tax on Invoice"), 0)) * 100
