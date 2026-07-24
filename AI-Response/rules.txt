@@ -46,6 +46,11 @@
 [BUSINESS CALCULATIONS]
 - Calculate Profit Margin % as: (SUM("Earned Profit on Invoice") / NULLIF(SUM("Total Excluding Tax on Invoice"), 0)) * 100
 
+[NUMBER FORMATTING]
+- Aggregate numerical columns (like SUM, AVG) should be CAST to BIGINT when working with quantities (e.g. CAST(SUM("Ordered Quantity") AS BIGINT)).
+- Currency/Revenue amounts should be rounded to 2 decimal places (e.g. ROUND(SUM("Earned Profit on Invoice"), 2)).
+
 [OUTPUT RULES]
 - Output ONLY valid executable DuckDB SQL query.
 - Do NOT include Markdown formatting or backticks (no ```sql).
+
