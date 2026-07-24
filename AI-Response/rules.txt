@@ -50,6 +50,12 @@
 - Aggregate numerical columns (like SUM, AVG) should be CAST to BIGINT when working with quantities (e.g. CAST(SUM("Ordered Quantity") AS BIGINT)).
 - Currency/Revenue amounts should be rounded to 2 decimal places (e.g. ROUND(SUM("Earned Profit on Invoice"), 2)).
 
+[JOIN & COLUMN ALIASING RULES]
+- When writing a query that JOINs multiple views (e.g. JOIN "Sale_Invoice" and "Purchases_Invoices"):
+  * ALWAYS prefix shared column names with their respective view name (e.g. "Sale_Invoice"."Item Name", "Purchases_Invoices"."Item ID").
+  * Use explicit table aliases if joining (e.g., FROM "Sale_Invoice" s JOIN "Purchases_Invoices" p ON s."Item ID" = p."Item ID").
+- When selecting shared columns in a JOIN query, explicitly state which view's column to pick (e.g. COALESCE(s."Item Name", p."Item Name") AS "Item Name" OR s."Item Name").
+
 [OUTPUT RULES]
 - Output ONLY valid executable DuckDB SQL query.
 - Do NOT include Markdown formatting or backticks (no ```sql).

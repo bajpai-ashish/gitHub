@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3-Pane Layout</title>
+  <style>
+    /* Reset margins and set full screen height */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #17323d;
+      background: #eaf6fa;
+    }
+
+    /* Outer Container: Splits page into Left (70%) and Right (30%) */
+    .container {
+      display: grid;
+      grid-template-columns: 70% 30%;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Left Frame styling */
+    .left-frame {
+      background: linear-gradient(145deg, #f5f8d8 0%, #dce99d 100%);
+      border-right: 1px solid #b6c465;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow: hidden;
+    }
+
+    /* Right Container: Splits vertically into Top (70%) and Bottom (30%) */
+    .right-container {
+      display: grid;
+      grid-template-rows: 80% 20%;
+      height: 100%;
+    }
+
+    /* Right Top Frame styling */
+    .right-top-frame {
+      background: linear-gradient(180deg, #f4fcff 0%, #d9f5fc 100%);
+      padding: 28px 24px 16px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    /* Right Bottom Frame styling */
+    .right-bottom-frame {
+      background: #d9f5fc;
+      padding: 16px 24px 24px;
+      border-top: 1px solid rgba(115, 185, 206, 0.45);
+    }
+
+    h2, h3 {
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      color: #41521a;
+      font-size: 1.45rem;
+    }
+
+    h3 {
+      color: #245365;
+      font-size: 1rem;
+    }
+
+    .prompt-form {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      margin-top: 14px;
+      border: 1px solid #a5cfdc;
+      border-radius: 18px;
+      background: #fff;
+      padding: 5px;
+      box-shadow: 0 8px 20px rgba(59, 128, 149, 0.13);
+    }
+
+    .prompt-input {
+      flex: 1;
+      min-width: 0;
+      min-height: 72px;
+      border: 0;
+      background: transparent;
+      padding: 8px 11px;
+      font: inherit;
+      outline: none;
+      resize: vertical;
+    }
+
+    .prompt-form:focus-within {
+      border-color: #4295ad;
+      box-shadow: 0 0 0 3px rgba(66, 149, 173, 0.16), 0 8px 20px rgba(59, 128, 149, 0.13);
+    }
+
+    .send-button {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      border: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a819c, #175d75);
+      box-shadow: 0 4px 10px rgba(31, 105, 129, 0.25);
+      color: #fff;
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .send-button:hover {
+      background: linear-gradient(135deg, #359ebd, #1c6c85);
+      transform: translateY(-1px);
+    }
+
+    .send-button:focus-visible {
+      outline: 3px solid rgba(139, 77, 63, 0.35);
+      outline-offset: 2px;
+    }
+
+    .chat-history {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .history-empty {
+      color: #355761;
+      font-size: 0.9rem;
+    }
+
+    .history-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      align-self: flex-end;
+      max-width: 86%;
+      border-radius: 18px 18px 4px 18px;
+      background: #d9f7c8;
+      padding: 10px;
+      box-shadow: 0 2px 6px rgba(44, 99, 59, 0.12);
+    }
+
+    .history-text {
+      flex: 1;
+      min-width: 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      color: #243a42;
+    }
+
+    .reuse-button {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      flex: 0 0 26px;
+      border: 0;
+      border-radius: 50%;
+      background: #4e8799;
+      color: #fff;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .reuse-button:hover {
+      background: #376b7b;
+    }
+
+    .right-top-panels {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .chat-panel {
+      display: flex;
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      flex-direction: column;
+    }
+
+    .chat-panel .chat-history {
+      margin-top: 10px;
+    }
+
+    .sql-history-item {
+      align-self: flex-start;
+      max-width: 90%;
+      border-radius: 18px 18px 18px 4px;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(36, 58, 66, 0.13);
+      padding: 10px 12px;
+    }
+
+    .sql-history-label {
+      display: block;
+      margin-bottom: 6px;
+      color: #4e8799;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .sql-history-text {
+      color: #243a42;
+      font: 0.78rem/1.45 Consolas, 'Courier New', monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .sql-history-item.is-error {
+      background: #fff0f0;
+    }
+
+    .sql-history-item.is-error .sql-history-label,
+    .sql-history-item.is-error .sql-history-text {
+      color: #a12727;
+    }
+
+    .result-table-wrapper {
+      flex: 1;
+      overflow: auto;
+      border: 1px solid rgba(132, 150, 46, 0.45);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 10px 25px rgba(98, 111, 30, 0.1);
+    }
+
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    .result-table th,
+    .result-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #d9dfaa;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .result-table th {
+      position: sticky;
+      top: 0;
+      background: #677824;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .result-table tbody tr:nth-child(even) {
+      background: #f4f7df;
+    }
+
+    .result-table tbody tr:nth-child(odd) {
+      background: #fff;
+    }
+
+    .result-table tbody tr:hover {
+      background: #e3edbf;
+    }
+
+    .result-message { color: #4d571d; }
+    .result-error { color: #a12727; }
+    .send-button:disabled { cursor: wait; opacity: 0.7; }
+
+    @media (max-width: 800px) {
+      .container { grid-template-columns: 1fr; height: auto; min-height: 100vh; }
+      .left-frame { min-height: 45vh; }
+      .right-container { min-height: 55vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Left Frame (70% Width) -->
+    <div class="left-frame">
+      <h2>Query Results</h2>
+      <div class="result-table-wrapper" id="result-table-wrapper">
+        <p class="result-message">Run a question to see the query results here.</p>
+      </div>
+    </div>
+
+    <!-- Right Column Container -->
+    <div class="right-container">
+      <!-- Right Top Frame (80% Height) -->
+      <div class="right-top-frame">
+        <div class="right-top-panels">
+          <section class="chat-panel" aria-labelledby="chat-title">
+            <h3 id="chat-title">Chat History</h3>
+            <div class="chat-history" id="chat-history" aria-live="polite">
+              <p class="history-empty" id="history-empty">Your submitted messages will appear here.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Right Bottom Frame (Remaining 20% Height) -->
+      <div class="right-bottom-frame">
+        <h3>&#128173; Ask Your Data</h3>
+        <form class="prompt-form" id="prompt-form">
+          <textarea class="prompt-input" id="prompt-input" rows="3" placeholder="Type a message..." aria-label="Message"></textarea>
+          <button class="send-button" type="submit" aria-label="Send message" title="Send message">&#8593;</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const promptForm = document.getElementById('prompt-form');
+    const promptInput = document.getElementById('prompt-input');
+    const chatHistory = document.getElementById('chat-history');
+    const historyEmpty = document.getElementById('history-empty');
+    const resultTableWrapper = document.getElementById('result-table-wrapper');
+    const sendButton = promptForm.querySelector('.send-button');
+
+    function addHistoryItem(message) {
+      if (historyEmpty) historyEmpty.remove();
+
+      const item = document.createElement('div');
+      item.className = 'history-item';
+
+      const text = document.createElement('p');
+      text.className = 'history-text';
+      text.textContent = message;
+
+      const reuseButton = document.createElement('button');
+      reuseButton.type = 'button';
+      reuseButton.className = 'reuse-button';
+      reuseButton.setAttribute('aria-label', 'Use this message again');
+      reuseButton.title = 'Use this message again';
+      reuseButton.textContent = '\u25B6';
+      reuseButton.addEventListener('click', () => {
+        promptInput.value = message;
+        promptInput.focus();
+      });
+
+      item.append(text, reuseButton);
+      chatHistory.append(item);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+
+    function addSqlHistoryItem(message, isError = false) {
+      const item = document.createElement('div');
+      item.className = `sql-history-item${isError ? ' is-error' : ''}`;
+
+      const label = document.createElement('span');
+      label.className = 'sql-history-label';
+      label.textContent = isError ? 'Error' : 'SQL Query';
+
+      const text = document.createElement('pre');
+      text.className = 'sql-history-text';
+      text.textContent = message;
+
+      item.append(label, text);
+      chatHistory.append(item);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+      return { item, label, text };
+    }
+
+    function showResultMessage(message, isError = false) {
+      resultTableWrapper.replaceChildren();
+      const resultMessage = document.createElement('p');
+      resultMessage.className = isError ? 'result-error' : 'result-message';
+      resultMessage.textContent = message;
+      resultTableWrapper.append(resultMessage);
+    }
+
+    function showResults(columns, rows, rowCount) {
+      if (!rows.length) {
+        showResultMessage(`Query completed. ${rowCount} rows returned.`);
+        return;
+      }
+
+      resultTableWrapper.replaceChildren();
+      const table = document.createElement('table');
+      table.className = 'result-table';
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+
+      columns.forEach((column) => {
+        const header = document.createElement('th');
+        header.textContent = column;
+        headerRow.append(header);
+      });
+      thead.append(headerRow);
+      table.append(thead);
+
+      const tbody = document.createElement('tbody');
+      rows.forEach((row) => {
+        const tableRow = document.createElement('tr');
+        columns.forEach((column) => {
+          const cell = document.createElement('td');
+          cell.textContent = row[column] ?? '';
+          tableRow.append(cell);
+        });
+        tbody.append(tableRow);
+      });
+      table.append(tbody);
+      resultTableWrapper.append(table);
+    }
+
+    promptForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const message = promptInput.value.trim();
+      if (!message) return;
+
+      addHistoryItem(message);
+      promptInput.value = '';
+      sendButton.disabled = true;
+      const sqlHistoryItem = addSqlHistoryItem('Generating and running query...');
+      showResultMessage('Generating and running query...');
+      let hasGeneratedSql = false;
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: message }),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          if (data.sql) {
+            sqlHistoryItem.text.textContent = data.sql;
+            hasGeneratedSql = true;
+          }
+          throw new Error(data.error || 'The query could not be completed.');
+        }
+
+        sqlHistoryItem.text.textContent = data.sql;
+        hasGeneratedSql = true;
+        showResults(data.columns, data.rows, data.row_count);
+      } catch (error) {
+        const errorMessage = error.message || 'Could not reach the Python service.';
+        if (!hasGeneratedSql) {
+          sqlHistoryItem.item.classList.add('is-error');
+          sqlHistoryItem.label.textContent = 'Error';
+          sqlHistoryItem.text.textContent = errorMessage;
+        }
+        showResultMessage(errorMessage, true);
+      } finally {
+        sendButton.disabled = false;
+        promptInput.focus();
+      }
+    });
+
+    promptInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
+        event.preventDefault();
+        promptForm.requestSubmit();
+      }
+    });
+  </script>
+
+</body>
+</html>
