@@ -22,23 +22,22 @@
 [COLUMN & SYNONYM MAPPINGS - PURCHASES]
 - "Supplier", "Vendor", "Supplier Name" -> "Supplier Name"
 - "Purchase Date", "Order Date" -> "Purchase Date"
-- "Purchase Year" -> "Purchase Year"
-- "Purchase Month" -> "Purchase Month"
+- "Purchase Year" -> "Purchased  or Order Year Number"
+- "Purchase Month" -> "Purchased  or Order Month Number"
+- "Purchase Month Name" -> "Purchased  or Order Month Name"
 - "Ordered Quantity", "Quantity Ordered" -> "Ordered Quantity"
 - "Received Quantity", "Received Outers" -> "Received Outers"
 
 [COLUMN & SYNONYM MAPPINGS - SHARED / ITEMS]
 - "Item", "Product", "Stock Item" -> "Item Name"
-- "Brand" -> "Item Brand" (Purchases_Invoices) or "Item's Brand" (Sale_Invoice)
-- "Color" -> "Item Color" (Purchases_Invoices) or "Item's Color" (Sale_Invoice)
-- "Size" -> "Item Size" (Purchases_Invoices) or "Item's Size" (Sale_Invoice)
+- "Brand" -> "Item Brand" (Purchases_Invoices) or "Item Brand" (Sale_Invoice)
+- "Color" -> "Item Color" (Purchases_Invoices) or "Item Color" (Sale_Invoice)
+- "Size" -> "Item Size" (Purchases_Invoices) or "Item Size" (Sale_Invoice)
 
 [DATE LOGIC]
-- "last year" -> "Purchase Year" = (YEAR(CURRENT_DATE) - 1) [for purchases] OR "Invoice Year" = (YEAR(CURRENT_DATE) - 1) [for sales]
-- "this year" -> "Purchase Year" = YEAR(CURRENT_DATE) [for purchases] OR "Invoice Year" = YEAR(CURRENT_DATE) [for sales]
-- "last week" -> "Invoice Date" >= (CURRENT_DATE - INTERVAL '7 DAYS') [for Sale_Invoice] OR "Purchase Date" >= (CURRENT_DATE - INTERVAL '7 DAYS') [for Purchases_Invoices]
-- "last year" -> "Invoice Year" = (YEAR(CURRENT_DATE) - 1) [for Sale_Invoice] OR "Purchase Year" = (YEAR(CURRENT_DATE) - 1) [for Purchases_Invoices]
-- "this year" -> "Invoice Year" = YEAR(CURRENT_DATE) [for Sale_Invoice] OR "Purchase Year" = YEAR(CURRENT_DATE) [for Purchases_Invoices]
+- "last week" -> "Invoice Dates" >= (CURRENT_DATE - INTERVAL '7 DAYS') [for Sale_Invoice] OR "Purchased  or Order Date" >= (CURRENT_DATE - INTERVAL '7 DAYS') [for Purchases_Invoices]
+- "last year" -> "Invoice Year Number" = (YEAR(CURRENT_DATE) - 1) [for Sale_Invoice] OR "Purchased  or Order Year Number" = (YEAR(CURRENT_DATE) - 1) [for Purchases_Invoices]
+- "this year" -> "Invoice Year Number" = YEAR(CURRENT_DATE) [for Sale_Invoice] OR "Purchased  or Order Year Number" = YEAR(CURRENT_DATE) [for Purchases_Invoices]
 
 [STRICT REJECTION GUARDRAILS]
 - If a query is a general knowledge or non-database question, return ONLY:
@@ -56,6 +55,40 @@
   * ALWAYS prefix shared column names with their respective view name (e.g. "Sale_Invoice"."Item Name", "Purchases_Invoices"."Item ID").
   * Use explicit table aliases if joining (e.g., FROM "Sale_Invoice" s JOIN "Purchases_Invoices" p ON s."Item ID" = p."Item ID").
 - When selecting shared columns in a JOIN query, explicitly state which view's column to pick (e.g. COALESCE(s."Item Name", p."Item Name") AS "Item Name" OR s."Item Name").
+
+[GROUP BY & AGGREGATION RULES]
+- MANDATORY GROUP BY CLAUSE: Whenever using aggregate functions (e.g. SUM, COUNT, AVG, MIN, MAX), EVERY non-aggregated column listed in the SELECT clause MUST be included in the GROUP BY clause.
+- Example: If selecting `SELECT "Customer Full Name", "Invoice Month Name", SUM("Earned Profit on Invoice")`, the group by MUST be `GROUP BY "Customer Full Name", "Invoice Month Name"`.
+- Never leave selected dimensions or attributes out of the GROUP BY clause.
+
+[UNIVERSAL GROUP BY & AGGREGATION RULES]
+- MANDATORY GROUP BY CLAUSE: Whenever an aggregate function (e.g. SUM, COUNT, AVG, MIN, MAX) is used in a SELECT statement, EVERY non-aggregated column in the SELECT clause MUST be listed in the GROUP BY clause.
+- This rule applies universally across ALL views (Sale_Invoice, Purchases_Invoices, fact_order, etc.).
+- Incorrect:  SELECT "Supplier Name", "Purchase Month", SUM("Ordered Quantity") ... GROUP BY "Purchase Month"
+- Correct:    SELECT "Supplier Name", "Purchase Month", SUM("Ordered Quantity") ... GROUP BY "Supplier Name", "Purchase Month"
+
+[UNIVERSAL SORTING & ORDERING RULES]
+- TOP N / AGGREGATION SORTING: Whenever calculating aggregated totals (e.g. SUM, COUNT, AVG) or asking for "top", "best", "highest", or "worst", ALWAYS add an ORDER BY clause.
+  * Order by the primary metric DESCENDING for "top/best/highest" (e.g. ORDER BY Total_Profit DESC).
+  * Order by the primary metric ASCENDING for "bottom/lowest/worst" (e.g. ORDER BY Total_Profit ASC).
+- CHRONOLOGICAL SORTING: When grouping by time periods (Year, Quarter, Month, Week, Date), ensure the final output is sorted chronologically by the numeric date or period sequence (e.g. ORDER BY "Purchase Year", "Purchase Month Number").
+- DEFAULT LIMIT: If the user asks for "top items", "best customers", or "suppliers" without specifying a count, default to `LIMIT 10` to keep result sets readable.
+
+[UNIVERSAL DATE & TIME HANDLING]
+- DUCKDB CURRENT DATE: Always use `CURRENT_DATE` (not `GETDATE()` or `NOW()`) for current date references in DuckDB.
+- DATE FILTERING PATTERNS:
+  * "this year"      -> "Calendar_Year" = YEAR(CURRENT_DATE) OR "Invoice Year" = YEAR(CURRENT_DATE)
+  * "last year"      -> "Calendar_Year" = (YEAR(CURRENT_DATE) - 1) OR "Invoice Year" = (YEAR(CURRENT_DATE) - 1)
+  * "last 30 days"   -> <Date Column> >= (CURRENT_DATE - INTERVAL '30 DAYS')
+  * "last N months"  -> <Date Column> >= (CURRENT_DATE - INTERVAL 'N MONTHS')
+  * "year to date"   -> <Date Column> >= DATE_TRUNC('year', CURRENT_DATE)
+- DATE AGGREGATION: When grouping by month, select both the Month Name and Month Number to allow correct chronological sorting (e.g., SELECT "Purchase Month", "Purchase Month Number" ... ORDER BY "Purchase Month Number").
+
+[UNIVERSAL NULL & ZERO-DIVISION HANDLING]
+- SAFE DIVISION: When dividing numeric columns (e.g. Profit Margin %, Unit Price calculations, Growth rates), ALWAYS use `NULLIF(denominator, 0)` to prevent Zero-Division runtime errors.
+  * Example: `(SUM("Earned Profit") / NULLIF(SUM("Total Cost"), 0)) * 100`
+- NULL STRING & CATEGORY MATCHING: When filtering text or string attributes using `ILIKE`, prefer using `COALESCE("Column Name", '') ILIKE '%term%'` if the column might contain NULLs.
+- NULL AGGREGATE DISPLAY: Use `COALESCE(SUM("Column"), 0)` when outputting totals where `NULL` records might cause blank table cells in summary reports.
 
 
 [OUTPUT RULES]

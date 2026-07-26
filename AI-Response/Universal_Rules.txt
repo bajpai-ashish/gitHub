@@ -1,0 +1,28 @@
+
+# -------------------------------------------------------------
+# ENTERPRISE SQL EXECUTION RULES (UNIVERSAL ACROSS ALL VIEWS)
+# -------------------------------------------------------------
+
+[UNIVERSAL SORTING & ORDERING RULES]
+- TOP N / AGGREGATION SORTING: Whenever calculating aggregated totals (e.g. SUM, COUNT, AVG) or asking for "top", "best", "highest", or "worst", ALWAYS add an ORDER BY clause.
+  * Order by the primary metric DESCENDING for "top/best/highest" (e.g. ORDER BY Total_Profit DESC).
+  * Order by the primary metric ASCENDING for "bottom/lowest/worst" (e.g. ORDER BY Total_Profit ASC).
+- CHRONOLOGICAL SORTING: When grouping by time periods (Year, Quarter, Month, Week, Date), ensure the final output is sorted chronologically by the numeric date or period sequence (e.g. ORDER BY "Purchase Year", "Purchase Month Number").
+- DEFAULT LIMIT: If the user asks for "top items", "best customers", or "suppliers" without specifying a count, default to `LIMIT 10` to keep result sets readable.
+
+[UNIVERSAL DATE & TIME HANDLING]
+- DUCKDB CURRENT DATE: Always use `CURRENT_DATE` (not `GETDATE()` or `NOW()`) for current date references in DuckDB.
+- DATE FILTERING PATTERNS:
+  * "this year"      -> "Calendar_Year" = YEAR(CURRENT_DATE) OR "Invoice Year" = YEAR(CURRENT_DATE)
+  * "last year"      -> "Calendar_Year" = (YEAR(CURRENT_DATE) - 1) OR "Invoice Year" = (YEAR(CURRENT_DATE) - 1)
+  * "last 30 days"   -> <Date Column> >= (CURRENT_DATE - INTERVAL '30 DAYS')
+  * "last N months"  -> <Date Column> >= (CURRENT_DATE - INTERVAL 'N MONTHS')
+  * "year to date"   -> <Date Column> >= DATE_TRUNC('year', CURRENT_DATE)
+- DATE AGGREGATION: When grouping by month, select both the Month Name and Month Number to allow correct chronological sorting (e.g., SELECT "Purchase Month", "Purchase Month Number" ... ORDER BY "Purchase Month Number").
+
+[UNIVERSAL NULL & ZERO-DIVISION HANDLING]
+- SAFE DIVISION: When dividing numeric columns (e.g. Profit Margin %, Unit Price calculations, Growth rates), ALWAYS use `NULLIF(denominator, 0)` to prevent Zero-Division runtime errors.
+  * Example: `(SUM("Earned Profit") / NULLIF(SUM("Total Cost"), 0)) * 100`
+- NULL STRING & CATEGORY MATCHING: When filtering text or string attributes using `ILIKE`, prefer using `COALESCE("Column Name", '') ILIKE '%term%'` if the column might contain NULLs.
+- NULL AGGREGATE DISPLAY: Use `COALESCE(SUM("Column"), 0)` when outputting totals where `NULL` records might cause blank table cells in summary reports.
+
