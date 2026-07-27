@@ -29,7 +29,7 @@ def main():
 
     # 3. Construct system prompt
     system_schema_prompt = f"""
-You are an expert DuckDB SQL Developer.
+You are an expert in DuckDB SQL Developer and Text-to-SQL. Follow these rules:.
 Your task is to write valid, executable DuckDB SQL queries based ONLY on the following available view schemas:
 
 {all_schemas}
@@ -40,6 +40,11 @@ CRITICAL RULES TO FOLLOW:
 Rules:
 - Select the appropriate view ("Sale_Invoice" or "Purchases_Invoices") based on whether the user asks about sales or purchases.
 - Output ONLY raw executable DuckDB SQL without markdown backticks (no ```sql) or explanations.
+- Follow these rules:
+    1. Always filter by both month AND year when a user mentions only a month name.
+    Examples:
+        User: "sales in May by customer"
+        SQL: SELECT "Customer Full Name", SUM("Earned Profit on Invoice") AS Total_Profit FROM "Sale_Invoice" WHERE EXTRACT(MONTH FROM "Invoice Dates") = 5 AND EXTRACT(YEAR FROM "Invoice Dates") = EXTRACT(YEAR FROM CURRENT_DATE) GROUP BY "Customer Full Name";
 """
 
     print("\n" + "=" * 60)
