@@ -3,7 +3,7 @@ import pandas as pd
 from tabulate import tabulate
 
 DB_PATH = "C:/data/my_warehouse.duckdb"
-VIEW_NAMES = ["Sale_Invoice", "Purchases_Invoices"]
+VIEW_NAMES = ["Sale_Invoice", "Purchases_Invoices", "customer_order_details"]
 
 # Format large floating-point numbers to standard decimals instead of scientific notation
 pd.options.display.float_format = "{:,.2f}".format

@@ -2,7 +2,7 @@
 
 CREATE OR REPLACE VIEW Purchases_Invoice AS
 SELECT
-    purchase.WWI_Purchase_Order_ID AS "Purchase Number",
+    purchase.WWI_Purchase_Order_ID AS "Purchase Code",
     purchase_date.Date AS "Purchased  or Order Dates",
     purchase_date.Day_Number AS "Purchased  or Order Day Number",
     purchase_date."Day" AS "Purchased  or Order Day",
@@ -24,7 +24,7 @@ SELECT
     supplier.Supplier_Reference AS "Supplier Reference",
     supplier.Payment_Days AS "Payment Days",
     supplier.Postal_Code AS "Postal Code",
-    Stock_Item.WWI_Stock_Item_ID AS "Item ID",
+    Stock_Item.WWI_Stock_Item_ID AS "Item Code",
     Stock_Item.Stock_Item AS "Item Name",
     Stock_Item.Color AS "Item Color",
     Stock_Item.Selling_Package AS "Item Selling Package",
