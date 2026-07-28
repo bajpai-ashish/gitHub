@@ -2,6 +2,99 @@
 # DUCKDB TEXT-TO-SQL RULE BOOK
 # -------------------------------------------------------------
 
+
+================================================================================
+TABLE & VIEW METADATA
+================================================================================
+
+--- VIEW 1: "Purchases_Invoice" ---
+Description: Use this view when the user asks about purchases, purchase orders, or suppliers.
+Columns:
+- "Purchased or Order Dates"                  : Full date (DATE, e.g. '2026-05-15')
+- "Purchased or Order Year Number"            : Pre-computed 4-digit year (INTEGER, e.g., 2026)
+- "Purchased or Order Month Number"           : Pre-computed month number (INTEGER, 1 to 12)
+- "Purchased or Order Month Name"             : Full month name (STRING, e.g., 'May')
+- "Purchased or Order Short Month Name"       : 3-letter month (STRING, e.g., 'May', 'Jan')
+- "Purchased or Order Day Number"             : Day of month (INTEGER, 1 to 31)
+- "Purchased or Order Day"                    : Day of week name (STRING, e.g., 'Monday')
+- "Purchased or Order Financial Year"         : Financial year integer (e.g., 2026)
+- "Purchased or Order Financial Month Number" : Financial month integer (1 to 12)
+- "Purchased or Order Week Number"            : ISO week number (INTEGER, 1 to 52)
+- "Supplier Code", "Supplier Name", "Supplier Category"
+- "Item Code", "Item Name", "Item Color", "Item Brand", "Item Unit Price"
+
+
+--- VIEW 2: "Sale_Invoice" ---
+Description: Use this view when the user asks about sales, invoices, revenue, profit, or customers.
+Columns:
+- "Sales Dates"                               : Full date (DATE, e.g. '2026-05-15')
+- "Sales Year Number"                         : Pre-computed 4-digit year (INTEGER, e.g., 2026)
+- "Sales Month Number"                        : Pre-computed month number (INTEGER, 1 to 12)
+- "Sales Month Name"                          : Full month name (STRING, e.g., 'May')
+- "Sales Short Month Name"                    : 3-letter month (STRING, e.g., 'May', 'Jan')
+- "Sales Day Number"                          : Day of month (INTEGER, 1 to 31)
+- "Sales Day"                                 : Day of week name (STRING, e.g., 'Monday')
+- "Sales Financial Year"                      : Financial year integer (e.g., 2026)
+- "Sales Financial Month Number"              : Financial month integer (1 to 12)
+- "Sales Week Number"                         : ISO week number (INTEGER, 1 to 52)
+- "Customer Full Name", "Earned Profit on Invoice", "Total Invoice Amount"
+
+--- VIEW 3: "customer_order_details" ---
+Description: This data is order before sale, use this view when the user asks about Orders, Order by Customer, Item Ordered or sales person fulfillment order.
+Columns:
+- "Order ISO Week Number",        : ISO week number (INTEGER, 1 to 52)
+- "Order Date",                   : Full date (DATE, e.g. '2026-05-15')
+- "Order Day Number",             : Day (Number, e.g. 1, 2, 7)
+- "Order Day",                    : Day of the week (charater, e.g. 'Sunday', 'Monday')
+- "Order Month",                  : Month Full Name (charater, e.g. 'January', 'March')
+- "Order Short Month",            : month abbreviation 3 letter (charater, e.g. 'Jul', 'Sep')
+- "Order Calendar Month Number",  : Pre-computed month number (INTEGER, e.g. 1 to 12)
+- "Order Calendar Month Label",   : Year join with month abbreviation (charater, '2026-Jul', '1995-Jan')
+- "Order Calendar Year",          : Pre-computed 4-digit year (INTEGER, e.g., 2026)
+- "Order Calendar Year Label",    : Calendar 6-charater year (charater, e.g., CY2026, CY2025)
+- "Order Fiscal Month Number",    : financial year Pre-computed month number (INTEGER, e.g. 1 to 12)
+- "Order Fiscal Month Label",     : financial year 'FY' join Year join and month abbreviation (charater, 'FY2026-Jul', 'FY1995-Jan')
+- "Order Fiscal Year",            : financial year Pre-computed 4-digit year (INTEGER, e.g., 2026)
+- "Order Fiscal Year Label",      : financial year 6-charater year (charater, e.g., FY2026, FY2025)
+- "Customer Full Name", "Earned Profit on Invoice", "Total Invoice Amount"
+- "Item ID" is common between Sale_Invoice and Purchase View
+- "Customer ID" is common between Sale_Invoice
+
+
+================================================================================
+SQL GENERATION RULES
+================================================================================
+1. FORBIDDEN FUNCTIONS:
+   NEVER use date-extraction functions like EXTRACT(), YEAR(), MONTH(), or DATE_PART().
+   Always use the pre-computed date columns specific to the target view.
+
+2. VIEW SELECTION:
+   - For sales, profit, or customer queries -> FROM "Sale_Invoice"
+   - For purchase or supplier queries -> FROM "Purchases_Invoice"
+   - For Order or fulfillment queries -> FROM "customer_order_details"
+
+3. DEFAULT YEAR FILTER:
+   When a user specifies a month (e.g., "May") without a year, filter using the pre-computed 
+   month column AND subquery for the maximum year of that specific view.
+
+   Example for Sales:
+   WHERE "Sales Month Number" = 5 
+     AND "Sales Year Number" = (SELECT MAX("Sales Year Number") FROM "Sale_Invoice")
+
+================================================================================
+FEW-SHOT EXAMPLES
+================================================================================
+User Question: "sale in month of 'May' by customers"
+Generated SQL:
+SELECT 
+    "Customer Full Name", 
+    SUM("Earned Profit on Invoice") AS Total_Profit
+FROM "Sale_Invoice"
+WHERE "Sales Month Number" = 5
+  AND "Sales Year Number" = (SELECT MAX("Sales Year Number") FROM "Sale_Invoice")
+GROUP BY "Customer Full Name"
+ORDER BY Total_Profit DESC;
+
 [VIEW ROUTING & ENTITY RULES]
 - CUSTOMER ACTIONS -> Always use "Sale_Invoice"
   * Phrases like "customer bought", "customer purchased", "customer orders", "sales to customer" MUST query "Sale_Invoice".
