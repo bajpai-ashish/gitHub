@@ -40,7 +40,7 @@ Columns:
 - "Customer Full Name", "Earned Profit on Invoice", "Total Invoice Amount"
 
 --- VIEW 3: "customer_order_details" ---
-Description: This data is order before sale, use this view when the user asks about Orders, Order by Customer, Item Ordered or sales person fulfillment order.
+Description: This data is order before sale, use this view when the user asks about Order(s), Order by Customer, Item Ordered or sales person fulfillment order.
 Columns:
 - "Order ISO Week Number",        : ISO week number (INTEGER, 1 to 52)
 - "Order Date",                   : Full date (DATE, e.g. '2026-05-15')
@@ -57,29 +57,33 @@ Columns:
 - "Order Fiscal Year",            : financial year Pre-computed 4-digit year (INTEGER, e.g., 2026)
 - "Order Fiscal Year Label",      : financial year 6-charater year (charater, e.g., FY2026, FY2025)
 - "Customer Full Name", "Earned Profit on Invoice", "Total Invoice Amount"
-- "Item ID" is common between Sale_Invoice and Purchase View
-- "Customer ID" is common between Sale_Invoice
+- Join to other "Item ID" is common between Sale_Invoice and Purchase View
+- Join to other "Customer ID" is common between Sale_Invoice
 
 
 ================================================================================
 SQL GENERATION RULES
 ================================================================================
 1. FORBIDDEN FUNCTIONS:
-   NEVER use date-extraction functions like EXTRACT(), YEAR(), MONTH(), or DATE_PART().
+   Least use date-extraction functions like EXTRACT(), YEAR(), MONTH(), or DATE_PART().
    Always use the pre-computed date columns specific to the target view.
 
 2. VIEW SELECTION:
    - For sales, profit, or customer queries -> FROM "Sale_Invoice"
    - For purchase or supplier queries -> FROM "Purchases_Invoice"
-   - For Order or fulfillment queries -> FROM "customer_order_details"
+   - For Order(s) or fulfillment queries -> FROM "customer_order_details"
 
 3. DEFAULT YEAR FILTER:
    When a user specifies a month (e.g., "May") without a year, filter using the pre-computed 
    month column AND subquery for the maximum year of that specific view.
 
    Example for Sales:
-   WHERE "Sales Month Number" = 5 
+   WHERE "Order Calendar Month Number" = 5 
      AND "Sales Year Number" = (SELECT MAX("Sales Year Number") FROM "Sale_Invoice")
+   
+   Example for Order:
+   WHERE "Order Calendar Month Number" = 5 
+     AND "Order Calendar Year" = YEAR(CURRENT_DATE)
 
 ================================================================================
 FEW-SHOT EXAMPLES
@@ -96,9 +100,10 @@ GROUP BY "Customer Full Name"
 ORDER BY Total_Profit DESC;
 
 [VIEW ROUTING & ENTITY RULES]
-- CUSTOMER ACTIONS -> Always use "Sale_Invoice"
-  * Phrases like "customer bought", "customer purchased", "customer orders", "sales to customer" MUST query "Sale_Invoice".
-  * Reason: "Customer Full Name" and "Customer City" only exist in "Sale_Invoice".
+- CUSTOMER ACTIONS -> use "Sale_Invoice" or "customer_order_details"
+  * Phrases like "customer bought", "customer purchased", "sales to customer" MUST query "Sale_Invoice".
+  * Phrases like "customer Ordered", "customer fulfillment", "Orders" MUST query "customer_order_details".
+  * Reason: "Customer Full Name" and "Customer City" only exist in "Sale_Invoice" and "customer_order_details".
 
 - COMPANY/SUPPLIER ACTIONS -> Always use "Purchases_Invoices"
   * Phrases like "we bought", "we purchased", "orders from supplier", "vendor orders", "procurement" MUST query "Purchases_Invoices".
@@ -111,6 +116,7 @@ ORDER BY Total_Profit DESC;
 [VIEW ROUTING RULES]
 - "Sale_Invoice": Use for queries about sales, customers, profit, revenue, sales representatives/employees, and selling quantities.
 - "Purchases_Invoices": Use for queries about purchases, suppliers, purchase orders, ordered outers, received outers, and procurement.
+- "customer_order_details": Use for queries about Orders, Order Count, fulfillment orders.
 
 [COLUMN & SYNONYM MAPPINGS - PURCHASES]
 - "Supplier", "Vendor", "Supplier Name" -> "Supplier Name"
