@@ -1,0 +1,285 @@
+Table subjects.Persons {
+  person_id int [pk, increment]
+  first_name varchar
+  middle_name varchar
+  last_name varchar
+  date_of_birth date
+  is_employee boolean
+  is_customer boolean
+  is_vendor boolean
+  is_supplier boolean
+  is_corporate boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table subjects.Addresses {
+  address_id int [pk, increment]
+  street varchar
+  city varchar
+  state varchar
+  postal_code varchar
+  country varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table subjects.email {
+  email_id int [pk, increment]
+  person_id int [ref: > subjects.Persons.person_id]
+  email_address varchar
+  email_type varchar
+  is_primary boolean
+  is_corporate boolean
+  is_verified boolean
+  is_active boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table subjects.phone {
+  phone_id int [pk, increment]
+  person_id int [ref: > subjects.Persons.person_id]
+  phone_address varchar
+  phone_type varchar
+  is_primary boolean
+  is_corporate boolean
+  is_verified boolean
+  is_active boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table subjects.person_address {
+  person_address_id int [pk, increment]
+  person_id int [ref: > subjects.Persons.person_id]
+  address_id int [ref: > subjects.Addresses.address_id]
+  is_primary boolean
+  is_active boolean
+  is_corporate boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table subjects.Customers {
+  custid int [pk, increment]
+  person_id int [ref: > subjects.Persons.person_id]
+  is_active boolean
+  is_corporate boolean
+  is_online boolean
+  is_inperson boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table subjects.Vendors {
+  vendor_id int [pk, increment]
+  person_id int [ref: > subjects.Persons.person_id]
+  is_active boolean
+  is_corporate boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table subjects.Suppliers {
+  supplier_id int [pk, increment]
+  person_id int [ref: > subjects.Persons.person_id]
+  is_active boolean
+  is_corporate boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table objects.Categories {
+  category_id int [pk, increment]
+  name varchar
+  description text
+  created_at timestamp
+  updated_at timestamp
+}
+Table objects.Products {
+  prodid int [pk, increment]
+  category_id int [ref: > objects.Categories.category_id]
+  name varchar
+  description text
+  price decimal
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table subjects.employees {
+  empid int [pk, increment]
+  employee_verification_id int
+  name varchar
+  email varchar
+  position varchar
+  is_Salesperson boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table transactions.govt_id_verification {
+  verification_id int [pk, increment]
+  empid int [ref: ?> subjects.employees.empid]
+  vendor_id int [ref: ?> subjects.Vendors.vendor_id]
+  supplier_id int [ref: ?> subjects.Suppliers.supplier_id]
+  customer_id int [ref: ?> subjects.Customers.custid]
+  verification_status varchar
+  verification_Id_number varchar
+  verification_Id_type varchar
+  verification_description text
+  verification_id_issue_date date
+  verification_id_expiry_date date
+  verification_id_active boolean
+  verification_date timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table transactions.Payment_Modes {
+  payment_mode_id int [pk, increment]
+  mode_name varchar
+  description text
+  created_at timestamp
+  updated_at timestamp
+}
+Table transactions.Orders {
+  orderid int [pk, increment]
+  customer_id int [ref: ?> subjects.Customers.custid]
+  vendor_id int [ref: ?> subjects.Vendors.vendor_id]
+  empid int [ref: ?> subjects.employees.empid]
+  order_date timestamp
+  paymentID int
+  status varchar
+  total_amount decimal
+  created_at timestamp
+  updated_at timestamp
+}
+Table transactions.Order_Items {
+  orderitemid int [pk, increment]
+  order_id int [ref: > transactions.Orders.orderid]
+  product_id int [ref: > objects.Products.prodid]
+  quantity int
+  price decimal
+  discount decimal
+  tax decimal
+  total decimal
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table transactions.Order_Suppliers {
+  order_supplier_id int [pk, increment]
+  order_id int [ref: > transactions.Orders.orderid]
+  supplier_id int [ref: > subjects.Suppliers.supplier_id]
+  product_id int [ref: > objects.Products.prodid]
+  quantity int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table transactions.stock {
+  product_id int [ref: > objects.Products.prodid]
+  quantity int
+  location varchar
+  created_at timestamp
+  updated_at timestamp
+}
+// enum belonged to default "public" schema
+enum transactions.transactionType {
+  Sales
+  Purchases
+  Returns
+  Purchase_Returns
+}
+
+Table transactions.inventory_Transactions {
+  inventory_id int [pk, increment]
+  inventory_date timestamp
+  order_id int [ref: > transactions.Orders.orderid]
+  product_id int [ref: > objects.Products.prodid]
+  transaction_type transactions.transactionType
+  inward_quantity int
+  outward_quantity int
+  rate decimal
+  discount decimal
+  tax decimal
+  total decimal
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table transactions.account_Transactions {
+  accountTransaction_id int [pk, increment]
+  accountTransaction_date timestamp
+  transaction_type transactions.transactionType
+  order_id int [ref: ?> transactions.Orders.orderid]
+  salary_id int [ref: ?> transactions.Employee_Salary.salary_id]
+  commission_id int [ref: ?> transactions.Employee_Commissions.commission_id]
+  inward_amount decimal
+  inward_discount decimal
+  inward_tax decimal
+  inward_total decimal
+  outward_amount decimal
+  outward_discount decimal
+  outward_tax decimal
+  outward_total decimal
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table transactions.Shipping {
+  shippingID int [pk, increment]
+  order_supplier_id int [ref: > transactions.Order_Suppliers.order_supplier_id]
+  order_id int [ref: > transactions.Orders.orderid]
+  shipping_address varchar
+  shipping_date timestamp
+  delivery_date timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table transactions.Payments {
+  paymentID int [pk, increment]
+  mode_id int [ref: > transactions.Payment_Modes.payment_mode_id]
+  order_id int [ref: > transactions.Orders.orderid]
+  amount decimal
+  payment_date timestamp
+  payment_method varchar
+  created_at timestamp
+  updated_at timestamp
+}
+Table transactions.Employee_Salary {
+  salary_id int [pk, increment]
+  empid int [ref: > subjects.employees.empid]
+  base_salary decimal
+  bonus decimal
+  deductions decimal
+  net_salary decimal
+  salary_date timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+Table transactions.Employee_Commissions {
+  commission_id int [pk, increment]
+  empid int [ref: > subjects.employees.empid]
+  order_id int [ref: ?> transactions.Orders.orderid]
+  commission_amount decimal
+  commission_date timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+// DiagramView Default {
+//   Tables {
+//     subjects.Persons
+//     objects.Categories
+//     transactions.Orders
+//   }
+// }
+TableGroup "User Wishlist System" [color: #1E69FD]
+   {
+    subjects.Persons
+    objects.Categories
+    transactions.Orders
+  }

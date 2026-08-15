@@ -1,0 +1,266 @@
+erDiagram
+    %% Logical Data Vault 2.0 model for the Insurance Canonical Model.
+    %% All tables carry load_dts and record_source. Satellites also carry hashdiff.
+
+    H_PARTY {
+        string party_hk PK
+        string party_bk UK "source party_id"
+        datetime load_dts
+        string record_source
+    }
+    H_POLICY {
+        string policy_hk PK
+        string policy_bk UK "source policy_id"
+        datetime load_dts
+        string record_source
+    }
+    H_PRODUCT {
+        string product_hk PK
+        string product_bk UK "source product_id"
+        datetime load_dts
+        string record_source
+    }
+    H_COVERAGE {
+        string coverage_hk PK
+        string coverage_bk UK "coverage_code required"
+        datetime load_dts
+        string record_source
+    }
+    H_RISK_ITEM {
+        string risk_item_hk PK
+        string risk_item_bk UK "risk_item_id required"
+        datetime load_dts
+        string record_source
+    }
+    H_BILLING_ACCOUNT {
+        string billing_account_hk PK
+        string billing_account_bk UK
+        datetime load_dts
+        string record_source
+    }
+    H_INVOICE {
+        string invoice_hk PK
+        string invoice_bk UK
+        datetime load_dts
+        string record_source
+    }
+    H_PAYMENT {
+        string payment_hk PK
+        string payment_bk UK
+        datetime load_dts
+        string record_source
+    }
+    H_COMMISSION {
+        string commission_hk PK
+        string commission_bk UK
+        datetime load_dts
+        string record_source
+    }
+    H_CLAIM {
+        string claim_hk PK
+        string claim_bk UK
+        datetime load_dts
+        string record_source
+    }
+    H_CLAIM_INCIDENT {
+        string claim_incident_hk PK
+        string claim_incident_bk UK
+        datetime load_dts
+        string record_source
+    }
+    H_REINSURANCE_CONTRACT {
+        string reinsurance_contract_hk PK
+        string reinsurance_contract_bk UK
+        datetime load_dts
+        string record_source
+    }
+    H_REINSURANCE_STATEMENT {
+        string reinsurance_statement_hk PK
+        string reinsurance_statement_bk UK
+        datetime load_dts
+        string record_source
+    }
+    H_REINSURANCE_SETTLEMENT {
+        string reinsurance_settlement_hk PK
+        string reinsurance_settlement_bk UK
+        datetime load_dts
+        string record_source
+    }
+
+    L_POLICY_PRODUCT {
+        string policy_product_hk PK
+        string policy_hk FK
+        string product_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_POLICY_PARTY_ROLE {
+        string policy_party_role_hk PK
+        string policy_hk FK
+        string party_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_POLICY_COVERAGE {
+        string policy_coverage_hk PK
+        string policy_hk FK
+        string coverage_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_POLICY_RISK_ITEM {
+        string policy_risk_item_hk PK
+        string policy_hk FK
+        string risk_item_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_POLICY_BILLING_ACCOUNT {
+        string policy_billing_account_hk PK
+        string policy_hk FK
+        string billing_account_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_BILLING_ACCOUNT_INVOICE {
+        string billing_account_invoice_hk PK
+        string billing_account_hk FK
+        string invoice_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_INVOICE_PAYMENT {
+        string invoice_payment_hk PK
+        string invoice_hk FK
+        string payment_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_POLICY_COMMISSION {
+        string policy_commission_hk PK
+        string policy_hk FK
+        string commission_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_POLICY_CLAIM {
+        string policy_claim_hk PK
+        string policy_hk FK
+        string claim_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_CLAIM_INCIDENT {
+        string claim_incident_hk PK
+        string claim_hk FK
+        string incident_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_CLAIM_PARTY_ROLE {
+        string claim_party_role_hk PK
+        string claim_hk FK
+        string party_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_POLICY_REINSURANCE_CONTRACT {
+        string policy_reinsurance_contract_hk PK
+        string policy_hk FK
+        string reinsurance_contract_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_REINSURANCE_CONTRACT_STATEMENT {
+        string reinsurance_contract_statement_hk PK
+        string reinsurance_contract_hk FK
+        string reinsurance_statement_hk FK
+        datetime load_dts
+        string record_source
+    }
+    L_REINSURANCE_STATEMENT_SETTLEMENT {
+        string reinsurance_statement_settlement_hk PK
+        string reinsurance_statement_hk FK
+        string reinsurance_settlement_hk FK
+        datetime load_dts
+        string record_source
+    }
+
+    S_PARTY_PROFILE {
+        string party_hk FK
+        string party_type
+        string name_fields
+        string identifiers
+        string demographic_attributes
+        string hashdiff
+    }
+    S_PARTY_ADDRESS { string party_hk FK }
+    S_PARTY_CONTACT { string party_hk FK }
+    S_PARTY_RELATIONSHIP { string party_relationship_hk FK }
+    S_POLICY_DETAILS {
+        string policy_hk FK
+        string policy_type
+        string policy_status
+        date effective_date
+        date expiration_date
+        string hashdiff
+    }
+    S_POLICY_VERSION {
+        string policy_hk FK
+        int version_no
+        string transaction_type
+        date effective_date
+        string hashdiff
+    }
+    S_POLICY_PARTY_ROLE_EFFECTIVITY {
+        string policy_party_role_hk FK
+        string role_type
+        date effective_date
+        date end_date
+        string hashdiff
+    }
+    S_POLICY_COVERAGE_DETAILS { string policy_coverage_hk FK }
+    S_POLICY_RISK_ITEM_DETAILS { string policy_risk_item_hk FK }
+    S_PREMIUM { string policy_hk FK }
+    S_PREMIUM_SCHEDULE { string policy_hk FK }
+    S_CLAIM_DETAILS { string claim_hk FK }
+    S_CLAIM_TRANSACTION { string claim_hk FK }
+    S_CLAIM_COVERAGE { string claim_hk FK }
+    S_CESSION { string policy_reinsurance_contract_hk FK }
+
+    H_PARTY ||--o{ S_PARTY_PROFILE : describes
+    H_PARTY ||--o{ S_PARTY_ADDRESS : has
+    H_PARTY ||--o{ S_PARTY_CONTACT : has
+    H_POLICY ||--o{ S_POLICY_DETAILS : describes
+    H_POLICY ||--o{ S_POLICY_VERSION : versions
+    H_POLICY ||--o{ L_POLICY_PRODUCT : uses
+    H_PRODUCT ||--o{ L_POLICY_PRODUCT : selected_by
+    H_POLICY ||--o{ L_POLICY_PARTY_ROLE : involves
+    H_PARTY ||--o{ L_POLICY_PARTY_ROLE : plays_role_on
+    L_POLICY_PARTY_ROLE ||--o{ S_POLICY_PARTY_ROLE_EFFECTIVITY : effective_dated
+    H_POLICY ||--o{ L_POLICY_COVERAGE : has
+    H_COVERAGE ||--o{ L_POLICY_COVERAGE : applied_to
+    L_POLICY_COVERAGE ||--o{ S_POLICY_COVERAGE_DETAILS : detailed_by
+    H_POLICY ||--o{ L_POLICY_RISK_ITEM : covers
+    H_RISK_ITEM ||--o{ L_POLICY_RISK_ITEM : insured_under
+    L_POLICY_RISK_ITEM ||--o{ S_POLICY_RISK_ITEM_DETAILS : detailed_by
+    H_POLICY ||--o{ L_POLICY_BILLING_ACCOUNT : billed_through
+    H_BILLING_ACCOUNT ||--o{ L_POLICY_BILLING_ACCOUNT : serves
+    H_BILLING_ACCOUNT ||--o{ L_BILLING_ACCOUNT_INVOICE : generates
+    H_INVOICE ||--o{ L_BILLING_ACCOUNT_INVOICE : belongs_to
+    H_INVOICE ||--o{ L_INVOICE_PAYMENT : receives
+    H_PAYMENT ||--o{ L_INVOICE_PAYMENT : settles
+    H_POLICY ||--o{ L_POLICY_COMMISSION : pays
+    H_COMMISSION ||--o{ L_POLICY_COMMISSION : earned_on
+    H_POLICY ||--o{ L_POLICY_CLAIM : has
+    H_CLAIM ||--o{ L_POLICY_CLAIM : submitted_against
+    H_CLAIM ||--o{ L_CLAIM_INCIDENT : arises_from
+    H_CLAIM_INCIDENT ||--o{ L_CLAIM_INCIDENT : records
+    H_CLAIM ||--o{ L_CLAIM_PARTY_ROLE : involves
+    H_PARTY ||--o{ L_CLAIM_PARTY_ROLE : plays_role_on
+    H_POLICY ||--o{ L_POLICY_REINSURANCE_CONTRACT : ceded_under
+    H_REINSURANCE_CONTRACT ||--o{ L_POLICY_REINSURANCE_CONTRACT : covers
+    H_REINSURANCE_CONTRACT ||--o{ L_REINSURANCE_CONTRACT_STATEMENT : produces
+    H_REINSURANCE_STATEMENT ||--o{ L_REINSURANCE_CONTRACT_STATEMENT : for_contract
+    H_REINSURANCE_STATEMENT ||--o{ L_REINSURANCE_STATEMENT_SETTLEMENT : settles
+    H_REINSURANCE_SETTLEMENT ||--o{ L_REINSURANCE_STATEMENT_SETTLEMENT : settles_statement

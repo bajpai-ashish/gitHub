@@ -1,0 +1,649 @@
+{
+  "version": "2.0.0",
+  "darkMode": false,
+  "gridEnabling": false,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "tablePositions": [
+      {
+        "name": "Persons",
+        "schemaName": "subjects",
+        "x": 16,
+        "y": 16
+      },
+      {
+        "name": "Addresses",
+        "schemaName": "subjects",
+        "x": 16,
+        "y": 472
+      },
+      {
+        "name": "email",
+        "schemaName": "subjects",
+        "x": 600,
+        "y": 16
+      },
+      {
+        "name": "phone",
+        "schemaName": "subjects",
+        "x": 600,
+        "y": 408
+      },
+      {
+        "name": "person_address",
+        "schemaName": "subjects",
+        "x": 600,
+        "y": 1680
+      },
+      {
+        "name": "Customers",
+        "schemaName": "subjects",
+        "x": 600,
+        "y": 808
+      },
+      {
+        "name": "Vendors",
+        "schemaName": "subjects",
+        "x": 600,
+        "y": 1144
+      },
+      {
+        "name": "Suppliers",
+        "schemaName": "subjects",
+        "x": 600,
+        "y": 1416
+      },
+      {
+        "name": "Categories",
+        "schemaName": "objects",
+        "x": 16,
+        "y": 808
+      },
+      {
+        "name": "Products",
+        "schemaName": "objects",
+        "x": 600,
+        "y": 2016
+      },
+      {
+        "name": "employees",
+        "schemaName": "subjects",
+        "x": 16,
+        "y": 1048
+      },
+      {
+        "name": "govt_id_verification",
+        "schemaName": "transactions",
+        "x": 1248,
+        "y": 16
+      },
+      {
+        "name": "Payment_Modes",
+        "schemaName": "transactions",
+        "x": 16,
+        "y": 1384
+      },
+      {
+        "name": "Orders",
+        "schemaName": "transactions",
+        "x": 1248,
+        "y": 568
+      },
+      {
+        "name": "Order_Items",
+        "schemaName": "transactions",
+        "x": 1840,
+        "y": 360
+      },
+      {
+        "name": "Order_Suppliers",
+        "schemaName": "transactions",
+        "x": 1840,
+        "y": 56
+      },
+      {
+        "name": "stock",
+        "schemaName": "transactions",
+        "x": 1248,
+        "y": 968
+      },
+      {
+        "name": "inventory_Transactions",
+        "schemaName": "transactions",
+        "x": 1840,
+        "y": 752
+      },
+      {
+        "name": "account_Transactions",
+        "schemaName": "transactions",
+        "x": 2456,
+        "y": 344
+      },
+      {
+        "name": "Shipping",
+        "schemaName": "transactions",
+        "x": 2456,
+        "y": 16
+      },
+      {
+        "name": "Payments",
+        "schemaName": "transactions",
+        "x": 1840,
+        "y": 1552
+      },
+      {
+        "name": "Employee_Salary",
+        "schemaName": "transactions",
+        "x": 600,
+        "y": 2320
+      },
+      {
+        "name": "Employee_Commissions",
+        "schemaName": "transactions",
+        "x": 1840,
+        "y": 1248
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "person_id"
+        ],
+        "firstTableName": "Persons",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "person_id"
+        ],
+        "secondTableName": "email",
+        "secondSchemaName": "subjects",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "person_id"
+        ],
+        "firstTableName": "Persons",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "person_id"
+        ],
+        "secondTableName": "phone",
+        "secondSchemaName": "subjects",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "person_id"
+        ],
+        "firstTableName": "Persons",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "person_id"
+        ],
+        "secondTableName": "person_address",
+        "secondSchemaName": "subjects",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "address_id"
+        ],
+        "firstTableName": "Addresses",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "address_id"
+        ],
+        "secondTableName": "person_address",
+        "secondSchemaName": "subjects",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "person_id"
+        ],
+        "firstTableName": "Persons",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "person_id"
+        ],
+        "secondTableName": "Customers",
+        "secondSchemaName": "subjects",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "person_id"
+        ],
+        "firstTableName": "Persons",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "person_id"
+        ],
+        "secondTableName": "Vendors",
+        "secondSchemaName": "subjects",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "person_id"
+        ],
+        "firstTableName": "Persons",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "person_id"
+        ],
+        "secondTableName": "Suppliers",
+        "secondSchemaName": "subjects",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "category_id"
+        ],
+        "firstTableName": "Categories",
+        "firstSchemaName": "objects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "category_id"
+        ],
+        "secondTableName": "Products",
+        "secondSchemaName": "objects",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "empid"
+        ],
+        "firstTableName": "employees",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "empid"
+        ],
+        "secondTableName": "govt_id_verification",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "vendor_id"
+        ],
+        "firstTableName": "Vendors",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "vendor_id"
+        ],
+        "secondTableName": "govt_id_verification",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "supplier_id"
+        ],
+        "firstTableName": "Suppliers",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "supplier_id"
+        ],
+        "secondTableName": "govt_id_verification",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "custid"
+        ],
+        "firstTableName": "Customers",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "govt_id_verification",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "custid"
+        ],
+        "firstTableName": "Customers",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "Orders",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "vendor_id"
+        ],
+        "firstTableName": "Vendors",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "vendor_id"
+        ],
+        "secondTableName": "Orders",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "empid"
+        ],
+        "firstTableName": "employees",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "empid"
+        ],
+        "secondTableName": "Orders",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "orderid"
+        ],
+        "firstTableName": "Orders",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "Order_Items",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "prodid"
+        ],
+        "firstTableName": "Products",
+        "firstSchemaName": "objects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "Order_Items",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "orderid"
+        ],
+        "firstTableName": "Orders",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "Order_Suppliers",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "supplier_id"
+        ],
+        "firstTableName": "Suppliers",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "supplier_id"
+        ],
+        "secondTableName": "Order_Suppliers",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "prodid"
+        ],
+        "firstTableName": "Products",
+        "firstSchemaName": "objects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "Order_Suppliers",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "prodid"
+        ],
+        "firstTableName": "Products",
+        "firstSchemaName": "objects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "stock",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "orderid"
+        ],
+        "firstTableName": "Orders",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "inventory_Transactions",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "prodid"
+        ],
+        "firstTableName": "Products",
+        "firstSchemaName": "objects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "inventory_Transactions",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "orderid"
+        ],
+        "firstTableName": "Orders",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "account_Transactions",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "salary_id"
+        ],
+        "firstTableName": "Employee_Salary",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "salary_id"
+        ],
+        "secondTableName": "account_Transactions",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "commission_id"
+        ],
+        "firstTableName": "Employee_Commissions",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "commission_id"
+        ],
+        "secondTableName": "account_Transactions",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_supplier_id"
+        ],
+        "firstTableName": "Order_Suppliers",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_supplier_id"
+        ],
+        "secondTableName": "Shipping",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "orderid"
+        ],
+        "firstTableName": "Orders",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "Shipping",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "payment_mode_id"
+        ],
+        "firstTableName": "Payment_Modes",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "mode_id"
+        ],
+        "secondTableName": "Payments",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "orderid"
+        ],
+        "firstTableName": "Orders",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "Payments",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "empid"
+        ],
+        "firstTableName": "employees",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "empid"
+        ],
+        "secondTableName": "Employee_Salary",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "empid"
+        ],
+        "firstTableName": "employees",
+        "firstSchemaName": "subjects",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "empid"
+        ],
+        "secondTableName": "Employee_Commissions",
+        "secondSchemaName": "transactions",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "orderid"
+        ],
+        "firstTableName": "Orders",
+        "firstSchemaName": "transactions",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "Employee_Commissions",
+        "secondSchemaName": "transactions",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      }
+    ]
+  },
+  "views": {}
+}

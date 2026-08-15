@@ -1,0 +1,197 @@
+
+flowchart LR
+
+p_BusinessEntityID -- INSERT ---> cust_stg_customer_id
+p_Title -- INSERT ---> cust_stg_title
+p_FirstName -- INSERT ---> cust_stg_firstname
+p_MiddleName -- INSERT ---> cust_stg_middlename
+p_LastName -- INSERT ---> cust_stg_lastname
+p_Suffix -- INSERT ---> cust_stg_suffix
+pp_PhoneNumber -- INSERT ---> cust_stg_phonenumber
+pnt_Name -- INSERT ---> cust_stg_phonenumbertype
+ea_EmailAddress -- INSERT ---> cust_stg_emailaddress
+p_EmailPromotion -- INSERT ---> cust_stg_emailpromotion
+at_Name -- INSERT ---> cust_stg_addresstype
+a_AddressLine1 -- INSERT ---> cust_stg_addressline1
+a_AddressLine2 -- INSERT ---> cust_stg_addressline2
+a_City -- INSERT ---> cust_stg_city
+sp_Name -- INSERT ---> cust_stg_StateProvinceName
+a_PostalCode -- INSERT ---> cust_stg_postalcode
+cr_Name -- INSERT ---> cust_stg_countryregionname
+p_demographics -- INSERT ---> cust_stg_demographics
+
+cust_stg_customer_key ins1@-- UPSERT --> cust_dim_customer_key
+cust_stg_customer_id ins2@-- UPSERT --> cust_dim_customer_id
+cust_stg_title ins3@-- UPSERT --> cust_dim_title
+cust_stg_firstname ins4@-- UPSERT --> cust_dim_firstname
+cust_stg_middlename ins5@-- UPSERT --> cust_dim_middlename
+cust_stg_lastname ins6@-- UPSERT --> cust_dim_lastname
+cust_stg_suffix ins7@-- UPSERT --> cust_dim_suffix
+cust_stg_phonenumber ins8@-- UPSERT --> cust_dim_phonenumber
+cust_stg_phonenumbertype ins9@-- UPSERT --> cust_dim_phonenumbertype
+cust_stg_emailaddress ins10@-- UPSERT --> cust_dim_emailaddress
+cust_stg_emailpromotion ins11@-- UPSERT --> cust_dim_emailpromotion
+cust_stg_addresstype ins12@-- UPSERT --> cust_dim_addresstype
+cust_stg_addressline1 ins13@-- UPSERT --> cust_dim_addressline1
+cust_stg_addressline2 ins14@-- UPSERT --> cust_dim_addressline2
+cust_stg_city ins15@-- UPSERT --> cust_dim_city
+cust_stg_StateProvinceName ins16@-- UPSERT --> cust_dim_StateProvinceName
+cust_stg_postalcode ins17@-- UPSERT --> cust_dim_postalcode
+cust_stg_countryregionname ins18@-- UPSERT --> cust_dim_countryregionname
+cust_stg_demographics ins19@-- UPSERT --> cust_dim_demographics
+
+ins1@{animation: fast}
+ins2@{animation: fast}
+ins3@{animation: fast}
+ins4@{animation: fast}
+ins5@{animation: fast}
+ins6@{animation: fast}
+ins7@{animation: fast}
+ins8@{animation: fast}
+ins9@{animation: fast}
+ins10@{animation: fast}
+ins11@{animation: fast}
+ins12@{animation: fast}
+ins13@{animation: fast}
+ins14@{animation: fast}
+ins15@{animation: fast}
+ins16@{animation: fast}
+ins17@{animation: fast}
+ins18@{animation: fast}
+ins19@{animation: fast}
+
+
+p_BusinessEntityID j1@o-.JOIN.-o bea_BusinessEntityID
+j1@{animation: slow}
+a_AddressID j2@o-.JOIN.-o bea_AddressID
+j2@{animation: slow}
+sp_StateProvinceID j3@o-.JOIN.-o a_StateProvinceID
+j3@{animation: slow}
+c_PersonID j4@o-.JOIN.-o p_BusinessEntityID
+j4@{animation: slow}
+ea_BusinessEntityID j5@o-.JOIN.-o p_BusinessEntityID
+j5@{animation: slow}
+pp_BusinessEntityID j6@o-.JOIN.-o p_BusinessEntityID
+j6@{animation: slow}
+pp_PhoneNumberTypeID j7@o-.JOIN.-o pnt_PhoneNumberTypeID
+j7@{animation: slow}
+at_AddressTypeID j8@o-.JOIN.-o bea_AddressTypeID
+j8@{animation: slow}
+cr_CountryRegionCode j9@o-.JOIN.-o sp_CountryRegionCode
+j9@{animation: slow}
+
+    subgraph Destination
+        subgraph customer staging
+            direction LR
+            cust_stg_customer_key[customer_key]
+            cust_stg_customer_id[customer_id]
+            cust_stg_title[title]
+            cust_stg_firstname[firstname]
+            cust_stg_middlename[middlename]
+            cust_stg_lastname[lastname]
+            cust_stg_suffix[suffix]
+            cust_stg_phonenumber[phonenumber]
+            cust_stg_phonenumbertype[phonenumbertype]
+            cust_stg_emailaddress[emailaddress]
+            cust_stg_emailpromotion[emailpromotion]
+            cust_stg_addresstype[addresstype]
+            cust_stg_addressline1[addressline1]
+            cust_stg_addressline2[addressline2]
+            cust_stg_city[city]
+            cust_stg_StateProvinceName[StateProvinceName]
+            cust_stg_postalcode[postalcode]
+            cust_stg_countryregionname[countryregionname]
+            cust_stg_demographics[demographics]
+        end
+        subgraph Dimension.customer
+            direction LR
+            cust_dim_customer_key[customer_key]
+            cust_dim_customer_id[customer_id]
+            cust_dim_title[title]
+            cust_dim_firstname[firstname]
+            cust_dim_middlename[middlename]
+            cust_dim_lastname[lastname]
+            cust_dim_suffix[suffix]
+            cust_dim_phonenumber[phonenumber]
+            cust_dim_phonenumbertype[phonenumbertype]
+            cust_dim_emailaddress[emailaddress]
+            cust_dim_emailpromotion[emailpromotion]
+            cust_dim_addresstype[addresstype]
+            cust_dim_addressline1[addressline1]
+            cust_dim_addressline2[addressline2]
+            cust_dim_city[city]
+            cust_dim_StateProvinceName[StateProvinceName]
+            cust_dim_postalcode[postalcode]
+            cust_dim_countryregionname[countryregionname]
+            cust_dim_demographics[demographics]
+        end
+    end
+    subgraph Source
+        subgraph    Person.Person
+        direction LR
+            p_BusinessEntityID[BusinessEntityID] 
+            p_Title[Title] 
+            p_FirstName[FirstName] 
+            p_MiddleName[MiddleName] 
+            p_LastName[LastName] 
+            p_Suffix[Suffix]
+            p_EmailPromotion[EmailPromotion] 
+            p_AdditionalContactInfo[AdditionalContactInfo] 
+            p_demographics[Demographics] 
+        end
+        subgraph    Person.BusinessEntityAddress
+        direction LR
+            bea_BusinessEntityID[BusinessEntityID]
+            bea_AddressID[AddressID]
+            bea_AddressTypeID[AddressTypeID]
+        end
+        subgraph    Person.Address
+        direction LR
+            a_AddressID[AddressID]
+            a_AddressLine1[AddressLine1]
+            a_AddressLine2[AddressLine2]
+            a_City[City]
+            a_StateProvinceID[StateProvinceID]
+            a_PostalCode[PostalCode]
+        end
+        subgraph Person.AddressType
+            direction LR
+            at_Name[Name] 
+            at_AddressTypeID[AddressTypeID]
+        end
+        subgraph Sales.Customer
+            direction LR
+            c_PersonID[PersonID]
+            c_StoreID[StoreID]
+        end
+        subgraph Person.EmailAddress
+            direction LR
+            ea_BusinessEntityID[BusinessEntityID]
+            ea_EmailAddress[EmailAddress]
+        end
+        subgraph Person.PersonPhone
+            direction LR
+            pp_PhoneNumber[PhoneNumber]
+            pp_BusinessEntityID[BusinessEntityID]
+            pp_PhoneNumberTypeID[PhoneNumberTypeID]
+        end
+        subgraph Person.PhoneNumberType
+            direction LR
+            pnt_Name[Name] 
+            pnt_PhoneNumberTypeID[PhoneNumberTypeID]
+        end
+        subgraph Person.StateProvince
+            direction LR
+            sp_Name[Name]
+            sp_StateProvinceCode[Subregion] 
+            sp_StateProvinceID[StateProvinceID] 
+            sp_TerritoryID[TerritoryID] 
+            sp_CountryRegionCode[CountryRegionCode] 
+        end
+        subgraph Person.CountryRegion
+            direction LR
+            cr_Name[Name]
+            cr_CountryRegionCode[CountryRegionCode] 
+            
+        end
+    end
