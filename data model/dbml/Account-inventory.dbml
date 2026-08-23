@@ -1,3 +1,10 @@
+use * from './main'
+
+TablePartial audit {
+  created_at timestamp
+  updated_at timestamp
+}
+
 Table subjects.Persons {
   person_id int [pk, increment]
   first_name varchar
@@ -9,8 +16,7 @@ Table subjects.Persons {
   is_vendor boolean
   is_supplier boolean
   is_corporate boolean
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table subjects.Addresses {
@@ -20,8 +26,7 @@ Table subjects.Addresses {
   state varchar
   postal_code varchar
   country varchar
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table subjects.email {
@@ -33,8 +38,7 @@ Table subjects.email {
   is_corporate boolean
   is_verified boolean
   is_active boolean
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table subjects.phone {
@@ -46,8 +50,7 @@ Table subjects.phone {
   is_corporate boolean
   is_verified boolean
   is_active boolean
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table subjects.person_address {
@@ -57,8 +60,7 @@ Table subjects.person_address {
   is_primary boolean
   is_active boolean
   is_corporate boolean
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table subjects.Customers {
@@ -68,8 +70,7 @@ Table subjects.Customers {
   is_corporate boolean
   is_online boolean
   is_inperson boolean
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table subjects.Vendors {
@@ -77,8 +78,7 @@ Table subjects.Vendors {
   person_id int [ref: > subjects.Persons.person_id]
   is_active boolean
   is_corporate boolean
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table subjects.Suppliers {
@@ -86,16 +86,14 @@ Table subjects.Suppliers {
   person_id int [ref: > subjects.Persons.person_id]
   is_active boolean
   is_corporate boolean
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table objects.Categories {
   category_id int [pk, increment]
   name varchar
   description text
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 Table objects.Products {
   prodid int [pk, increment]
@@ -103,8 +101,7 @@ Table objects.Products {
   name varchar
   description text
   price decimal
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table subjects.employees {
@@ -114,8 +111,7 @@ Table subjects.employees {
   email varchar
   position varchar
   is_Salesperson boolean
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table transactions.govt_id_verification {
@@ -132,16 +128,14 @@ Table transactions.govt_id_verification {
   verification_id_expiry_date date
   verification_id_active boolean
   verification_date timestamp
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table transactions.Payment_Modes {
   payment_mode_id int [pk, increment]
   mode_name varchar
   description text
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 Table transactions.Orders {
   orderid int [pk, increment]
@@ -152,8 +146,7 @@ Table transactions.Orders {
   paymentID int
   status varchar
   total_amount decimal
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 Table transactions.Order_Items {
   orderitemid int [pk, increment]
@@ -164,8 +157,7 @@ Table transactions.Order_Items {
   discount decimal
   tax decimal
   total decimal
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table transactions.Order_Suppliers {
@@ -174,16 +166,14 @@ Table transactions.Order_Suppliers {
   supplier_id int [ref: > subjects.Suppliers.supplier_id]
   product_id int [ref: > objects.Products.prodid]
   quantity int
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table transactions.stock {
   product_id int [ref: > objects.Products.prodid]
   quantity int
   location varchar
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 // enum belonged to default "public" schema
 enum transactions.transactionType {
@@ -205,8 +195,7 @@ Table transactions.inventory_Transactions {
   discount decimal
   tax decimal
   total decimal
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table transactions.account_Transactions {
@@ -224,8 +213,7 @@ Table transactions.account_Transactions {
   outward_discount decimal
   outward_tax decimal
   outward_total decimal
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table transactions.Shipping {
@@ -235,8 +223,7 @@ Table transactions.Shipping {
   shipping_address varchar
   shipping_date timestamp
   delivery_date timestamp
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 Table transactions.Payments {
@@ -246,8 +233,7 @@ Table transactions.Payments {
   amount decimal
   payment_date timestamp
   payment_method varchar
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 Table transactions.Employee_Salary {
   salary_id int [pk, increment]
@@ -257,8 +243,7 @@ Table transactions.Employee_Salary {
   deductions decimal
   net_salary decimal
   salary_date timestamp
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 Table transactions.Employee_Commissions {
   commission_id int [pk, increment]
@@ -266,8 +251,7 @@ Table transactions.Employee_Commissions {
   order_id int [ref: ?> transactions.Orders.orderid]
   commission_amount decimal
   commission_date timestamp
-  created_at timestamp
-  updated_at timestamp
+  ~audit
 }
 
 // DiagramView Default {
@@ -283,3 +267,5 @@ TableGroup "User Wishlist System" [color: #1E69FD]
     objects.Categories
     transactions.Orders
   }
+
+  

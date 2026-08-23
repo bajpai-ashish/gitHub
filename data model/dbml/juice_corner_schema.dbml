@@ -1,0 +1,841 @@
+// =============================================================
+// Juice Corner Ordering & Delivery System
+// Full Database Schema (DBML format for dbdiagram.io)
+// =============================================================
+
+// ---------- ENUMS ----------
+
+Enum ingredient_unit {
+  kg
+  gram
+  liter
+  ml
+  piece
+}
+
+Enum stock_movement_type {
+  in
+  out
+  adjust
+  waste
+}
+
+Enum po_status {
+  draft
+  sent
+  received
+  cancelled
+}
+
+Enum day_of_week {
+  mon
+  tue
+  wed
+  thu
+  fri
+  sat
+  sun
+}
+
+Enum table_status {
+  available
+  occupied
+  reserved
+}
+
+Enum user_role {
+  admin
+  manager
+  staff
+  delivery
+}
+
+Enum delivery_availability {
+  available
+  busy
+  offline
+}
+
+Enum order_type {
+  dine_in
+  delivery
+}
+
+Enum order_status {
+  pending
+  confirmed
+  in_prep
+  ready
+  served
+  out_for_delivery
+  delivered
+  completed
+  cancelled
+}
+
+Enum delivery_status {
+  assigned
+  picked_up
+  on_way
+  delivered
+  failed
+}
+
+Enum payment_method {
+  cash
+  card
+  bkash
+  nagad
+  rocket
+  gateway
+}
+
+Enum payment_status {
+  pending
+  paid
+  failed
+  refunded
+}
+
+Enum refund_status {
+  requested
+  approved
+  processed
+  rejected
+}
+
+Enum discount_type {
+  percent
+  fixed
+}
+
+Enum otp_purpose {
+  register
+  login
+  reset
+}
+
+Enum loyalty_txn_type {
+  earn
+  redeem
+  expire
+  adjust
+}
+
+Enum referral_status {
+  pending
+  completed
+}
+
+Enum ticket_status {
+  open
+  pending
+  resolved
+  closed
+}
+
+Enum ticket_priority {
+  low
+  medium
+  high
+}
+
+Enum ticket_sender_type {
+  customer
+  staff
+}
+
+Enum notification_recipient_type {
+  customer
+  staff
+  delivery
+}
+
+Enum tokenable_type {
+  customer
+  user
+}
+
+Enum setting_type {
+  string
+  number
+  boolean
+  json
+}
+
+
+// =============================================================
+// 1. BRANCHES & OPERATIONS
+// =============================================================
+
+Table branches {
+  id integer [pk, increment]
+  name varchar [not null]
+  address text
+  phone varchar
+  latitude decimal(10,7)
+  longitude decimal(10,7)
+  is_active boolean [default: true]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table operating_hours {
+  id integer [pk, increment]
+  branch_id integer [not null, ref: > branches.id]
+  day day_of_week [not null]
+  open_time time
+  close_time time
+  is_closed boolean [default: false]
+
+  indexes {
+    (branch_id, day) [unique]
+  }
+}
+
+Table holidays {
+  id integer [pk, increment]
+  branch_id integer [not null, ref: > branches.id]
+  holiday_date date [not null]
+  reason varchar
+  is_closed boolean [default: true]
+}
+
+
+// =============================================================
+// 2. CATALOG
+// =============================================================
+
+Table categories {
+  id integer [pk, increment]
+  name varchar [not null]
+  description text
+  display_order integer [default: 0]
+  is_active boolean [default: true]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table products {
+  id integer [pk, increment]
+  category_id integer [not null, ref: > categories.id]
+  name varchar [not null]
+  description text
+  price decimal(10,2) [not null]
+  discounted_price decimal(10,2)
+  is_seasonal boolean [default: false]
+  is_available boolean [default: true]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table product_images {
+  id integer [pk, increment]
+  product_id integer [not null, ref: > products.id]
+  image_url varchar [not null]
+  is_primary boolean [default: false]
+  display_order integer [default: 0]
+}
+
+
+// =============================================================
+// 3. INVENTORY & PROCUREMENT
+// =============================================================
+
+Table ingredients {
+  id integer [pk, increment]
+  name varchar [not null]
+  unit ingredient_unit [not null]
+  current_stock decimal(10,3) [default: 0]
+  reorder_level decimal(10,3) [default: 0]
+  cost_per_unit decimal(10,2)
+  is_active boolean [default: true]
+  created_at timestamp
+}
+
+Table product_ingredients {
+  id integer [pk, increment]
+  product_id integer [not null, ref: > products.id]
+  ingredient_id integer [not null, ref: > ingredients.id]
+  quantity decimal(10,3) [not null, note: 'amount per single product unit']
+  unit ingredient_unit
+
+  indexes {
+    (product_id, ingredient_id) [unique]
+  }
+}
+
+Table suppliers {
+  id integer [pk, increment]
+  name varchar [not null]
+  contact_person varchar
+  phone varchar
+  email varchar
+  address text
+  is_active boolean [default: true]
+  created_at timestamp
+}
+
+Table purchase_orders {
+  id integer [pk, increment]
+  po_number varchar [unique, not null]
+  supplier_id integer [not null, ref: > suppliers.id]
+  branch_id integer [not null, ref: > branches.id]
+  status po_status [default: 'draft']
+  total_amount decimal(12,2)
+  order_date date
+  expected_date date
+  received_date date
+  notes text
+  created_at timestamp
+}
+
+Table purchase_order_items {
+  id integer [pk, increment]
+  purchase_order_id integer [not null, ref: > purchase_orders.id]
+  ingredient_id integer [not null, ref: > ingredients.id]
+  quantity decimal(10,3) [not null]
+  unit_price decimal(10,2) [not null]
+  subtotal decimal(12,2)
+}
+
+Table stock_movements {
+  id integer [pk, increment]
+  ingredient_id integer [not null, ref: > ingredients.id]
+  branch_id integer [not null, ref: > branches.id]
+  type stock_movement_type [not null]
+  quantity decimal(10,3) [not null]
+  reference_type varchar [note: 'purchase | order | manual']
+  reference_id integer
+  notes text
+  created_by integer [ref: > users.id]
+  created_at timestamp
+
+  indexes {
+    (ingredient_id, created_at)
+    (reference_type, reference_id)
+  }
+}
+
+
+// =============================================================
+// 4. DINE-IN TABLES
+// =============================================================
+
+Table dining_tables {
+  id integer [pk, increment, note: 'named dining_tables to avoid SQL reserved word']
+  branch_id integer [not null, ref: > branches.id]
+  table_number varchar [not null]
+  capacity integer
+  status table_status [default: 'available']
+  qr_code varchar [unique]
+  is_active boolean [default: true]
+
+  indexes {
+    (branch_id, table_number) [unique]
+  }
+}
+
+
+// =============================================================
+// 5. STAFF / ADMIN / DELIVERY USERS
+// =============================================================
+
+Table users {
+  id integer [pk, increment]
+  branch_id integer [ref: > branches.id]
+  name varchar [not null]
+  email varchar [unique]
+  phone varchar
+  password_hash varchar [not null]
+  role user_role [not null]
+  is_active boolean [default: true]
+  last_login_at timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table delivery_personnel {
+  id integer [pk, increment]
+  user_id integer [unique, not null, ref: > users.id]
+  vehicle_type varchar
+  vehicle_number varchar
+  license_number varchar
+  availability delivery_availability [default: 'offline']
+  current_latitude decimal(10,7)
+  current_longitude decimal(10,7)
+}
+
+
+// =============================================================
+// 6. CUSTOMERS & ADDRESSES
+// =============================================================
+
+Table customers {
+  id integer [pk, increment]
+  name varchar [not null]
+  phone varchar [unique]
+  email varchar [unique]
+  password_hash varchar
+  phone_verified boolean [default: false]
+  email_verified boolean [default: false]
+  loyalty_balance integer [default: 0]
+  referral_code varchar [unique]
+  referred_by integer [ref: > customers.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table delivery_zones {
+  id integer [pk, increment]
+  name varchar [not null]
+  delivery_fee decimal(10,2) [default: 0]
+  min_order_amount decimal(10,2) [default: 0]
+  estimated_minutes integer
+  is_active boolean [default: true]
+}
+
+Table customer_addresses {
+  id integer [pk, increment]
+  customer_id integer [not null, ref: > customers.id]
+  zone_id integer [ref: > delivery_zones.id]
+  label varchar [note: 'Home, Office, Hostel']
+  recipient_name varchar
+  recipient_phone varchar
+  address_line varchar [not null]
+  area varchar
+  city varchar
+  postal_code varchar
+  landmark varchar
+  delivery_instructions text
+  latitude decimal(10,7)
+  longitude decimal(10,7)
+  is_default boolean [default: false]
+  created_at timestamp
+}
+
+
+// =============================================================
+// 7. AUTH & SECURITY
+// =============================================================
+
+Table otp_verifications {
+  id integer [pk, increment]
+  customer_id integer [ref: > customers.id]
+  phone varchar [not null]
+  otp_code varchar [not null]
+  purpose otp_purpose [not null]
+  expires_at timestamp [not null]
+  is_used boolean [default: false]
+  attempts integer [default: 0]
+  created_at timestamp
+
+  indexes {
+    (phone, purpose)
+  }
+}
+
+Table password_resets {
+  id integer [pk, increment]
+  email varchar [not null]
+  token_hash varchar [unique, not null]
+  expires_at timestamp [not null]
+  is_used boolean [default: false]
+  created_at timestamp
+}
+
+Table auth_tokens {
+  id integer [pk, increment]
+  tokenable_type tokenable_type [not null]
+  tokenable_id integer [not null, note: 'polymorphic FK to customers.id or users.id']
+  token_hash varchar [unique, not null]
+  device_info varchar
+  ip_address varchar
+  last_used_at timestamp
+  expires_at timestamp
+  created_at timestamp
+
+  indexes {
+    (tokenable_type, tokenable_id)
+  }
+}
+
+
+// =============================================================
+// 8. ENGAGEMENT (favorites, reviews, loyalty, referrals, support)
+// =============================================================
+
+Table favorites {
+  id integer [pk, increment]
+  customer_id integer [not null, ref: > customers.id]
+  product_id integer [not null, ref: > products.id]
+  created_at timestamp
+
+  indexes {
+    (customer_id, product_id) [unique]
+  }
+}
+
+Table reviews {
+  id integer [pk, increment]
+  customer_id integer [not null, ref: > customers.id]
+  product_id integer [not null, ref: > products.id]
+  order_id integer [ref: > orders.id]
+  rating integer [not null, note: '1 to 5']
+  comment text
+  is_approved boolean [default: false]
+  created_at timestamp
+
+  indexes {
+    (product_id, is_approved)
+  }
+}
+
+Table loyalty_transactions {
+  id integer [pk, increment]
+  customer_id integer [not null, ref: > customers.id]
+  order_id integer [ref: > orders.id]
+  type loyalty_txn_type [not null]
+  points integer [not null]
+  balance_after integer
+  description varchar
+  created_at timestamp
+
+  indexes {
+    (customer_id, created_at)
+  }
+}
+
+Table referrals {
+  id integer [pk, increment]
+  referrer_id integer [not null, ref: > customers.id]
+  referred_id integer [not null, ref: > customers.id]
+  status referral_status [default: 'pending']
+  reward_points integer [default: 0]
+  completed_at timestamp
+  created_at timestamp
+
+  indexes {
+    (referred_id) [unique]
+  }
+}
+
+Table support_tickets {
+  id integer [pk, increment]
+  ticket_number varchar [unique, not null]
+  customer_id integer [not null, ref: > customers.id]
+  order_id integer [ref: > orders.id]
+  subject varchar [not null]
+  status ticket_status [default: 'open']
+  priority ticket_priority [default: 'medium']
+  assigned_to integer [ref: > users.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table ticket_messages {
+  id integer [pk, increment]
+  ticket_id integer [not null, ref: > support_tickets.id]
+  sender_type ticket_sender_type [not null]
+  sender_id integer [not null, note: 'polymorphic: customers.id or users.id']
+  message text [not null]
+  created_at timestamp
+}
+
+
+// =============================================================
+// 9. SHOPPING CART
+// =============================================================
+
+Table carts {
+  id integer [pk, increment]
+  customer_id integer [unique, not null, ref: > customers.id]
+  updated_at timestamp
+  created_at timestamp
+}
+
+Table cart_items {
+  id integer [pk, increment]
+  cart_id integer [not null, ref: > carts.id]
+  product_id integer [not null, ref: > products.id]
+  quantity integer [not null, default: 1]
+  special_instructions text
+  added_at timestamp
+
+  indexes {
+    (cart_id, product_id) [unique]
+  }
+}
+
+
+// =============================================================
+// 10. PROMOTIONS & COUPONS
+// =============================================================
+
+Table promotions {
+  id integer [pk, increment]
+  title varchar [not null]
+  description text
+  discount_type discount_type [not null]
+  discount_value decimal(10,2) [not null]
+  start_date date
+  end_date date
+  is_active boolean [default: true]
+  created_at timestamp
+}
+
+Table product_promotions {
+  id integer [pk, increment]
+  product_id integer [not null, ref: > products.id]
+  promotion_id integer [not null, ref: > promotions.id]
+
+  indexes {
+    (product_id, promotion_id) [unique]
+  }
+}
+
+Table coupons {
+  id integer [pk, increment]
+  code varchar [unique, not null]
+  title varchar
+  description text
+  discount_type discount_type [not null]
+  discount_value decimal(10,2) [not null]
+  min_order_amount decimal(10,2) [default: 0]
+  max_discount decimal(10,2)
+  usage_limit integer [note: 'global limit, NULL = unlimited']
+  per_customer_limit integer [default: 1]
+  used_count integer [default: 0]
+  start_date date
+  end_date date
+  is_active boolean [default: true]
+  created_at timestamp
+}
+
+Table coupon_redemptions {
+  id integer [pk, increment]
+  coupon_id integer [not null, ref: > coupons.id]
+  customer_id integer [not null, ref: > customers.id]
+  order_id integer [not null, ref: > orders.id]
+  discount_amount decimal(10,2) [not null]
+  redeemed_at timestamp
+
+  indexes {
+    (coupon_id, customer_id)
+  }
+}
+
+
+// =============================================================
+// 11. ORDERS
+// =============================================================
+
+Table orders {
+  id integer [pk, increment]
+  order_number varchar [unique, not null]
+  customer_id integer [ref: > customers.id, note: 'nullable for walk-in']
+  branch_id integer [not null, ref: > branches.id]
+  order_type order_type [not null]
+  table_id integer [ref: > dining_tables.id, note: 'required if dine_in']
+  address_id integer [ref: > customer_addresses.id, note: 'required if delivery']
+  coupon_id integer [ref: > coupons.id]
+
+  // delivery address snapshot (frozen at order time)
+  recipient_name varchar
+  recipient_phone varchar
+  address_snapshot text
+  delivery_latitude decimal(10,7)
+  delivery_longitude decimal(10,7)
+
+  status order_status [default: 'pending']
+
+  // pricing
+  subtotal decimal(12,2) [not null]
+  discount_amount decimal(10,2) [default: 0]
+  coupon_discount decimal(10,2) [default: 0]
+  delivery_fee decimal(10,2) [default: 0]
+  tax decimal(10,2) [default: 0]
+  total_amount decimal(12,2) [not null]
+
+  // loyalty
+  loyalty_earned integer [default: 0]
+  loyalty_used integer [default: 0]
+
+  notes text
+  cancellation_reason text
+  placed_at timestamp
+  completed_at timestamp
+  created_at timestamp
+  updated_at timestamp
+
+  indexes {
+    (customer_id, placed_at)
+    (status, placed_at)
+    (order_type, placed_at)
+    (branch_id, status)
+  }
+}
+
+Table order_items {
+  id integer [pk, increment]
+  order_id integer [not null, ref: > orders.id]
+  product_id integer [not null, ref: > products.id]
+  quantity integer [not null]
+  unit_price decimal(10,2) [not null, note: 'frozen at order time']
+  discount decimal(10,2) [default: 0]
+  subtotal decimal(12,2) [not null]
+  special_instructions text
+
+  indexes {
+    (order_id)
+    (product_id)
+  }
+}
+
+Table order_status_history {
+  id integer [pk, increment]
+  order_id integer [not null, ref: > orders.id]
+  status order_status [not null]
+  changed_by integer [ref: > users.id]
+  notes text
+  created_at timestamp
+
+  indexes {
+    (order_id, created_at)
+  }
+}
+
+
+// =============================================================
+// 12. PAYMENTS & REFUNDS
+// =============================================================
+
+Table payments {
+  id integer [pk, increment]
+  order_id integer [not null, ref: > orders.id]
+  method payment_method [not null]
+  amount decimal(12,2) [not null]
+  transaction_id varchar
+  status payment_status [default: 'pending']
+  paid_at timestamp
+  gateway_response text
+  created_at timestamp
+
+  indexes {
+    (order_id)
+    (transaction_id)
+  }
+}
+
+Table refunds {
+  id integer [pk, increment]
+  order_id integer [not null, ref: > orders.id]
+  payment_id integer [not null, ref: > payments.id]
+  amount decimal(12,2) [not null]
+  reason text
+  status refund_status [default: 'requested']
+  processed_by integer [ref: > users.id]
+  processed_at timestamp
+  created_at timestamp
+}
+
+
+// =============================================================
+// 13. DELIVERY
+// =============================================================
+
+Table deliveries {
+  id integer [pk, increment]
+  order_id integer [unique, not null, ref: > orders.id]
+  delivery_person_id integer [ref: > delivery_personnel.id]
+  status delivery_status [default: 'assigned']
+  assigned_at timestamp
+  picked_up_at timestamp
+  delivered_at timestamp
+  delivery_notes text
+  failure_reason text
+  proof_image_url varchar
+
+  indexes {
+    (delivery_person_id, status)
+  }
+}
+
+Table delivery_tracking {
+  id integer [pk, increment]
+  delivery_id integer [not null, ref: > deliveries.id]
+  latitude decimal(10,7) [not null]
+  longitude decimal(10,7) [not null]
+  recorded_at timestamp [not null]
+
+  indexes {
+    (delivery_id, recorded_at)
+  }
+}
+
+
+// =============================================================
+// 14. NOTIFICATIONS
+// =============================================================
+
+Table notifications {
+  id integer [pk, increment]
+  recipient_type notification_recipient_type [not null]
+  recipient_id integer [not null, note: 'polymorphic FK']
+  order_id integer [ref: > orders.id]
+  type varchar [not null]
+  title varchar [not null]
+  message text
+  is_read boolean [default: false]
+  sent_at timestamp
+  read_at timestamp
+
+  indexes {
+    (recipient_type, recipient_id, is_read)
+  }
+}
+
+
+// =============================================================
+// 15. ADMIN & SYSTEM
+// =============================================================
+
+Table banners {
+  id integer [pk, increment]
+  branch_id integer [ref: > branches.id, note: 'NULL = applies to all branches']
+  title varchar
+  image_url varchar [not null]
+  link_url varchar
+  display_order integer [default: 0]
+  start_date date
+  end_date date
+  is_active boolean [default: true]
+}
+
+Table activity_logs {
+  id integer [pk, increment]
+  user_id integer [ref: > users.id]
+  action varchar [not null, note: 'created | updated | deleted | login | etc.']
+  entity_type varchar
+  entity_id integer
+  old_values json
+  new_values json
+  ip_address varchar
+  user_agent varchar
+  created_at timestamp
+
+  indexes {
+    (entity_type, entity_id)
+    (user_id, created_at)
+  }
+}
+
+Table settings {
+  id integer [pk, increment]
+  key varchar [unique, not null]
+  value text
+  type setting_type [default: 'string']
+  group varchar [note: 'general | payment | notification | etc.']
+  description varchar
+  updated_at timestamp
+}

@@ -1,0 +1,758 @@
+{
+  "version": "3.0.0",
+  "darkMode": false,
+  "gridEnabling": false,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "relationshipMode": "All",
+    "tablePositions": [
+      {
+        "name": "orders",
+        "schemaName": "public",
+        "x": 1768,
+        "y": 1408
+      },
+      {
+        "name": "brands",
+        "schemaName": "public",
+        "x": 720,
+        "y": 1728
+      },
+      {
+        "name": "categories",
+        "schemaName": "public",
+        "x": 208,
+        "y": 1000
+      },
+      {
+        "name": "products",
+        "schemaName": "public",
+        "x": 976,
+        "y": 968
+      },
+      {
+        "name": "invoices",
+        "schemaName": "public",
+        "x": 1160,
+        "y": 1696
+      },
+      {
+        "name": "inventories",
+        "schemaName": "public",
+        "x": 1440,
+        "y": 1848
+      },
+      {
+        "name": "coupons",
+        "schemaName": "public",
+        "x": 2104,
+        "y": 2312
+      },
+      {
+        "name": "tickets",
+        "schemaName": "public",
+        "x": 784,
+        "y": 1368
+      },
+      {
+        "name": "shipments",
+        "schemaName": "public",
+        "x": 1720,
+        "y": 2376
+      },
+      {
+        "name": "order_items",
+        "schemaName": "public",
+        "x": 1584,
+        "y": 824
+      },
+      {
+        "name": "payments",
+        "schemaName": "public",
+        "x": 2048,
+        "y": 1664
+      },
+      {
+        "name": "regions",
+        "schemaName": "public",
+        "x": 2416,
+        "y": 2048
+      },
+      {
+        "name": "roles",
+        "schemaName": "public",
+        "x": 1752,
+        "y": 1800
+      },
+      {
+        "name": "addresses",
+        "schemaName": "public",
+        "x": 1984,
+        "y": 1992
+      },
+      {
+        "name": "reviews",
+        "schemaName": "public",
+        "x": 440,
+        "y": 1360
+      },
+      {
+        "name": "wishlist_items",
+        "schemaName": "public",
+        "x": 1456,
+        "y": 1112
+      },
+      {
+        "name": "users",
+        "schemaName": "public",
+        "x": 1128,
+        "y": 640
+      },
+      {
+        "name": "warehouses",
+        "schemaName": "public",
+        "x": 1424,
+        "y": 2400
+      },
+      {
+        "name": "countries",
+        "schemaName": "public",
+        "x": 2200,
+        "y": 1360
+      },
+      {
+        "name": "departments",
+        "schemaName": "public",
+        "x": 48,
+        "y": 1376
+      },
+      {
+        "name": "ticket_messages",
+        "schemaName": "public",
+        "x": 584,
+        "y": 1048
+      },
+      {
+        "name": "audit_logs",
+        "schemaName": "public",
+        "x": 1440,
+        "y": 48
+      },
+      {
+        "name": "customers",
+        "schemaName": "public",
+        "x": 1168,
+        "y": 1368
+      },
+      {
+        "name": "role_permissions",
+        "schemaName": "public",
+        "x": 1688,
+        "y": 2096
+      },
+      {
+        "name": "user_roles",
+        "schemaName": "public",
+        "x": 1776,
+        "y": 1088
+      },
+      {
+        "name": "carriers",
+        "schemaName": "public",
+        "x": 1104,
+        "y": 2528
+      },
+      {
+        "name": "wishlists",
+        "schemaName": "public",
+        "x": 1448,
+        "y": 1552
+      },
+      {
+        "name": "employees",
+        "schemaName": "public",
+        "x": 432,
+        "y": 728
+      },
+      {
+        "name": "permissions",
+        "schemaName": "public",
+        "x": 2416,
+        "y": 1768
+      },
+      {
+        "name": "customer_addresses",
+        "schemaName": "public",
+        "x": 1272,
+        "y": 2088
+      },
+      {
+        "name": "suppliers",
+        "schemaName": "public",
+        "x": 2496,
+        "y": 1400
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "categories",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "parent_category_id"
+        ],
+        "secondTableName": "categories",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "brands",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "brand_id"
+        ],
+        "secondTableName": "products",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "categories",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "category_id"
+        ],
+        "secondTableName": "products",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "invoices",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "inventories",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "coupons",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "coupon_id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "shipments",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "order_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "order_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "wishlist_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_id"
+        ],
+        "secondTableName": "customers",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "warehouses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "warehouse_id"
+        ],
+        "secondTableName": "inventories",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "tickets",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ticket_id"
+        ],
+        "secondTableName": "ticket_messages",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "reviews",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "permissions",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "permission_id"
+        ],
+        "secondTableName": "role_permissions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "invoices",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "invoice_id"
+        ],
+        "secondTableName": "payments",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "roles",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "role_id"
+        ],
+        "secondTableName": "user_roles",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "addresses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "address_id"
+        ],
+        "secondTableName": "suppliers",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "reviews",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "wishlists",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "customer_addresses",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "addresses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "shipping_address_id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_id"
+        ],
+        "secondTableName": "employees",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "departments",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "department_id"
+        ],
+        "secondTableName": "employees",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "employees",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "assigned_employee_id"
+        ],
+        "secondTableName": "tickets",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "countries",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "country_id"
+        ],
+        "secondTableName": "regions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "carriers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "carrier_id"
+        ],
+        "secondTableName": "shipments",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "regions",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "region_id"
+        ],
+        "secondTableName": "addresses",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_id"
+        ],
+        "secondTableName": "audit_logs",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "tickets",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "sender_user_id"
+        ],
+        "secondTableName": "ticket_messages",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "addresses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "address_id"
+        ],
+        "secondTableName": "warehouses",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "wishlists",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "wishlist_id"
+        ],
+        "secondTableName": "wishlist_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "addresses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "address_id"
+        ],
+        "secondTableName": "customer_addresses",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "roles",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "role_id"
+        ],
+        "secondTableName": "role_permissions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_id"
+        ],
+        "secondTableName": "user_roles",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      }
+    ]
+  },
+  "views": {}
+}

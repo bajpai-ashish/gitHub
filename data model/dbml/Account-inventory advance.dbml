@@ -1,0 +1,306 @@
+Table payments {
+  id integer [pk]
+  invoice_id integer [not null]
+  paid_at timestamp [not null]
+  amount decimal(10,2) [not null]
+  payment_method varchar(50) [not null]
+}
+
+Table regions {
+  id integer [pk]
+  name varchar(100) [not null]
+  country_id integer [not null]
+}
+
+Table roles {
+  id integer [pk]
+  name varchar(50) [not null]
+  description varchar(255) [not null]
+}
+
+Table addresses {
+  id integer [pk]
+  street varchar(255) [not null]
+  city varchar(100) [not null]
+  postal_code varchar(20) [not null]
+  region_id integer [not null]
+}
+
+Table reviews {
+  id integer [pk]
+  product_id integer [not null]
+  customer_id integer [not null]
+  rating integer [not null]
+  comment text [not null]
+  created_at timestamp [not null]
+}
+
+Table order_items {
+  id integer [pk]
+  order_id integer [not null]
+  product_id integer [not null]
+  quantity integer [not null]
+  unit_price decimal(10,2) [not null]
+}
+
+Table wishlist_items {
+  id integer [pk]
+  wishlist_id integer [not null]
+  product_id integer [not null]
+}
+
+Table users {
+  id integer [pk]
+  email varchar(255) [not null]
+  password_hash varchar(255) [not null]
+  first_name varchar(100) [not null]
+  last_name varchar(100) [not null]
+  phone varchar(50) [not null]
+}
+
+Table warehouses {
+  id integer [pk]
+  name varchar(100) [not null]
+  address_id integer [not null]
+}
+
+Table shipments {
+  id integer [pk]
+  order_id integer [not null]
+  carrier_id integer [not null]
+  tracking_number varchar(100) [not null]
+  shipped_at timestamp [not null]
+  delivered_at timestamp
+}
+
+Table tickets {
+  id integer [pk]
+  customer_id integer [not null]
+  assigned_employee_id integer
+  subject varchar(255) [not null]
+  status varchar(50) [not null]
+  created_at timestamp [not null]
+}
+
+Table coupons {
+  id integer [pk]
+  code varchar(50) [not null]
+  discount_percent decimal(5,2) [not null]
+  active_until timestamp [not null]
+}
+
+Table orders {
+  id integer [pk]
+  customer_id integer [not null]
+  ordered_at timestamp [not null]
+  status varchar(50) [not null]
+  coupon_id integer
+  shipping_address_id integer [not null]
+}
+
+Table countries {
+  id integer [pk]
+  name varchar(100) [not null]
+  code varchar(3) [not null]
+}
+
+Table departments {
+  id integer [pk]
+  name varchar(100) [not null]
+  budget decimal(15,2) [not null]
+}
+
+Table ticket_messages {
+  id integer [pk]
+  ticket_id integer [not null]
+  sender_user_id integer [not null]
+  message text [not null]
+  sent_at timestamp [not null]
+}
+
+Table audit_logs {
+  id integer [pk]
+  user_id integer [not null]
+  action varchar(100) [not null]
+  table_name varchar(100) [not null]
+  row_id integer [not null]
+  performed_at timestamp [not null]
+}
+
+Table brands {
+  id integer [pk]
+  name varchar(100) [not null]
+  website varchar(255) [not null]
+}
+
+Table categories {
+  id integer [pk]
+  name varchar(100) [not null]
+  description varchar(255) [not null]
+  parent_category_id integer
+}
+
+Table products {
+  id integer [pk]
+  name varchar(150) [not null]
+  sku varchar(50) [not null]
+  description text [not null]
+  price decimal(10,2) [not null]
+  cost decimal(10,2) [not null]
+  weight decimal(8,2) [not null]
+  brand_id integer [not null]
+  category_id integer [not null]
+}
+
+Table customers {
+  id integer [pk]
+  user_id integer [not null]
+  company_name varchar(150) [not null]
+  tax_identifier varchar(50) [not null]
+}
+
+Table role_permissions {
+  id integer [pk]
+  role_id integer [not null]
+  permission_id integer [not null]
+}
+
+Table user_roles {
+  id integer [pk]
+  user_id integer [not null]
+  role_id integer [not null]
+}
+
+Table carriers {
+  id integer [pk]
+  name varchar(100) [not null]
+  phone varchar(50) [not null]
+  website varchar(255) [not null]
+}
+
+Table invoices {
+  id integer [pk]
+  order_id integer [not null]
+  issued_at timestamp [not null]
+  total_amount decimal(10,2) [not null]
+}
+
+Table wishlists {
+  id integer [pk]
+  customer_id integer [not null]
+  name varchar(100) [not null]
+  created_at timestamp [not null]
+}
+
+Table employees {
+  id integer [pk]
+  user_id integer [not null]
+  department_id integer [not null]
+  job_title varchar(100) [not null]
+  hire_date date [not null]
+  salary decimal(10,2) [not null]
+}
+
+Table permissions {
+  id integer [pk]
+  name varchar(100) [not null]
+  description varchar(255) [not null]
+}
+
+Table inventories {
+  id integer [pk]
+  product_id integer [not null]
+  warehouse_id integer [not null]
+  quantity integer [not null]
+}
+
+Table customer_addresses {
+  id integer [pk]
+  customer_id integer [not null]
+  address_id integer [not null]
+  is_billing boolean [not null]
+  is_shipping boolean [not null]
+}
+
+Table suppliers {
+  id integer [pk]
+  name varchar(150) [not null]
+  contact_name varchar(100) [not null]
+  email varchar(255) [not null]
+  phone varchar(50) [not null]
+  address_id integer [not null]
+}
+
+Ref:brands.id < products.brand_id
+
+Ref:products.id < wishlist_items.product_id
+
+Ref:users.id < customers.user_id
+
+Ref:warehouses.id < inventories.warehouse_id
+
+Ref:customers.id < orders.customer_id
+
+Ref:tickets.id < ticket_messages.ticket_id
+
+Ref:products.id < reviews.product_id
+
+Ref:permissions.id < role_permissions.permission_id
+
+Ref:invoices.id < payments.invoice_id
+
+Ref:roles.id < user_roles.role_id
+
+Ref:addresses.id < suppliers.address_id
+
+Ref:customers.id < reviews.customer_id
+
+Ref:customers.id < wishlists.customer_id
+
+Ref:customers.id < customer_addresses.customer_id
+
+Ref:addresses.id < orders.shipping_address_id
+
+Ref:users.id < employees.user_id
+
+Ref:orders.id < invoices.order_id
+
+Ref:departments.id < employees.department_id
+
+Ref:employees.id < tickets.assigned_employee_id
+
+Ref:countries.id < regions.country_id
+
+Ref:carriers.id < shipments.carrier_id
+
+Ref:regions.id < addresses.region_id
+
+Ref:orders.id < shipments.order_id
+
+Ref:users.id < audit_logs.user_id
+
+Ref:products.id < order_items.product_id
+
+Ref:customers.id < tickets.customer_id
+
+Ref:users.id < ticket_messages.sender_user_id
+
+Ref:addresses.id < warehouses.address_id
+
+Ref:categories.id < categories.parent_category_id
+
+Ref:orders.id < order_items.order_id
+
+Ref:categories.id < products.category_id
+
+Ref:wishlists.id < wishlist_items.wishlist_id
+
+Ref:addresses.id < customer_addresses.address_id
+
+Ref:roles.id < role_permissions.role_id
+
+Ref:products.id < inventories.product_id
+
+Ref:users.id < user_roles.user_id
+
+Ref:coupons.id < orders.coupon_id

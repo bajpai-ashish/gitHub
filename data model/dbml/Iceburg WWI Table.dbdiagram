@@ -1,0 +1,461 @@
+{
+  "version": "3.0.0",
+  "darkMode": false,
+  "gridEnabling": false,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "relationshipMode": "All",
+    "tablePositions": [
+      {
+        "name": "Purchase",
+        "schemaName": "reporting.Fact",
+        "x": 730.16455078125,
+        "y": 12
+      },
+      {
+        "name": "Stock_Holding",
+        "schemaName": "reporting.Fact",
+        "x": 730.16455078125,
+        "y": 442
+      },
+      {
+        "name": "Order",
+        "schemaName": "reporting.Fact",
+        "x": 730.16455078125,
+        "y": 2642
+      },
+      {
+        "name": "Movement",
+        "schemaName": "reporting.Fact",
+        "x": 730.16455078125,
+        "y": 808
+      },
+      {
+        "name": "Sale",
+        "schemaName": "reporting.Fact",
+        "x": 730.16455078125,
+        "y": 1892
+      },
+      {
+        "name": "payment_method",
+        "schemaName": "reporting.Dimension",
+        "x": 12,
+        "y": 1160
+      },
+      {
+        "name": "supplier",
+        "schemaName": "reporting.Dimension",
+        "x": 12,
+        "y": 12
+      },
+      {
+        "name": "city",
+        "schemaName": "reporting.Dimension",
+        "x": 12,
+        "y": 2656
+      },
+      {
+        "name": "stock_item",
+        "schemaName": "reporting.Dimension",
+        "x": 12,
+        "y": 442
+      },
+      {
+        "name": "customer",
+        "schemaName": "reporting.Dimension",
+        "x": 12,
+        "y": 1430
+      },
+      {
+        "name": "date",
+        "schemaName": "reporting.Dimension",
+        "x": 99.83928261806015,
+        "y": 1835.927750021242
+      },
+      {
+        "name": "transaction_type",
+        "schemaName": "reporting.Dimension",
+        "x": 12,
+        "y": 2386
+      },
+      {
+        "name": "employee",
+        "schemaName": "reporting.Dimension",
+        "x": 12,
+        "y": 3182
+      },
+      {
+        "name": "Transaction",
+        "schemaName": "reporting.Fact",
+        "x": 730.16455078125,
+        "y": 1238
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "Date"
+        ],
+        "firstTableName": "date",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Date_Key"
+        ],
+        "secondTableName": "Transaction",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Customer_Key"
+        ],
+        "firstTableName": "customer",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Customer_Key"
+        ],
+        "secondTableName": "Transaction",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Customer_Key"
+        ],
+        "firstTableName": "customer",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Customer_Key"
+        ],
+        "secondTableName": "Sale",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Customer_Key"
+        ],
+        "firstTableName": "customer",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Customer_Key"
+        ],
+        "secondTableName": "Order",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Customer_Key"
+        ],
+        "firstTableName": "customer",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Customer_Key"
+        ],
+        "secondTableName": "Movement",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Payment_Method_Key"
+        ],
+        "firstTableName": "payment_method",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Payment_Method_Key"
+        ],
+        "secondTableName": "Transaction",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Supplier_Key"
+        ],
+        "firstTableName": "supplier",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Supplier_Key"
+        ],
+        "secondTableName": "Movement",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Supplier_Key"
+        ],
+        "firstTableName": "supplier",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Supplier_Key"
+        ],
+        "secondTableName": "Transaction",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Supplier_Key"
+        ],
+        "firstTableName": "supplier",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Supplier_Key"
+        ],
+        "secondTableName": "Purchase",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "City_Key"
+        ],
+        "firstTableName": "city",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "City_Key"
+        ],
+        "secondTableName": "Sale",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "City_Key"
+        ],
+        "firstTableName": "city",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "City_Key"
+        ],
+        "secondTableName": "Order",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "firstTableName": "stock_item",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "secondTableName": "Movement",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "firstTableName": "stock_item",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "secondTableName": "Order",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "firstTableName": "stock_item",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "secondTableName": "Purchase",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "firstTableName": "stock_item",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "secondTableName": "Stock_Holding",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "firstTableName": "stock_item",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Stock_Item_Key"
+        ],
+        "secondTableName": "Sale",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Date"
+        ],
+        "firstTableName": "date",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Date_Key"
+        ],
+        "secondTableName": "Purchase",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Date"
+        ],
+        "firstTableName": "date",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Order_Date_Key"
+        ],
+        "secondTableName": "Order",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Date"
+        ],
+        "firstTableName": "date",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Picked_Date_Key"
+        ],
+        "secondTableName": "Order",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Date"
+        ],
+        "firstTableName": "date",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Date_Key"
+        ],
+        "secondTableName": "Movement",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Transaction_Type_Key"
+        ],
+        "firstTableName": "transaction_type",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Transaction_Type_Key"
+        ],
+        "secondTableName": "Transaction",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Transaction_Type_Key"
+        ],
+        "firstTableName": "transaction_type",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Transaction_Type_Key"
+        ],
+        "secondTableName": "Movement",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Employee_Key"
+        ],
+        "firstTableName": "employee",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Salesperson_Key"
+        ],
+        "secondTableName": "Order",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "Employee_Key"
+        ],
+        "firstTableName": "employee",
+        "firstSchemaName": "reporting.Dimension",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "Salesperson_Key"
+        ],
+        "secondTableName": "Sale",
+        "secondSchemaName": "reporting.Fact",
+        "secondRelation": "*",
+        "checkPoints": []
+      }
+    ]
+  },
+  "views": {}
+}

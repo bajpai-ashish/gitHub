@@ -1,147 +1,148 @@
 {
-  "version": "2.0.0",
+  "version": "3.0.0",
   "darkMode": false,
   "gridEnabling": false,
   "currentViewName": null,
   "defaultView": {
     "detailLevel": "All",
+    "relationshipMode": "All",
     "tablePositions": [
       {
         "name": "Persons",
         "schemaName": "subjects",
-        "x": 16,
-        "y": 16
+        "x": 12,
+        "y": 12
       },
       {
         "name": "Addresses",
         "schemaName": "subjects",
-        "x": 16,
-        "y": 472
+        "x": 12,
+        "y": 474
       },
       {
         "name": "email",
         "schemaName": "subjects",
-        "x": 600,
-        "y": 16
+        "x": 599.37548828125,
+        "y": 12
       },
       {
         "name": "phone",
         "schemaName": "subjects",
-        "x": 600,
-        "y": 408
+        "x": 599.37548828125,
+        "y": 410
       },
       {
         "name": "person_address",
         "schemaName": "subjects",
-        "x": 600,
-        "y": 1680
+        "x": 599.37548828125,
+        "y": 1682
       },
       {
         "name": "Customers",
         "schemaName": "subjects",
-        "x": 600,
+        "x": 599.37548828125,
         "y": 808
       },
       {
         "name": "Vendors",
         "schemaName": "subjects",
-        "x": 600,
-        "y": 1144
+        "x": 599.37548828125,
+        "y": 1142
       },
       {
         "name": "Suppliers",
         "schemaName": "subjects",
-        "x": 600,
-        "y": 1416
+        "x": 599.37548828125,
+        "y": 1412
       },
       {
         "name": "Categories",
         "schemaName": "objects",
-        "x": 16,
+        "x": 12,
         "y": 808
       },
       {
         "name": "Products",
         "schemaName": "objects",
-        "x": 600,
-        "y": 2016
+        "x": 599.37548828125,
+        "y": 2017
       },
       {
         "name": "employees",
         "schemaName": "subjects",
-        "x": 16,
-        "y": 1048
+        "x": 12,
+        "y": 1046
       },
       {
         "name": "govt_id_verification",
         "schemaName": "transactions",
-        "x": 1248,
-        "y": 16
+        "x": 1249.20751953125,
+        "y": 12
       },
       {
         "name": "Payment_Modes",
         "schemaName": "transactions",
-        "x": 16,
-        "y": 1384
+        "x": 12,
+        "y": 1380
       },
       {
         "name": "Orders",
         "schemaName": "transactions",
-        "x": 1248,
-        "y": 568
+        "x": 1249.20751953125,
+        "y": 571
       },
       {
         "name": "Order_Items",
         "schemaName": "transactions",
-        "x": 1840,
-        "y": 360
+        "x": 1836.5146484375,
+        "y": 356
       },
       {
         "name": "Order_Suppliers",
         "schemaName": "transactions",
-        "x": 1840,
-        "y": 56
+        "x": 1836.5146484375,
+        "y": 53
       },
       {
         "name": "stock",
         "schemaName": "transactions",
-        "x": 1248,
-        "y": 968
+        "x": 1249.20751953125,
+        "y": 969
       },
       {
         "name": "inventory_Transactions",
         "schemaName": "transactions",
-        "x": 1840,
-        "y": 752
+        "x": 1836.5146484375,
+        "y": 754
       },
       {
         "name": "account_Transactions",
         "schemaName": "transactions",
-        "x": 2456,
-        "y": 344
+        "x": 2495.4482421875,
+        "y": 346
       },
       {
         "name": "Shipping",
         "schemaName": "transactions",
-        "x": 2456,
-        "y": 16
+        "x": 2495.4482421875,
+        "y": 12
       },
       {
         "name": "Payments",
         "schemaName": "transactions",
-        "x": 1840,
-        "y": 1552
+        "x": 1836.5146484375,
+        "y": 1550
       },
       {
         "name": "Employee_Salary",
         "schemaName": "transactions",
-        "x": 600,
+        "x": 599.37548828125,
         "y": 2320
       },
       {
         "name": "Employee_Commissions",
         "schemaName": "transactions",
-        "x": 1840,
+        "x": 1836.5146484375,
         "y": 1248
       }
     ],
