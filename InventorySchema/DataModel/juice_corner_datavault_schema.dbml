@@ -1,0 +1,809 @@
+// ============================================================================
+// DATA VAULT 2.0 BLUEPRINT: JUICE CORNER ORDERING & DELIVERY SYSTEM
+// ============================================================================
+
+
+// ============================================================================
+// LAYER 1: HUBS (The Backbone - Core Business Concepts & Identities)
+// Rule: Contains ONLY the unique business key, a hash key, and load metadata.
+// ============================================================================
+
+Table hub_branches {
+  branch_hk varchar [pk]                  // MD5/SHA256 hash of branch_id
+  branch_id integer [not null]            // Natural business key from source
+  load_date timestamp [not null]          // System injection timestamp
+  record_source varchar [not null]        // Origin tracking (e.g., 'operational_db')
+}
+
+Table hub_categories {
+  category_hk varchar [pk]
+  category_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_products {
+  product_hk varchar [pk]
+  product_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_ingredients {
+  ingredient_hk varchar [pk]
+  ingredient_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_suppliers {
+  supplier_hk varchar [pk]
+  supplier_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_dining_tables {
+  table_hk varchar [pk]
+  table_id integer [not null]            // From dining_tables.id
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_users {
+  user_hk varchar [pk]                    // System users, staff, and admins
+  user_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_customers {
+  customer_hk varchar [pk]
+  customer_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_delivery_zones {
+  zone_hk varchar [pk]
+  zone_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_customer_addresses {
+  address_hk varchar [pk]
+  address_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_coupons {
+  coupon_hk varchar [pk]
+  coupon_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_promotions {
+  promotion_hk varchar [pk]
+  promotion_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+// NOTE: For immutable business transactions, the transactional transaction number 
+// is anchored directly in its matching Link table as a "Degenerate Business Key".
+// That is why 'orders' and 'purchase_orders' jump straight into the Link layer!
+
+
+// ============================================================================
+// LAYER 2: LINKS (The Framework - Inter-Entity Business Relationships)
+// Rule: Connects 2 or more Hubs via their Hash Keys. Contains relationship keys.
+// ============================================================================
+
+// --- Operational Relationships ---
+
+Table lnk_user_branch {
+  user_branch_hk varchar [pk]
+  user_hk varchar [ref: > hub_users.user_hk]
+  branch_hk varchar [ref: > hub_branches.branch_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_customer_address {
+  customer_address_hk varchar [pk]
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  address_hk varchar [ref: > hub_customer_addresses.address_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_address_delivery_zone {
+  address_zone_hk varchar [pk]
+  address_hk varchar [ref: > hub_customer_addresses.address_hk]
+  zone_hk varchar [ref: > hub_delivery_zones.zone_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_product_category {
+  product_category_hk varchar [pk]
+  product_hk varchar [ref: > hub_products.product_hk]
+  category_hk varchar [ref: > hub_categories.category_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_product_ingredients {
+  product_ingredient_hk varchar [pk]     // Recipe bridge
+  product_hk varchar [ref: > hub_products.product_hk]
+  ingredient_hk varchar [ref: > hub_ingredients.ingredient_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_product_promotions {
+  product_promotion_hk varchar [pk]
+  product_hk varchar [ref: > hub_products.product_hk]
+  promotion_hk varchar [ref: > hub_promotions.promotion_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_dining_table_branch {
+  table_branch_hk varchar [pk]
+  table_hk varchar [ref: > hub_dining_tables.table_hk]
+  branch_hk varchar [ref: > hub_branches.branch_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_customer_referral {
+  customer_referral_hk varchar [pk]      // Maps structural 'referrals' and self-joins
+  referrer_hk varchar [ref: > hub_customers.customer_hk]
+  referred_hk varchar [ref: > hub_customers.customer_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+// --- Polymorphic Event Relations (Security & Audit Tokens) ---
+
+Table lnk_auth_tokens {
+  auth_token_hk varchar [pk]
+  token_id integer [not null]             // Degenerate Key
+  customer_hk varchar [ref: > hub_customers.customer_hk, null] // Nullable if token is for staff
+  user_hk varchar [ref: > hub_users.user_hk, null]             // Nullable if token is for customer
+  tokenable_type varchar [not null]       // 'customer' or 'user'
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_support_tickets {
+  ticket_hk varchar [pk]
+  ticket_number varchar [unique, not null] // Degenerate Key
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  order_hk varchar [ref: > lnk_orders.order_hk, null]
+  assigned_to_user_hk varchar [ref: > hub_users.user_hk, null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_ticket_messages {
+  ticket_message_hk varchar [pk]
+  message_id integer [not null]           // Degenerate Key
+  ticket_hk varchar [ref: > lnk_support_tickets.ticket_hk]
+  sender_customer_hk varchar [ref: > hub_customers.customer_hk, null]
+  sender_user_hk varchar [ref: > hub_users.user_hk, null]
+  sender_type varchar [not null]          // 'customer' or 'staff'
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_notifications {
+  notification_hk varchar [pk]
+  notification_id integer [not null]      // Degenerate Key
+  order_hk varchar [ref: > lnk_orders.order_hk, null]
+  recipient_customer_hk varchar [ref: > hub_customers.customer_hk, null]
+  recipient_user_hk varchar [ref: > hub_users.user_hk, null]
+  recipient_type varchar [not null]       // 'customer' | 'staff' | 'delivery'
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+// --- Transactional & Non-Historical Links (Core Operations) ---
+
+Table lnk_orders {
+  order_hk varchar [pk]                   // Hash of order_number
+  order_number varchar [unique, not null] // Degenerate Business Key
+  customer_hk varchar [ref: ?> hub_customers.customer_hk, null] // Nullable for walk-ins
+  branch_hk varchar [ref: ?> hub_branches.branch_hk]
+  table_hk varchar [ref: ?> hub_dining_tables.table_hk, null]   // Dynamic components
+  address_hk varchar [ref: ?> hub_customer_addresses.address_hk, null]
+  coupon_hk varchar [ref: ?> hub_coupons.coupon_hk, null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_order_items {
+  order_item_hk varchar [pk]              // Composite link connecting products inside orders
+  order_hk varchar [ref: > lnk_orders.order_hk]
+  product_hk varchar [ref: > hub_products.product_hk]
+  order_item_id integer [not null]        // Unique line-item pointer from source
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_purchase_orders {
+  purchase_order_hk varchar [pk]          // Hash of po_number
+  po_number varchar [unique, not null]    // Degenerate Business Key
+  supplier_hk varchar [ref: > hub_suppliers.supplier_hk]
+  branch_hk varchar [ref: > hub_branches.branch_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_purchase_order_items {
+  po_item_hk varchar [pk]
+  purchase_order_hk varchar [ref: > lnk_purchase_orders.purchase_order_hk]
+  ingredient_hk varchar [ref: > hub_ingredients.ingredient_hk]
+  po_item_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_stock_movements {
+  stock_movement_hk varchar [pk]
+  movement_id integer [not null]          // Degenerate key from stock_movements.id
+  ingredient_hk varchar [ref: > hub_ingredients.ingredient_hk]
+  branch_hk varchar [ref: > hub_branches.branch_hk]
+  created_by_user_hk varchar [ref: > hub_users.user_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+
+Table lnk_coupon_redemptions {
+  redemption_hk varchar [pk]
+  redemption_id integer [not null]
+  coupon_hk varchar [ref: > hub_coupons.coupon_hk]
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  order_hk varchar [ref: > lnk_orders.order_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+// Shopping Carts are short-lived. We track their association natively as a Link.
+Table lnk_customer_cart_items {
+  cart_item_hk varchar [pk]
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  product_hk varchar [ref: > hub_products.product_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+// Favorites Map
+Table lnk_customer_favorites {
+  favorite_hk varchar [pk]
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+product_hk varchar [ref: > hub_products.product_hk]
+load_date timestamp [not null]
+record_source varchar [not null]
+}
+// User Security Validation Instances
+Table lnk_customer_otp 
+{customer_otp_hk varchar [pk]
+otp_id integer [not null]
+customer_hk varchar [ref: > hub_customers.customer_hk, null]
+load_date timestamp [not null]
+record_source varchar [not null]
+}
+// ============================================================================
+// LAYER 3: SATELLITES (The Muscle - Context, Timelines, & Changing Metrics)
+// Rule: Must use a composite primary key (HK + Load Date) to handle tracking updates.
+// ============================================================================
+// --- Hub Satellites ---
+Table sat_branches {
+branch_hk varchar [ref: > hub_branches.branch_hk]
+load_date timestamp
+hash_diff varchar [not null]            // Controls delta loading changes
+name varchar
+address text
+phone varchar
+latitude decimal(10,7)
+longitude decimal(10,7)
+is_active boolean
+record_source varchar [not null]
+Indexes { (branch_hk, load_date) [pk] }
+}
+
+Table sat_categories {
+  category_hk varchar [ref: > hub_categories.category_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  description text
+  display_order integer
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (category_hk, load_date) [pk] }
+}
+
+Table sat_products {
+  product_hk varchar [ref: > hub_products.product_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  description text
+  price decimal(10,2)
+  discounted_price decimal(10,2)
+  is_seasonal boolean
+  is_available boolean
+  record_source varchar [not null]
+  Indexes { 
+    (product_hk, load_date) [pk] 
+        }
+}
+
+Table sat_product_images {
+  product_hk varchar [ref: > hub_products.product_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  image_url varchar                       // Since image metadata changes, track at product grain
+  is_primary boolean
+  display_order integer
+  record_source varchar [not null]
+  Indexes { (product_hk, load_date) [pk] }
+}
+
+Table sat_ingredients {
+  ingredient_hk varchar [ref: > hub_ingredients.ingredient_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  unit varchar
+  current_stock decimal(10,3)
+  reorder_level decimal(10,3)
+  cost_per_unit decimal(10,2)
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (ingredient_hk, load_date) [pk] }
+}
+
+Table sat_suppliers {
+  supplier_hk varchar [ref: > hub_suppliers.supplier_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  contact_person varchar
+  phone varchar
+  email varchar
+  address text
+  is_active boolean
+  record_source varchar [not null]
+    Indexes {
+      (supplier_hk, load_date) [pk] 
+          }
+}
+
+Table sat_dining_tables {
+  table_hk varchar [ref: > hub_dining_tables.table_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  table_number varchar
+  capacity integer
+  status varchar
+  qr_code varchar
+  is_active boolean
+  record_source varchar [not null]
+    Indexes { (table_hk, load_date) [pk] }
+}
+
+Table sat_customers_standard {
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  phone_verified boolean
+  email_verified boolean
+  loyalty_balance integer
+  referral_code varchar
+  record_source varchar [not null]
+  Indexes { (customer_hk, load_date) [pk] }
+}
+
+Table sat_customers_sensitive {// Isolated for localized masking/GDPR rules
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  phone varchar
+  email varchar
+  password_hash varchar
+  record_source varchar [not null]
+    Indexes { (customer_hk, load_date) [pk] }
+}
+
+Table sat_delivery_zones {
+  zone_hk varchar [ref: > hub_delivery_zones.zone_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  delivery_fee decimal(10,2)
+  min_order_amount decimal(10,2)
+  estimated_minutes integer
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (zone_hk, load_date) [pk] }
+}
+
+Table sat_customer_addresses {
+  address_hk varchar [ref: > hub_customer_addresses.address_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  label varchar
+  recipient_name varchar
+  recipient_phone varchar
+  address_line varchar
+  area varchar
+  city varchar
+  postal_code varchar
+  landmark varchar
+  delivery_instructions text
+  latitude decimal(10,7)
+  longitude decimal(10,7)
+  is_default boolean
+  record_source varchar [not null]
+    Indexes { (address_hk, load_date) [pk] }
+}
+
+Table sat_coupons {
+  coupon_hk varchar [ref: > hub_coupons.coupon_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  title varchar
+  description text
+  discount_type varchar
+  discount_value decimal(10,2)
+  min_order_amount decimal(10,2)
+  max_discount decimal(10,2)
+  usage_limit integer
+  per_customer_limit integer
+  used_count integer
+  start_date date
+  end_date date
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (coupon_hk, load_date) [pk] }
+}
+
+Table sat_promotions {
+  promotion_hk varchar [ref: > hub_promotions.promotion_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  title varchar
+  description text
+  discount_type varchar
+  discount_value decimal(10,2)
+  start_date date
+  end_date date
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (promotion_hk, load_date) [pk] }
+}
+
+Table sat_users_standard {
+  user_hk varchar [ref: > hub_users.user_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  email varchar
+  phone varchar
+  role varchar
+  is_active boolean
+  last_login_at timestamp
+  record_source varchar [not null]
+    Indexes { (user_hk, load_date) [pk] }
+}
+
+Table sat_users_sensitive {
+  user_hk varchar [ref: > hub_users.user_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  password_hash varchar
+  record_source varchar [not null]
+    Indexes { (user_hk, load_date) [pk] }
+}
+
+// CRITICAL ROLE SUBTYPE: delivery_personnel expands users 1:1.
+// It attaches straight to hub_users via user_hk instead of an independent hub!
+Table sat_user_delivery_details {
+  user_hk varchar [ref: > hub_users.user_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  vehicle_type varchar
+  vehicle_number varchar
+  license_number varchar
+  availability varchar
+  current_latitude decimal(10,7)
+  current_longitude decimal(10,7)
+  record_source varchar [not null]
+  Indexes { (user_hk, load_date) [pk] }
+}
+
+// --- Link & Transactional Satellites ---
+Table sat_order_details {                 // Placed on Link because metrics belong to the connection map
+order_hk varchar [ref: > lnk_orders.order_hk]
+load_date timestamp
+hash_diff varchar [not null]
+recipient_name varchar
+recipient_phone varchar
+address_snapshot text
+delivery_latitude decimal(10,7)
+delivery_longitude decimal(10,7)
+status varchar
+subtotal decimal(12,2)
+discount_amount decimal(10,2)
+coupon_discount decimal(10,2)
+delivery_fee decimal(10,2)
+tax decimal(10,2)
+total_amount decimal(12,2)
+loyalty_earned integer
+loyalty_used integer
+notes text
+cancellation_reason text
+placed_at timestamp
+completed_at timestamp
+record_source varchar [not null]
+Indexes { (order_hk, load_date) [pk] }
+}
+
+Table sat_order_items {
+order_item_hk varchar [ref: > lnk_order_items.order_item_hk]
+load_date timestamp
+hash_diff varchar [not null]
+quantity integer
+unit_price decimal(10,2)
+discount decimal(10,2)
+subtotal decimal(12,2)
+special_instructions text
+record_source varchar [not null]
+Indexes { (order_item_hk, load_date) [pk] }
+}
+
+Table sat_order_deliveries {              // Collects the 'deliveries' transactional context
+order_hk varchar [ref: > lnk_orders.order_hk]
+load_date timestamp
+hash_diff varchar [not null]
+delivery_person_user_hk varchar [ref: > hub_users.user_hk] // Links driver directly to user recordstatus varcharassigned_at timestamp
+picked_up_at timestamp
+delivered_at timestamp
+delivery_notes text
+failure_reason text
+proof_image_url varchar
+record_source varchar [not null]
+Indexes { (order_hk, load_date) [pk] }
+}
+
+Table sat_purchase_orders {purchase_order_hk varchar [ref: > lnk_purchase_orders.purchase_order_hk]
+load_date timestamp
+hash_diff varchar [not null]
+status varchar
+total_amount decimal(12,2)
+order_date date
+expected_date date
+received_date date
+notes text
+record_source varchar [not null]
+Indexes { (purchase_order_hk, load_date) [pk] }
+}
+
+Table sat_purchase_order_items {
+po_item_hk varchar [ref: > lnk_purchase_order_items.po_item_hk]
+load_date timestamp
+hash_diff varchar [not null]
+quantity decimal(10,3)
+unit_price decimal(10,2)
+subtotal decimal(12,2)
+record_source varchar [not null]
+Indexes { (po_item_hk, load_date) [pk] }
+}
+
+Table sat_stock_movements {stock_movement_hk varchar [ref: > lnk_stock_movements.stock_movement_hk]
+load_date timestamp
+hash_diff varchar [not null]
+type varchar
+quantity decimal(10,3)
+reference_type varchar
+reference_id integer
+notes text
+record_source varchar [not null]
+Indexes { (stock_movement_hk, load_date) [pk] }
+}
+
+Table sat_product_ingredients {
+product_ingredient_hk varchar [ref: > lnk_product_ingredients.product_ingredient_hk]
+load_date timestamp
+hash_diff varchar [not null]
+quantity decimal(10,3)
+unit varchar
+record_source varchar [not null]
+Indexes { (product_ingredient_hk, load_date) [pk] }
+}
+
+Table sat_customer_cart_items {cart_item_hk varchar [ref: > lnk_customer_cart_items.cart_item_hk]
+load_date timestamp
+hash_diff varchar [not null]
+quantity integer
+special_instructions text
+record_source varchar [not null]
+Indexes { (cart_item_hk, load_date) [pk] }
+}
+
+Table sat_customer_otp {
+customer_otp_hk varchar [ref: > lnk_customer_otp.customer_otp_hk]
+load_date timestamp
+hash_diff varchar [not null]
+phone varchar
+otp_code varchar
+purpose varchar
+expires_at timestamp
+is_used boolean
+attempts integer
+record_source varchar [not null]
+Indexes { (customer_otp_hk, load_date) [pk] }
+}
+
+Table sat_support_tickets {ticket_hk varchar [ref: > lnk_support_tickets.ticket_hk]
+load_date timestamp
+hash_diff varchar [not null]
+subject varchar
+status varchar
+priority varchar
+record_source varchar [not null]
+Indexes { (ticket_hk, load_date) [pk] }
+}
+
+Table sat_ticket_messages 
+{ticket_message_hk varchar [ref: > lnk_ticket_messages.ticket_message_hk]
+load_date timestamp
+hash_diff varchar [not null]
+message text
+record_source varchar [not null]
+Indexes { (ticket_message_hk, load_date) [pk] }
+}
+
+Table sat_notifications {
+notification_hk varchar [ref: > lnk_notifications.notification_hk]
+load_date timestamp
+hash_diff varchar [not null]
+type varchar
+title varchar
+message text
+is_read boolean
+sent_at timestamp
+read_at timestamp
+record_source varchar [not null]
+Indexes { (notification_hk, load_date) [pk] }
+}
+
+Table sat_auth_tokens {
+auth_token_hk varchar [ref: > lnk_auth_tokens.auth_token_hk]
+load_date timestamp
+hash_diff varchar [not null]
+token_hash varchar
+device_info varchar
+ip_address varchar
+last_used_at timestamp
+expires_at timestamp
+record_source varchar [not null]
+Indexes { (auth_token_hk, load_date) [pk] }
+}
+
+Table sat_coupon_redemptions {
+redemption_hk varchar [ref: > lnk_coupon_redemptions.redemption_hk]
+load_date timestamp
+hash_diff varchar [not null]
+discount_amount decimal(10,2)
+record_source varchar [not null]
+Indexes { (redemption_hk, load_date) [pk] }
+}
+
+// Immutable historical ledger entries (like Loyalty updates) track context  sequentially on the customer grain.
+
+Table sat_customer_loyalty_transactions {
+  customer_hk varchar  [ref: > hub_customers.customer_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  transaction_id integer // Sourced from loyalty_transactions.id
+  order_hk varchar [ref: > lnk_orders.order_hk, null]
+  type varchar
+  points integer
+  balance_after integer
+  description varchar
+  record_source varchar [not null]
+  Indexes { (customer_hk, load_date) [pk] }
+}
+
+Table sat_customer_referrals {
+  customer_referral_hk varchar [ref: > lnk_customer_referral.customer_referral_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  status varchar
+  reward_points integer
+  completed_at timestamp
+  record_source varchar [not null]
+Indexes { (customer_referral_hk, load_date) [pk] }
+}
+
+/*
+LAYER 4: REFERENCE TABLES (Bypass the Core Vault - Simple Lookups)
+Rule: Used for static constants, dimensions, or high-volume log streams.
+*/
+
+Table ref_settings {// Sourced from 'settings'
+keys varchar [pk]
+keyvalues text
+keytypes varchar
+keygroups varchar
+keydescriptions varchar
+last_updated timestamp
+}
+
+Table ref_operating_hours {// Calendar dimensional extension
+    id integer     [pk]
+    branch_id integer
+    day varchar
+    open_time time
+    close_time time
+    is_closed boolean
+}
+
+Table ref_holidays { // Calendar operational dimension
+    id integer [pk]
+    branch_id integer
+    holiday_date date
+    reason varchar
+    is_closed boolean
+}
+Table ref_banners {// App layout configuration metadata
+    id integer [pk]
+    branch_id integer // Nullable referencetitle varchar
+    image_url varchar
+    link_url varchar
+    display_order integer
+    start_date date
+    end_date date
+    is_active boolean
+}
+// Fast high-volume streams without business keys are written directly into telemetry tables
+Table ref_delivery_tracking { // Spatial tracking data stream
+    id integer [pk]
+    order_hk varchar [ref: > lnk_orders.order_hk, null] // Direct tracking index connection
+    latitude decimal(10,7)
+    longitude decimal(10,7)
+    recorded_at timestamp
+}
+
+Table ref_activity_logs { // System administrative history logs
+    id integer [pk]
+    user_id integer
+    action varchar
+    entity_type varchar
+    entity_id integer
+    old_values json
+    new_values json
+    ip_address varchar
+    user_agent varchar
+    created_at timestamp
+}
+
+/*
+### Key Architectural Choices Made:
+1. **Polymorphic Foreign Keys Resolved**: Tables like `auth_tokens`, `ticket_messages`, and `notifications` reference multiple potential source entities (like a Customer ID or a Staff User ID). In Data Vault, a single column cannot point to two different Hubs. The solution used above creates separate, nullable slots (`customer_hk` and `user_hk`) inside the respective Link tables.
+2. **Subtyping / Role Extensions Simplified**: In your original file, `delivery_personnel` had a `1:1` relationship with `users`. Instead of creating a redundant `hub_delivery_personnel` and a Link table, it is attached as a contextual satellite (`sat_user_delivery_details`) right onto the core `hub_users`.
+3. **Transactional Links Employed**: Entities like `orders`, `purchase_orders`, and `stock_movements` represent discrete corporate events. They bypass traditional Hub storage and use **Transactional Links** where their business numbers (e.g., `order_number`) are stored as **Degenerate Business Keys** right alongside the Hub hashes. 
+4. **Context Splitting for GDPR**: Customer details are split into a standard profile satellite (`sat_customers_standard`) and a sensitive security satellite (`sat_customers_sensitive`). This allows your data pipelines to easily mask or clean up PII values without losing structural behavioral history.
+
+Now that the complete vault structure is mapped out, would you like to see how to construct an **incremental SQL loading pattern** for one of these Hubs/Satellites, or do you want to explore how to layer **Business Vault views (PIT or Bridge tables)** on top of this for reporting?
+*/
