@@ -1,0 +1,121 @@
+# ============================================================
+# InventorySchema - Platform Configuration
+# ============================================================
+
+application:
+  name: InventoryDataPlatform
+  environment: development
+
+
+# ============================================================
+# STORAGE
+# ============================================================
+
+storage:
+
+  type: minio
+
+  endpoint: http://localhost:9000
+
+  access_key: minioadmin
+  secret_key: minioadmin
+
+  secure: false
+
+  buckets:
+    raw: rawload
+    bronze: bronzeload
+    silver: silverload
+    gold: goldload
+
+  paths:
+    raw: s3a://rawload
+    bronze: s3a://bronzeload
+    silver: s3a://silverload
+    gold: s3a://goldload
+
+
+# ============================================================
+# SPARK
+# ============================================================
+
+spark:
+
+  driver:
+    memory: 4g
+    cores: 2
+
+  executor:
+    memory: 4g
+    cores: 2
+    instances: 1
+
+  sql:
+    shuffle_partitions: 8
+
+  log_level: WARN
+
+
+# ============================================================
+# TABLE FORMATS
+# ============================================================
+
+table_formats:
+
+  bronze: iceberg
+  silver: iceberg
+  gold: iceberg
+
+
+# ============================================================
+# ICEBERG
+# ============================================================
+
+iceberg:
+
+  enabled: true
+
+  catalog:
+    name: local
+    type: hadoop
+
+  warehouse: s3a://bronzeload/warehouse
+
+  namespace:
+    bronze: bronze
+    silver: silver
+    gold: gold
+
+
+# ============================================================
+# HUDI
+# ============================================================
+
+hudi:
+
+  enabled: false
+
+
+# ============================================================
+# DELTA
+# ============================================================
+
+delta:
+
+  enabled: false
+
+
+# ============================================================
+# PIPELINE
+# ============================================================
+
+pipeline:
+
+  timezone: Asia/Kolkata
+
+  source:
+    bucket: rawload
+    prefix: Restaurant_Food_Delivery
+
+  test:
+    date_shift_months: 3

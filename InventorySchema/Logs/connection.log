@@ -1,0 +1,3 @@
+2026-08-24 10:10:04,124 | INFO | MINIO | Successfully connected to MinIO at localhost:9000
+2026-08-24 10:12:52,406 | INFO | SPARK | Spark connection established. Application: InventoryDataPlatform
+2026-08-24 10:13:55,606 | INFO | SPARK | Spark connection established. Application: InventoryDataPlatform
