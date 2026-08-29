@@ -741,7 +741,7 @@ LAYER 4: REFERENCE TABLES (Bypass the Core Vault - Simple Lookups)
 Rule: Used for static constants, dimensions, or high-volume log streams.
 */
 
-Table ref_settings {// Sourced from 'settings'
+Table systems.ref_settings AS ref_settings {// Sourced from 'settings'
 keys varchar [pk]
 keyvalues text
 keytypes varchar
@@ -750,7 +750,7 @@ keydescriptions varchar
 last_updated timestamp
 }
 
-Table ref_operating_hours {// Calendar dimensional extension
+Table systems.ref_operating_hours AS ref_operating_hours {// Calendar dimensional extension
     id integer     [pk]
     branch_id integer
     day varchar
@@ -759,16 +759,17 @@ Table ref_operating_hours {// Calendar dimensional extension
     is_closed boolean
 }
 
-Table ref_holidays { // Calendar operational dimension
+Table systems.ref_holidays AS ref_holidays { // Calendar operational dimension
     id integer [pk]
     branch_id integer
     holiday_date date
     reason varchar
     is_closed boolean
 }
-Table ref_banners {// App layout configuration metadata
+Table objects.ref_banners {// App layout configuration metadata
     id integer [pk]
-    branch_id integer // Nullable referencetitle varchar
+    branch_id integer // Nullable reference
+    title varchar
     image_url varchar
     link_url varchar
     display_order integer
@@ -785,7 +786,7 @@ Table ref_delivery_tracking { // Spatial tracking data stream
     recorded_at timestamp
 }
 
-Table ref_activity_logs { // System administrative history logs
+Table systems.ref_activity_logs { // System administrative history logs
     id integer [pk]
     user_id integer
     action varchar

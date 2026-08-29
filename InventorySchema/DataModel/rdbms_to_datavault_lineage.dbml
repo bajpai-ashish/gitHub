@@ -1,0 +1,1617 @@
+// use * from './juice_corner_schema'
+
+Enum source.ingredient_unit {
+  kg
+  gram
+  liter
+  ml
+  piece
+}
+
+Enum source.stock_movement_type {
+  in
+  out
+  adjust
+  waste
+}
+
+Enum source.po_status {
+  draft
+  sent
+  received
+  cancelled
+}
+
+Enum source.day_of_week {
+  mon
+  tue
+  wed
+  thu
+  fri
+  sat
+  sun
+}
+
+Enum source.table_status {
+  available
+  occupied
+  reserved
+}
+
+Enum source.user_role {
+  admin
+  manager
+  staff
+  delivery
+}
+
+Enum source.delivery_availability {
+  available
+  busy
+  offline
+}
+
+Enum source.order_type {
+  dine_in
+  delivery
+}
+
+Enum source.order_status {
+  pending
+  confirmed
+  in_prep
+  ready
+  served
+  out_for_delivery
+  delivered
+  completed
+  cancelled
+}
+
+Enum source.delivery_status {
+  assigned
+  picked_up
+  on_way
+  delivered
+  failed
+}
+
+Enum source.payment_method {
+  cash
+  card
+  bkash
+  nagad
+  rocket
+  gateway
+}
+
+Enum source.payment_status {
+  pending
+  paid
+  failed
+  refunded
+}
+
+Enum source.refund_status {
+  requested
+  approved
+  processed
+  rejected
+}
+
+Enum source.discount_type {
+  percent
+  fixed
+}
+
+Enum source.otp_purpose {
+  register
+  login
+  reset
+}
+
+Enum source.loyalty_txn_type {
+  earn
+  redeem
+  expire
+  adjust
+}
+
+Enum source.referral_status {
+  pending
+  completed
+}
+
+Enum source.ticket_status {
+  open
+  pending
+  resolved
+  closed
+}
+
+Enum source.ticket_priority {
+  low
+  medium
+  high
+}
+
+Enum source.ticket_sender_type {
+  customer
+  staff
+}
+
+Enum source.notification_recipient_type {
+  customer
+  staff
+  delivery
+}
+
+Enum source.tokenable_type {
+  customer
+  user
+}
+
+Enum source.setting_type {
+  string
+  number
+  boolean
+  json
+}
+
+
+Table source.branches AS branches {
+  id integer [pk, increment]
+  name varchar [not null]
+  address text
+  phone varchar
+  latitude decimal(10,7)
+  longitude decimal(10,7)
+  is_active boolean [default: true]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table source.operating_hours AS operating_hours {
+  id integer [pk, increment]
+  branch_id integer [not null, ref: > branches.id]
+  day day_of_week [not null]
+  open_time time
+  close_time time
+  is_closed boolean [default: false]
+
+  indexes {
+    (branch_id, day) [unique]
+  }
+}
+
+Table source.holidays AS holidays {
+  id integer [pk, increment]
+  branch_id integer [not null, ref: > branches.id]
+  holiday_date date [not null]
+  reason varchar
+  is_closed boolean [default: true]
+}
+
+Table source.categories AS categories {
+  id integer [pk, increment]
+  name varchar [not null]
+  description text
+  display_order integer [default: 0]
+  is_active boolean [default: true]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table source.products AS products {
+  id integer [pk, increment]
+  category_id integer [not null, ref: > categories.id]
+  name varchar [not null]
+  description text
+  price decimal(10,2) [not null]
+  discounted_price decimal(10,2)
+  is_seasonal boolean [default: false]
+  is_available boolean [default: true]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table source.product_images AS product_images {
+  id integer [pk, increment]
+  product_id integer [not null, ref: > products.id]
+  image_url varchar [not null]
+  is_primary boolean [default: false]
+  display_order integer [default: 0]
+}
+
+Table source.ingredients AS ingredients {
+  id integer [pk, increment]
+  name varchar [not null]
+  unit ingredient_unit [not null]
+  current_stock decimal(10,3) [default: 0]
+  reorder_level decimal(10,3) [default: 0]
+  cost_per_unit decimal(10,2)
+  is_active boolean [default: true]
+  created_at timestamp
+}
+
+Table source.product_ingredients AS product_ingredients {
+  id integer [pk, increment]
+  product_id integer [not null, ref: > products.id]
+  ingredient_id integer [not null, ref: > ingredients.id]
+  quantity decimal(10,3) [not null, note: 'amount per single product unit']
+  unit ingredient_unit
+
+  indexes {
+    (product_id, ingredient_id) [unique]
+  }
+}
+
+Table source.suppliers AS suppliers {
+  id integer [pk, increment]
+  name varchar [not null]
+  contact_person varchar
+  phone varchar
+  email varchar
+  address text
+  is_active boolean [default: true]
+  created_at timestamp
+}
+
+Table source.purchase_orders AS purchase_orders {
+  id integer [pk, increment]
+  po_number varchar [unique, not null]
+  supplier_id integer [not null, ref: > suppliers.id]
+  branch_id integer [not null, ref: > branches.id]
+  status po_status [default: 'draft']
+  total_amount decimal(12,2)
+  order_date date
+  expected_date date
+  received_date date
+  notes text
+  created_at timestamp
+}
+
+Table source.purchase_order_items AS purchase_order_items {
+  id integer [pk, increment]
+  purchase_order_id integer [not null, ref: > purchase_orders.id]
+  ingredient_id integer [not null, ref: > ingredients.id]
+  quantity decimal(10,3) [not null]
+  unit_price decimal(10,2) [not null]
+  subtotal decimal(12,2)
+}
+
+Table source.stock_movements AS stock_movements {
+  id integer [pk, increment]
+  ingredient_id integer [not null, ref: > ingredients.id]
+  branch_id integer [not null, ref: > branches.id]
+  type stock_movement_type [not null]
+  quantity decimal(10,3) [not null]
+  reference_type varchar [note: 'purchase | order | manual']
+  reference_id integer
+  notes text
+  created_by integer [ref: > users.id]
+  created_at timestamp
+
+  indexes {
+    (ingredient_id, created_at)
+    (reference_type, reference_id)
+  }
+}
+
+Table source.dining_tables AS dining_tables {
+  id integer [pk, increment, note: 'named dining_tables to avoid SQL reserved word']
+  branch_id integer [not null, ref: > branches.id]
+  table_number varchar [not null]
+  capacity integer
+  status table_status [default: 'available']
+  qr_code varchar [unique]
+  is_active boolean [default: true]
+
+  indexes {
+    (branch_id, table_number) [unique]
+  }
+}
+
+Table source.users AS users {
+  id integer [pk, increment]
+  branch_id integer [ref: > branches.id]
+  name varchar [not null]
+  email varchar [unique]
+  phone varchar
+  password_hash varchar [not null]
+  role user_role [not null]
+  is_active boolean [default: true]
+  last_login_at timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table source.delivery_personnel AS delivery_personnel {
+  id integer [pk, increment]
+  user_id integer [unique, not null, ref: > users.id]
+  vehicle_type varchar
+  vehicle_number varchar
+  license_number varchar
+  availability delivery_availability [default: 'offline']
+  current_latitude decimal(10,7)
+  current_longitude decimal(10,7)
+}
+
+Table source.customers AS customers {
+  id integer [pk, increment]
+  name varchar [not null]
+  phone varchar [unique]
+  email varchar [unique]
+  password_hash varchar
+  phone_verified boolean [default: false]
+  email_verified boolean [default: false]
+  loyalty_balance integer [default: 0]
+  referral_code varchar [unique]
+  referred_by integer [ref: > customers.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table source.delivery_zones AS delivery_zones {
+  id integer [pk, increment]
+  name varchar [not null]
+  delivery_fee decimal(10,2) [default: 0]
+  min_order_amount decimal(10,2) [default: 0]
+  estimated_minutes integer
+  is_active boolean [default: true]
+}
+
+Table source.customer_addresses AS customer_addresses {
+  id integer [pk, increment]
+  customer_id integer [not null, ref: > customers.id]
+  zone_id integer [ref: > delivery_zones.id]
+  label varchar [note: 'Home, Office, Hostel']
+  recipient_name varchar
+  recipient_phone varchar
+  address_line varchar [not null]
+  area varchar
+  city varchar
+  postal_code varchar
+  landmark varchar
+  delivery_instructions text
+  latitude decimal(10,7)
+  longitude decimal(10,7)
+  is_default boolean [default: false]
+  created_at timestamp
+}
+
+Table source.otp_verifications AS otp_verifications {
+  id integer [pk, increment]
+  customer_id integer [ref: > customers.id]
+  phone varchar [not null]
+  otp_code varchar [not null]
+  purpose otp_purpose [not null]
+  expires_at timestamp [not null]
+  is_used boolean [default: false]
+  attempts integer [default: 0]
+  created_at timestamp
+
+  indexes {
+    (phone, purpose)
+  }
+}
+
+Table source.password_resets AS password_resets {
+  id integer [pk, increment]
+  email varchar [not null]
+  token_hash varchar [unique, not null]
+  expires_at timestamp [not null]
+  is_used boolean [default: false]
+  created_at timestamp
+}
+
+Table source.auth_tokens AS auth_tokens {
+  id integer [pk, increment]
+  tokenable_type tokenable_type [not null]
+  tokenable_id integer [not null, note: 'polymorphic FK to customers.id or users.id']
+  token_hash varchar [unique, not null]
+  device_info varchar
+  ip_address varchar
+  last_used_at timestamp
+  expires_at timestamp
+  created_at timestamp
+
+  indexes {
+    (tokenable_type, tokenable_id)
+  }
+}
+
+Table source.favorites AS favorites {
+  id integer [pk, increment]
+  customer_id integer [not null, ref: > customers.id]
+  product_id integer [not null, ref: > products.id]
+  created_at timestamp
+
+  indexes {
+    (customer_id, product_id) [unique]
+  }
+}
+
+Table source.reviews AS reviews {
+  id integer [pk, increment]
+  customer_id integer [not null, ref: > customers.id]
+  product_id integer [not null, ref: > products.id]
+  order_id integer [ref: > orders.id]
+  rating integer [not null, note: '1 to 5']
+  comment text
+  is_approved boolean [default: false]
+  created_at timestamp
+
+  indexes {
+    (product_id, is_approved)
+  }
+}
+
+Table source.loyalty_transactions AS loyalty_transactions {
+  id integer [pk, increment]
+  customer_id integer [not null, ref: > customers.id]
+  order_id integer [ref: > orders.id]
+  type loyalty_txn_type [not null]
+  points integer [not null]
+  balance_after integer
+  description varchar
+  created_at timestamp
+
+  indexes {
+    (customer_id, created_at)
+  }
+}
+
+Table source.referrals AS referrals {
+  id integer [pk, increment]
+  referrer_id integer [not null, ref: > customers.id]
+  referred_id integer [not null, ref: > customers.id]
+  status referral_status [default: 'pending']
+  reward_points integer [default: 0]
+  completed_at timestamp
+  created_at timestamp
+
+  indexes {
+    (referred_id) [unique]
+  }
+}
+
+Table source.support_tickets AS support_tickets {
+  id integer [pk, increment]
+  ticket_number varchar [unique, not null]
+  customer_id integer [not null, ref: > customers.id]
+  order_id integer [ref: > orders.id]
+  subject varchar [not null]
+  status ticket_status [default: 'open']
+  priority ticket_priority [default: 'medium']
+  assigned_to integer [ref: > users.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table source.ticket_messages AS ticket_messages {
+  id integer [pk, increment]
+  ticket_id integer [not null, ref: > support_tickets.id]
+  sender_type ticket_sender_type [not null]
+  sender_id integer [not null, note: 'polymorphic: customers.id or users.id']
+  message text [not null]
+  created_at timestamp
+}
+
+Table source.carts AS carts {
+  id integer [pk, increment]
+  customer_id integer [unique, not null, ref: > customers.id]
+  updated_at timestamp
+  created_at timestamp
+}
+
+Table source.cart_items AS cart_items {
+  id integer [pk, increment]
+  cart_id integer [not null, ref: > carts.id]
+  product_id integer [not null, ref: > products.id]
+  quantity integer [not null, default: 1]
+  special_instructions text
+  added_at timestamp
+
+  indexes {
+    (cart_id, product_id) [unique]
+  }
+}
+
+Table source.promotions AS promotions {
+  id integer [pk, increment]
+  title varchar [not null]
+  description text
+  discount_type discount_type [not null]
+  discount_value decimal(10,2) [not null]
+  start_date date
+  end_date date
+  is_active boolean [default: true]
+  created_at timestamp
+}
+
+Table source.product_promotions AS product_promotions {
+  id integer [pk, increment]
+  product_id integer [not null, ref: > products.id]
+  promotion_id integer [not null, ref: > promotions.id]
+
+  indexes {
+    (product_id, promotion_id) [unique]
+  }
+}
+
+Table source.coupons AS coupons {
+  id integer [pk, increment]
+  code varchar [unique, not null]
+  title varchar
+  description text
+  discount_type discount_type [not null]
+  discount_value decimal(10,2) [not null]
+  min_order_amount decimal(10,2) [default: 0]
+  max_discount decimal(10,2)
+  usage_limit integer [note: 'global limit, NULL = unlimited']
+  per_customer_limit integer [default: 1]
+  used_count integer [default: 0]
+  start_date date
+  end_date date
+  is_active boolean [default: true]
+  created_at timestamp
+}
+
+Table source.coupon_redemptions AS coupon_redemptions {
+  id integer [pk, increment]
+  coupon_id integer [not null, ref: > coupons.id]
+  customer_id integer [not null, ref: > customers.id]
+  order_id integer [not null, ref: > orders.id]
+  discount_amount decimal(10,2) [not null]
+  redeemed_at timestamp
+
+  indexes {
+    (coupon_id, customer_id)
+  }
+}
+
+Table source.orders AS orders {
+  id integer [pk, increment]
+  order_number varchar [unique, not null]
+  customer_id integer [ref: > customers.id, note: 'nullable for walk-in']
+  branch_id integer [not null, ref: > branches.id]
+  order_type order_type [not null]
+  table_id integer [ref: > dining_tables.id, note: 'required if dine_in']
+  address_id integer [ref: > customer_addresses.id, note: 'required if delivery']
+  coupon_id integer [ref: > coupons.id]
+  recipient_name varchar
+  recipient_phone varchar
+  address_snapshot text
+  delivery_latitude decimal(10,7)
+  delivery_longitude decimal(10,7)
+  status order_status [default: 'pending']
+  subtotal decimal(12,2) [not null]
+  discount_amount decimal(10,2) [default: 0]
+  coupon_discount decimal(10,2) [default: 0]
+  delivery_fee decimal(10,2) [default: 0]
+  tax decimal(10,2) [default: 0]
+  total_amount decimal(12,2) [not null]
+
+  loyalty_earned integer [default: 0]
+  loyalty_used integer [default: 0]
+
+  notes text
+  cancellation_reason text
+  placed_at timestamp
+  completed_at timestamp
+  created_at timestamp
+  updated_at timestamp
+
+  indexes {
+    (customer_id, placed_at)
+    (status, placed_at)
+    (order_type, placed_at)
+    (branch_id, status)
+  }
+}
+
+Table source.order_items AS order_items {
+  id integer [pk, increment]
+  order_id integer [not null, ref: > orders.id]
+  product_id integer [not null, ref: > products.id]
+  quantity integer [not null]
+  unit_price decimal(10,2) [not null, note: 'frozen at order time']
+  discount decimal(10,2) [default: 0]
+  subtotal decimal(12,2) [not null]
+  special_instructions text
+
+  indexes {
+    (order_id)
+    (product_id)
+  }
+}
+
+Table source.order_status_history AS order_status_history {
+  id integer [pk, increment]
+  order_id integer [not null, ref: > orders.id]
+  status order_status [not null]
+  changed_by integer [ref: > users.id]
+  notes text
+  created_at timestamp
+
+  indexes {
+    (order_id, created_at)
+  }
+}
+
+
+
+
+
+
+Table source.payments AS payments {
+  id integer [pk, increment]
+  order_id integer [not null, ref: > orders.id]
+  method payment_method [not null]
+  amount decimal(12,2) [not null]
+  transaction_id varchar
+  status payment_status [default: 'pending']
+  paid_at timestamp
+  gateway_response text
+  created_at timestamp
+
+  indexes {
+    (order_id)
+    (transaction_id)
+  }
+}
+
+Table source.refunds AS refunds {
+  id integer [pk, increment]
+  order_id integer [not null, ref: > orders.id]
+  payment_id integer [not null, ref: > payments.id]
+  amount decimal(12,2) [not null]
+  reason text
+  status refund_status [default: 'requested']
+  processed_by integer [ref: > users.id]
+  processed_at timestamp
+  created_at timestamp
+}
+
+
+
+
+
+
+Table source.deliveries AS deliveries {
+  id integer [pk, increment]
+  order_id integer [unique, not null, ref: > orders.id]
+  delivery_person_id integer [ref: > delivery_personnel.id]
+  status delivery_status [default: 'assigned']
+  assigned_at timestamp
+  picked_up_at timestamp
+  delivered_at timestamp
+  delivery_notes text
+  failure_reason text
+  proof_image_url varchar
+
+  indexes {
+    (delivery_person_id, status)
+  }
+}
+
+Table source.delivery_tracking AS delivery_tracking {
+  id integer [pk, increment]
+  delivery_id integer [not null, ref: > deliveries.id]
+  latitude decimal(10,7) [not null]
+  longitude decimal(10,7) [not null]
+  recorded_at timestamp [not null]
+
+  indexes {
+    (delivery_id, recorded_at)
+  }
+}
+
+
+
+
+
+
+Table source.notifications AS notifications {
+  id integer [pk, increment]
+  recipient_type notification_recipient_type [not null]
+  recipient_id integer [not null, note: 'polymorphic FK']
+  order_id integer [ref: > orders.id]
+  type varchar [not null]
+  title varchar [not null]
+  message text
+  is_read boolean [default: false]
+  sent_at timestamp
+  read_at timestamp
+
+  indexes {
+    (recipient_type, recipient_id, is_read)
+  }
+}
+
+
+
+
+
+
+Table source.banners AS banners {
+  id integer [pk, increment]
+  branch_id integer [ref: > branches.id, note: 'NULL = applies to all branches']
+  title varchar
+  image_url varchar [not null]
+  link_url varchar
+  display_order integer [default: 0]
+  start_date date
+  end_date date
+  is_active boolean [default: true]
+}
+
+Table source.activity_logs AS activity_logs {
+  id integer [pk, increment]
+  user_id integer [ref: > users.id]
+  action varchar [not null, note: 'created | updated | deleted | login | etc.']
+  entity_type varchar
+  entity_id integer
+  old_values json
+  new_values json
+  ip_address varchar
+  user_agent varchar
+  created_at timestamp
+
+  indexes {
+    (entity_type, entity_id)
+    (user_id, created_at)
+  }
+}
+
+Table source.settings AS settings {
+  id integer [pk, increment]
+  key varchar [unique, not null]
+  value text
+  type setting_type [default: 'string']
+  group varchar [note: 'general | payment | notification | etc.']
+  description varchar
+  updated_at timestamp
+}
+
+
+
+
+// use * from './juice_corner_datavault_schema'
+
+Table hub_branches {
+  branch_hk varchar [pk]                  
+  branch_id integer [not null]            
+  load_date timestamp [not null]          
+  record_source varchar [not null]        
+}
+
+Table hub_categories {
+  category_hk varchar [pk]
+  category_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_products {
+  product_hk varchar [pk]
+  product_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_ingredients {
+  ingredient_hk varchar [pk]
+  ingredient_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_suppliers {
+  supplier_hk varchar [pk]
+  supplier_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_dining_tables {
+  table_hk varchar [pk]
+  table_id integer [not null]            
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_users {
+  user_hk varchar [pk]                    
+  user_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_customers {
+  customer_hk varchar [pk]
+  customer_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_delivery_zones {
+  zone_hk varchar [pk]
+  zone_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_customer_addresses {
+  address_hk varchar [pk]
+  address_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_coupons {
+  coupon_hk varchar [pk]
+  coupon_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table hub_promotions {
+  promotion_hk varchar [pk]
+  promotion_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_user_branch {
+  user_branch_hk varchar [pk]
+  user_hk varchar [ref: > hub_users.user_hk]
+  branch_hk varchar [ref: > hub_branches.branch_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_customer_address {
+  customer_address_hk varchar [pk]
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  address_hk varchar [ref: > hub_customer_addresses.address_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_address_delivery_zone {
+  address_zone_hk varchar [pk]
+  address_hk varchar [ref: > hub_customer_addresses.address_hk]
+  zone_hk varchar [ref: > hub_delivery_zones.zone_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_product_category {
+  product_category_hk varchar [pk]
+  product_hk varchar [ref: > hub_products.product_hk]
+  category_hk varchar [ref: > hub_categories.category_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_product_ingredients {
+  product_ingredient_hk varchar [pk]     
+  product_hk varchar [ref: > hub_products.product_hk]
+  ingredient_hk varchar [ref: > hub_ingredients.ingredient_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_product_promotions {
+  product_promotion_hk varchar [pk]
+  product_hk varchar [ref: > hub_products.product_hk]
+  promotion_hk varchar [ref: > hub_promotions.promotion_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_dining_table_branch {
+  table_branch_hk varchar [pk]
+  table_hk varchar [ref: > hub_dining_tables.table_hk]
+  branch_hk varchar [ref: > hub_branches.branch_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_customer_referral {
+  customer_referral_hk varchar [pk]      
+  referrer_hk varchar [ref: > hub_customers.customer_hk]
+  referred_hk varchar [ref: > hub_customers.customer_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+
+Table lnk_auth_tokens {
+  auth_token_hk varchar [pk]
+  token_id integer [not null]             
+  customer_hk varchar [ref: > hub_customers.customer_hk, null] 
+  user_hk varchar [ref: > hub_users.user_hk, null]             
+  tokenable_type varchar [not null]       
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_support_tickets {
+  ticket_hk varchar [pk]
+  ticket_number varchar [unique, not null] 
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  order_hk varchar [ref: > lnk_orders.order_hk, null]
+  assigned_to_user_hk varchar [ref: > hub_users.user_hk, null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_ticket_messages {
+  ticket_message_hk varchar [pk]
+  message_id integer [not null]           
+  ticket_hk varchar [ref: > lnk_support_tickets.ticket_hk]
+  sender_customer_hk varchar [ref: > hub_customers.customer_hk, null]
+  sender_user_hk varchar [ref: > hub_users.user_hk, null]
+  sender_type varchar [not null]          
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_notifications {
+  notification_hk varchar [pk]
+  notification_id integer [not null]      
+  order_hk varchar [ref: > lnk_orders.order_hk, null]
+  recipient_customer_hk varchar [ref: > hub_customers.customer_hk, null]
+  recipient_user_hk varchar [ref: > hub_users.user_hk, null]
+  recipient_type varchar [not null]       
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+
+
+Table lnk_orders {
+  order_hk varchar [pk]                   
+  order_number varchar [unique, not null] 
+  customer_hk varchar [ref: ?> hub_customers.customer_hk, null] 
+  branch_hk varchar [ref: ?> hub_branches.branch_hk]
+  table_hk varchar [ref: ?> hub_dining_tables.table_hk, null]   
+  address_hk varchar [ref: ?> hub_customer_addresses.address_hk, null]
+  coupon_hk varchar [ref: ?> hub_coupons.coupon_hk, null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_order_items {
+  order_item_hk varchar [pk]              
+  order_hk varchar [ref: > lnk_orders.order_hk]
+  product_hk varchar [ref: > hub_products.product_hk]
+  order_item_id integer [not null]        
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_purchase_orders {
+  purchase_order_hk varchar [pk]          
+  po_number varchar [unique, not null]    
+  supplier_hk varchar [ref: > hub_suppliers.supplier_hk]
+  branch_hk varchar [ref: > hub_branches.branch_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_purchase_order_items {
+  po_item_hk varchar [pk]
+  purchase_order_hk varchar [ref: > lnk_purchase_orders.purchase_order_hk]
+  ingredient_hk varchar [ref: > hub_ingredients.ingredient_hk]
+  po_item_id integer [not null]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+Table lnk_stock_movements {
+  stock_movement_hk varchar [pk]
+  movement_id integer [not null]          
+  ingredient_hk varchar [ref: > hub_ingredients.ingredient_hk]
+  branch_hk varchar [ref: > hub_branches.branch_hk]
+  created_by_user_hk varchar [ref: > hub_users.user_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+
+Table lnk_coupon_redemptions {
+  redemption_hk varchar [pk]
+  redemption_id integer [not null]
+  coupon_hk varchar [ref: > hub_coupons.coupon_hk]
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  order_hk varchar [ref: > lnk_orders.order_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+
+Table lnk_customer_cart_items {
+  cart_item_hk varchar [pk]
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  product_hk varchar [ref: > hub_products.product_hk]
+  load_date timestamp [not null]
+  record_source varchar [not null]
+}
+
+
+Table lnk_customer_favorites {
+  favorite_hk varchar [pk]
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+product_hk varchar [ref: > hub_products.product_hk]
+load_date timestamp [not null]
+record_source varchar [not null]
+}
+
+Table lnk_customer_otp 
+{customer_otp_hk varchar [pk]
+otp_id integer [not null]
+customer_hk varchar [ref: > hub_customers.customer_hk, null]
+load_date timestamp [not null]
+record_source varchar [not null]
+}
+
+Table sat_branches {
+branch_hk varchar [ref: > hub_branches.branch_hk]
+load_date timestamp
+hash_diff varchar [not null]            
+name varchar
+address text
+phone varchar
+latitude decimal(10,7)
+longitude decimal(10,7)
+is_active boolean
+record_source varchar [not null]
+Indexes { (branch_hk, load_date) [pk] }
+}
+
+Table sat_categories {
+  category_hk varchar [ref: > hub_categories.category_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  description text
+  display_order integer
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (category_hk, load_date) [pk] }
+}
+
+Table sat_products {
+  product_hk varchar [ref: > hub_products.product_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  description text
+  price decimal(10,2)
+  discounted_price decimal(10,2)
+  is_seasonal boolean
+  is_available boolean
+  record_source varchar [not null]
+  Indexes { 
+    (product_hk, load_date) [pk] 
+        }
+}
+
+Table sat_product_images {
+  product_hk varchar [ref: > hub_products.product_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  image_url varchar                       
+  is_primary boolean
+  display_order integer
+  record_source varchar [not null]
+  Indexes { (product_hk, load_date) [pk] }
+}
+
+Table sat_ingredients {
+  ingredient_hk varchar [ref: > hub_ingredients.ingredient_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  unit varchar
+  current_stock decimal(10,3)
+  reorder_level decimal(10,3)
+  cost_per_unit decimal(10,2)
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (ingredient_hk, load_date) [pk] }
+}
+
+Table sat_suppliers {
+  supplier_hk varchar [ref: > hub_suppliers.supplier_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  contact_person varchar
+  phone varchar
+  email varchar
+  address text
+  is_active boolean
+  record_source varchar [not null]
+    Indexes {
+      (supplier_hk, load_date) [pk] 
+          }
+}
+
+Table sat_dining_tables {
+  table_hk varchar [ref: > hub_dining_tables.table_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  table_number varchar
+  capacity integer
+  status varchar
+  qr_code varchar
+  is_active boolean
+  record_source varchar [not null]
+    Indexes { (table_hk, load_date) [pk] }
+}
+
+Table sat_customers_standard {
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  phone_verified boolean
+  email_verified boolean
+  loyalty_balance integer
+  referral_code varchar
+  record_source varchar [not null]
+  Indexes { (customer_hk, load_date) [pk] }
+}
+
+Table sat_customers_sensitive {
+  customer_hk varchar [ref: > hub_customers.customer_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  phone varchar
+  email varchar
+  password_hash varchar
+  record_source varchar [not null]
+    Indexes { (customer_hk, load_date) [pk] }
+}
+
+Table sat_delivery_zones {
+  zone_hk varchar [ref: > hub_delivery_zones.zone_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  delivery_fee decimal(10,2)
+  min_order_amount decimal(10,2)
+  estimated_minutes integer
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (zone_hk, load_date) [pk] }
+}
+
+Table sat_customer_addresses {
+  address_hk varchar [ref: > hub_customer_addresses.address_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  label varchar
+  recipient_name varchar
+  recipient_phone varchar
+  address_line varchar
+  area varchar
+  city varchar
+  postal_code varchar
+  landmark varchar
+  delivery_instructions text
+  latitude decimal(10,7)
+  longitude decimal(10,7)
+  is_default boolean
+  record_source varchar [not null]
+    Indexes { (address_hk, load_date) [pk] }
+}
+
+Table sat_coupons {
+  coupon_hk varchar [ref: > hub_coupons.coupon_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  title varchar
+  description text
+  discount_type varchar
+  discount_value decimal(10,2)
+  min_order_amount decimal(10,2)
+  max_discount decimal(10,2)
+  usage_limit integer
+  per_customer_limit integer
+  used_count integer
+  start_date date
+  end_date date
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (coupon_hk, load_date) [pk] }
+}
+
+Table sat_promotions {
+  promotion_hk varchar [ref: > hub_promotions.promotion_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  title varchar
+  description text
+  discount_type varchar
+  discount_value decimal(10,2)
+  start_date date
+  end_date date
+  is_active boolean
+  record_source varchar [not null]
+  Indexes { (promotion_hk, load_date) [pk] }
+}
+
+Table sat_users_standard {
+  user_hk varchar [ref: > hub_users.user_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  name varchar
+  email varchar
+  phone varchar
+  role varchar
+  is_active boolean
+  last_login_at timestamp
+  record_source varchar [not null]
+    Indexes { (user_hk, load_date) [pk] }
+}
+
+Table sat_users_sensitive {
+  user_hk varchar [ref: > hub_users.user_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  password_hash varchar
+  record_source varchar [not null]
+    Indexes { (user_hk, load_date) [pk] }
+}
+
+
+
+Table sat_user_delivery_details {
+  user_hk varchar [ref: > hub_users.user_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  vehicle_type varchar
+  vehicle_number varchar
+  license_number varchar
+  availability varchar
+  current_latitude decimal(10,7)
+  current_longitude decimal(10,7)
+  record_source varchar [not null]
+  Indexes { (user_hk, load_date) [pk] }
+}
+
+
+Table sat_order_details {                 
+order_hk varchar [ref: > lnk_orders.order_hk]
+load_date timestamp
+hash_diff varchar [not null]
+recipient_name varchar
+recipient_phone varchar
+address_snapshot text
+delivery_latitude decimal(10,7)
+delivery_longitude decimal(10,7)
+status varchar
+subtotal decimal(12,2)
+discount_amount decimal(10,2)
+coupon_discount decimal(10,2)
+delivery_fee decimal(10,2)
+tax decimal(10,2)
+total_amount decimal(12,2)
+loyalty_earned integer
+loyalty_used integer
+notes text
+cancellation_reason text
+placed_at timestamp
+completed_at timestamp
+record_source varchar [not null]
+Indexes { (order_hk, load_date) [pk] }
+}
+
+Table sat_order_items {
+order_item_hk varchar [ref: > lnk_order_items.order_item_hk]
+load_date timestamp
+hash_diff varchar [not null]
+quantity integer
+unit_price decimal(10,2)
+discount decimal(10,2)
+subtotal decimal(12,2)
+special_instructions text
+record_source varchar [not null]
+Indexes { (order_item_hk, load_date) [pk] }
+}
+
+Table sat_order_deliveries {              
+order_hk varchar [ref: > lnk_orders.order_hk]
+load_date timestamp
+hash_diff varchar [not null]
+delivery_person_user_hk varchar [ref: > hub_users.user_hk] 
+picked_up_at timestamp
+delivered_at timestamp
+delivery_notes text
+failure_reason text
+proof_image_url varchar
+record_source varchar [not null]
+Indexes { (order_hk, load_date) [pk] }
+}
+
+Table sat_purchase_orders {
+purchase_order_hk varchar [ref: > lnk_purchase_orders.purchase_order_hk]
+load_date timestamp
+hash_diff varchar [not null]
+status varchar
+total_amount decimal(12,2)
+order_date date
+expected_date date
+received_date date
+notes text
+record_source varchar [not null]
+Indexes { (purchase_order_hk, load_date) [pk] }
+}
+
+Table sat_purchase_order_items {
+po_item_hk varchar [ref: > lnk_purchase_order_items.po_item_hk]
+load_date timestamp
+hash_diff varchar [not null]
+quantity decimal(10,3)
+unit_price decimal(10,2)
+subtotal decimal(12,2)
+record_source varchar [not null]
+Indexes { (po_item_hk, load_date) [pk] }
+}
+
+Table sat_stock_movements {
+stock_movement_hk varchar [ref: > lnk_stock_movements.stock_movement_hk]
+load_date timestamp
+hash_diff varchar [not null]
+type varchar
+quantity decimal(10,3)
+reference_type varchar
+reference_id integer
+notes text
+record_source varchar [not null]
+Indexes { (stock_movement_hk, load_date) [pk] }
+}
+
+Table sat_product_ingredients {
+product_ingredient_hk varchar [ref: > lnk_product_ingredients.product_ingredient_hk]
+load_date timestamp
+hash_diff varchar [not null]
+quantity decimal(10,3)
+unit varchar
+record_source varchar [not null]
+Indexes { (product_ingredient_hk, load_date) [pk] }
+}
+
+Table sat_customer_cart_items {
+cart_item_hk varchar [ref: > lnk_customer_cart_items.cart_item_hk]
+load_date timestamp
+hash_diff varchar [not null]
+quantity integer
+special_instructions text
+record_source varchar [not null]
+Indexes { (cart_item_hk, load_date) [pk] }
+}
+
+Table sat_customer_otp {
+customer_otp_hk varchar [ref: > lnk_customer_otp.customer_otp_hk]
+load_date timestamp
+hash_diff varchar [not null]
+phone varchar
+otp_code varchar
+purpose varchar
+expires_at timestamp
+is_used boolean
+attempts integer
+record_source varchar [not null]
+Indexes { (customer_otp_hk, load_date) [pk] }
+}
+
+Table sat_support_tickets {ticket_hk varchar [ref: > lnk_support_tickets.ticket_hk]
+load_date timestamp
+hash_diff varchar [not null]
+subject varchar
+status varchar
+priority varchar
+record_source varchar [not null]
+Indexes { (ticket_hk, load_date) [pk] }
+}
+
+Table sat_ticket_messages 
+{ticket_message_hk varchar [ref: > lnk_ticket_messages.ticket_message_hk]
+load_date timestamp
+hash_diff varchar [not null]
+message text
+record_source varchar [not null]
+Indexes { (ticket_message_hk, load_date) [pk] }
+}
+
+Table sat_notifications {
+notification_hk varchar [ref: > lnk_notifications.notification_hk]
+load_date timestamp
+hash_diff varchar [not null]
+type varchar
+title varchar
+message text
+is_read boolean
+sent_at timestamp
+read_at timestamp
+record_source varchar [not null]
+Indexes { (notification_hk, load_date) [pk] }
+}
+
+Table sat_auth_tokens {
+auth_token_hk varchar [ref: > lnk_auth_tokens.auth_token_hk]
+load_date timestamp
+hash_diff varchar [not null]
+token_hash varchar
+device_info varchar
+ip_address varchar
+last_used_at timestamp
+expires_at timestamp
+record_source varchar [not null]
+Indexes { (auth_token_hk, load_date) [pk] }
+}
+
+Table sat_coupon_redemptions {
+redemption_hk varchar [ref: > lnk_coupon_redemptions.redemption_hk]
+load_date timestamp
+hash_diff varchar [not null]
+discount_amount decimal(10,2)
+record_source varchar [not null]
+Indexes { (redemption_hk, load_date) [pk] }
+}
+
+
+
+Table sat_customer_loyalty_transactions {
+  customer_hk varchar  [ref: > hub_customers.customer_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  transaction_id integer 
+  order_hk varchar [ref: > lnk_orders.order_hk, null]
+  type varchar
+  points integer
+  balance_after integer
+  description varchar
+  record_source varchar [not null]
+  Indexes { (customer_hk, load_date) [pk] }
+}
+
+Table sat_customer_referrals {
+  customer_referral_hk varchar [ref: > lnk_customer_referral.customer_referral_hk]
+  load_date timestamp
+  hash_diff varchar [not null]
+  status varchar
+  reward_points integer
+  completed_at timestamp
+  record_source varchar [not null]
+Indexes { (customer_referral_hk, load_date) [pk] }
+}
+
+Table systems.ref_settings AS ref_settings {
+keys varchar [pk]
+keyvalues text
+keytypes varchar
+keygroups varchar
+keydescriptions varchar
+last_updated timestamp
+}
+
+Table systems.ref_operating_hours As ref_operating_hours {
+    id integer     [pk]
+    branch_id integer
+    day varchar
+    open_time time
+    close_time time
+    is_closed boolean
+}
+
+Table systems.ref_holidays As ref_holidays { 
+    id integer [pk]
+    branch_id integer
+    holiday_date date
+    reason varchar
+    is_closed boolean
+}
+Table objects.ref_banners AS ref_banners {
+    id integer [pk]
+    branch_id integer 
+    title varchar
+    image_url varchar
+    link_url varchar
+    display_order integer
+    start_date date
+    end_date date
+    is_active boolean
+}
+
+Table ref_delivery_tracking { 
+    id integer [pk]
+    order_hk varchar [ref: > lnk_orders.order_hk, null] 
+    latitude decimal(10,7)
+    longitude decimal(10,7)
+    recorded_at timestamp
+}
+
+Table systems.ref_activity_logs As ref_activity_logs { 
+    id integer [pk]
+    user_id integer
+    action varchar
+    entity_type varchar
+    entity_id integer
+    old_values json
+    new_values json
+    ip_address varchar
+    user_agent varchar
+    created_at timestamp
+}
+
+// Lineage
+
+dep "setting" {
+//settings.id -> 
+settings.key -> ref_settings.keys
+settings.value -> ref_settings.keyvalues
+settings.type -> ref_settings.keytypes
+settings.group -> ref_settings.keygroups
+settings.description -> ref_settings.keydescriptions
+settings.updated_at ->ref_settings.last_updated
+}
+
+dep "nonworking_days" {
+//settings.id -> 
+holidays.id -> ref_holidays.id
+holidays.branch_id -> ref_holidays.branch_id
+holidays.holiday_date -> ref_holidays.holiday_date
+holidays.reason -> ref_holidays.reason
+holidays.is_closed -> ref_holidays.is_closed
+}
+
+dep "operating_hours" {
+//settings.id -> 
+operating_hours.id -> ref_operating_hours.id
+operating_hours.branch_id -> ref_operating_hours.branch_id
+operating_hours.day -> ref_operating_hours.day
+operating_hours.open_time -> ref_operating_hours.open_time
+operating_hours.close_time -> ref_operating_hours.close_time
+operating_hours.is_closed -> ref_operating_hours.is_closed
+}
+
+dep "activity_logs" {
+activity_logs.id -> ref_activity_logs.id
+activity_logs.user_id -> ref_activity_logs.user_id
+activity_logs.action -> ref_activity_logs.action
+activity_logs.entity_type -> ref_activity_logs.entity_type
+activity_logs.entity_id -> ref_activity_logs.entity_id
+activity_logs.old_values -> ref_activity_logs.old_values
+activity_logs.new_values -> ref_activity_logs.new_values
+activity_logs.ip_address -> ref_activity_logs.ip_address
+activity_logs.user_agent -> ref_activity_logs.user_agent
+activity_logs.created_at -> ref_activity_logs.created_at
+}
+
+dep "activity_logs" {
+banners.id -> ref_banners.id
+banners.branch_id -> ref_banners.branch_id
+banners.title -> ref_banners.title
+banners.image_url -> ref_banners.image_url
+banners.link_url -> ref_banners.link_url
+banners.display_order -> ref_banners.display_order
+banners.start_date -> ref_banners.start_date
+banners.end_date -> ref_banners.end_date
+banners.is_active -> ref_banners.is_active
+}
+
+
+
+
+
+
+
+
