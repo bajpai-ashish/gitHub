@@ -4,8 +4,8 @@
 -- ============================================================================
 
 -- Create and set schema
-CREATE SCHEMA IF NOT EXISTS juice_corner;
-SET search_path TO juice_corner, public;
+CREATE SCHEMA IF NOT EXISTS invoices;
+SET search_path TO invoices, public;
 
 -- Drop tables if they exist (ordered to respect foreign key constraints)
 DROP TABLE IF EXISTS activity_logs CASCADE;
