@@ -1,0 +1,2867 @@
+{
+  "version": "3.0.0",
+  "darkMode": false,
+  "gridEnabling": false,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "relationshipMode": "Relationship",
+    "tablePositions": [
+      {
+        "name": "branches",
+        "schemaName": "source",
+        "x": 912,
+        "y": 1088
+      },
+      {
+        "name": "operating_hours",
+        "schemaName": "source",
+        "x": 1104,
+        "y": 184
+      },
+      {
+        "name": "holidays",
+        "schemaName": "source",
+        "x": 336,
+        "y": 104
+      },
+      {
+        "name": "categories",
+        "schemaName": "source",
+        "x": 1560,
+        "y": 784
+      },
+      {
+        "name": "products",
+        "schemaName": "source",
+        "x": 1168,
+        "y": 1448
+      },
+      {
+        "name": "product_images",
+        "schemaName": "source",
+        "x": 312,
+        "y": 784
+      },
+      {
+        "name": "ingredients",
+        "schemaName": "source",
+        "x": 1136,
+        "y": 1088
+      },
+      {
+        "name": "product_ingredients",
+        "schemaName": "source",
+        "x": 808,
+        "y": 784
+      },
+      {
+        "name": "suppliers",
+        "schemaName": "source",
+        "x": 2552,
+        "y": 784
+      },
+      {
+        "name": "purchase_orders",
+        "schemaName": "source",
+        "x": 1440,
+        "y": 1448
+      },
+      {
+        "name": "purchase_order_items",
+        "schemaName": "source",
+        "x": 2776,
+        "y": 784
+      },
+      {
+        "name": "stock_movements",
+        "schemaName": "source",
+        "x": 48,
+        "y": 1448
+      },
+      {
+        "name": "dining_tables",
+        "schemaName": "source",
+        "x": 2304,
+        "y": 784
+      },
+      {
+        "name": "users",
+        "schemaName": "source",
+        "x": 1696,
+        "y": 1448
+      },
+      {
+        "name": "delivery_personnel",
+        "schemaName": "source",
+        "x": 2696,
+        "y": 1088
+      },
+      {
+        "name": "customers",
+        "schemaName": "source",
+        "x": 1944,
+        "y": 1448
+      },
+      {
+        "name": "delivery_zones",
+        "schemaName": "source",
+        "x": 3064,
+        "y": 784
+      },
+      {
+        "name": "customer_addresses",
+        "schemaName": "source",
+        "x": 2568,
+        "y": 1448
+      },
+      {
+        "name": "otp_verifications",
+        "schemaName": "source",
+        "x": 2448,
+        "y": 1088
+      },
+      {
+        "name": "password_resets",
+        "schemaName": "source",
+        "x": 1320,
+        "y": 784
+      },
+      {
+        "name": "auth_tokens",
+        "schemaName": "source",
+        "x": 864,
+        "y": 1448
+      },
+      {
+        "name": "favorites",
+        "schemaName": "source",
+        "x": 2944,
+        "y": 48
+      },
+      {
+        "name": "reviews",
+        "schemaName": "source",
+        "x": 664,
+        "y": 1088
+      },
+      {
+        "name": "loyalty_transactions",
+        "schemaName": "source",
+        "x": 1920,
+        "y": 1088
+      },
+      {
+        "name": "referrals",
+        "schemaName": "source",
+        "x": 1792,
+        "y": 784
+      },
+      {
+        "name": "support_tickets",
+        "schemaName": "source",
+        "x": 312,
+        "y": 1448
+      },
+      {
+        "name": "ticket_messages",
+        "schemaName": "source",
+        "x": 48,
+        "y": 1088
+      },
+      {
+        "name": "carts",
+        "schemaName": "source",
+        "x": 48,
+        "y": 784
+      },
+      {
+        "name": "cart_items",
+        "schemaName": "source",
+        "x": 1080,
+        "y": 784
+      },
+      {
+        "name": "promotions",
+        "schemaName": "source",
+        "x": 576,
+        "y": 1448
+      },
+      {
+        "name": "product_promotions",
+        "schemaName": "source",
+        "x": 2664,
+        "y": 48
+      },
+      {
+        "name": "coupons",
+        "schemaName": "source",
+        "x": 2824,
+        "y": 1448
+      },
+      {
+        "name": "coupon_redemptions",
+        "schemaName": "source",
+        "x": 352,
+        "y": 1088
+      },
+      {
+        "name": "orders",
+        "schemaName": "source",
+        "x": 48,
+        "y": 2000
+      },
+      {
+        "name": "order_items",
+        "schemaName": "source",
+        "x": 1648,
+        "y": 1088
+      },
+      {
+        "name": "order_status_history",
+        "schemaName": "source",
+        "x": 2032,
+        "y": 784
+      },
+      {
+        "name": "payments",
+        "schemaName": "source",
+        "x": 2200,
+        "y": 1088
+      },
+      {
+        "name": "refunds",
+        "schemaName": "source",
+        "x": 1408,
+        "y": 1088
+      },
+      {
+        "name": "deliveries",
+        "schemaName": "source",
+        "x": 3000,
+        "y": 1088
+      },
+      {
+        "name": "delivery_tracking",
+        "schemaName": "source",
+        "x": 552,
+        "y": 784
+      },
+      {
+        "name": "notifications",
+        "schemaName": "source",
+        "x": 2192,
+        "y": 1448
+      },
+      {
+        "name": "banners",
+        "schemaName": "source",
+        "x": 1992,
+        "y": 296
+      },
+      {
+        "name": "activity_logs",
+        "schemaName": "source",
+        "x": 2448,
+        "y": 48
+      },
+      {
+        "name": "settings",
+        "schemaName": "source",
+        "x": 896,
+        "y": 144
+      },
+      {
+        "name": "ref_settings",
+        "schemaName": "systems",
+        "x": 568,
+        "y": 48
+      },
+      {
+        "name": "ref_operating_hours",
+        "schemaName": "systems",
+        "x": 1416,
+        "y": 48
+      },
+      {
+        "name": "ref_holidays",
+        "schemaName": "systems",
+        "x": 48,
+        "y": 48
+      },
+      {
+        "name": "ref_banners",
+        "schemaName": "objects",
+        "x": 1688,
+        "y": 48
+      },
+      {
+        "name": "ref_activity_logs",
+        "schemaName": "systems",
+        "x": 2224,
+        "y": 424
+      },
+      {
+        "name": "hub_branches",
+        "schemaName": "public",
+        "x": 48,
+        "y": 826
+      },
+      {
+        "name": "hub_categories",
+        "schemaName": "public",
+        "x": 386.41845703125,
+        "y": 826
+      },
+      {
+        "name": "hub_products",
+        "schemaName": "public",
+        "x": 720.88232421875,
+        "y": 826
+      },
+      {
+        "name": "hub_ingredients",
+        "schemaName": "public",
+        "x": 1048.5078125,
+        "y": 826
+      },
+      {
+        "name": "hub_suppliers",
+        "schemaName": "public",
+        "x": 1386.818359375,
+        "y": 826
+      },
+      {
+        "name": "hub_dining_tables",
+        "schemaName": "public",
+        "x": 1714.44384765625,
+        "y": 826
+      },
+      {
+        "name": "hub_users",
+        "schemaName": "public",
+        "x": 2060.43505859375,
+        "y": 826
+      },
+      {
+        "name": "hub_customers",
+        "schemaName": "public",
+        "x": 2400.1484375,
+        "y": 826
+      },
+      {
+        "name": "hub_delivery_zones",
+        "schemaName": "public",
+        "x": 48,
+        "y": 1036
+      },
+      {
+        "name": "hub_customer_addresses",
+        "schemaName": "public",
+        "x": 386.41845703125,
+        "y": 1036
+      },
+      {
+        "name": "hub_coupons",
+        "schemaName": "public",
+        "x": 720.88232421875,
+        "y": 1036
+      },
+      {
+        "name": "hub_promotions",
+        "schemaName": "public",
+        "x": 1048.5078125,
+        "y": 1036
+      },
+      {
+        "name": "lnk_user_branch",
+        "schemaName": "public",
+        "x": 1386.818359375,
+        "y": 1036
+      },
+      {
+        "name": "lnk_customer_address",
+        "schemaName": "public",
+        "x": 1714.44384765625,
+        "y": 1036
+      },
+      {
+        "name": "lnk_address_delivery_zone",
+        "schemaName": "public",
+        "x": 2060.43505859375,
+        "y": 1036
+      },
+      {
+        "name": "lnk_product_category",
+        "schemaName": "public",
+        "x": 2400.1484375,
+        "y": 1036
+      },
+      {
+        "name": "lnk_product_ingredients",
+        "schemaName": "public",
+        "x": 48,
+        "y": 1246
+      },
+      {
+        "name": "lnk_product_promotions",
+        "schemaName": "public",
+        "x": 386.41845703125,
+        "y": 1246
+      },
+      {
+        "name": "lnk_dining_table_branch",
+        "schemaName": "public",
+        "x": 720.88232421875,
+        "y": 1246
+      },
+      {
+        "name": "lnk_customer_referral",
+        "schemaName": "public",
+        "x": 1048.5078125,
+        "y": 1246
+      },
+      {
+        "name": "lnk_auth_tokens",
+        "schemaName": "public",
+        "x": 1386.818359375,
+        "y": 1278
+      },
+      {
+        "name": "lnk_support_tickets",
+        "schemaName": "public",
+        "x": 1714.44384765625,
+        "y": 1278
+      },
+      {
+        "name": "lnk_ticket_messages",
+        "schemaName": "public",
+        "x": 2060.43505859375,
+        "y": 1278
+      },
+      {
+        "name": "lnk_notifications",
+        "schemaName": "public",
+        "x": 2400.1484375,
+        "y": 1278
+      },
+      {
+        "name": "lnk_orders",
+        "schemaName": "public",
+        "x": 48,
+        "y": 1488
+      },
+      {
+        "name": "lnk_order_items",
+        "schemaName": "public",
+        "x": 386.41845703125,
+        "y": 1488
+      },
+      {
+        "name": "lnk_purchase_orders",
+        "schemaName": "public",
+        "x": 720.88232421875,
+        "y": 1488
+      },
+      {
+        "name": "lnk_purchase_order_items",
+        "schemaName": "public",
+        "x": 1048.5078125,
+        "y": 1488
+      },
+      {
+        "name": "lnk_stock_movements",
+        "schemaName": "public",
+        "x": 1386.818359375,
+        "y": 1584
+      },
+      {
+        "name": "lnk_coupon_redemptions",
+        "schemaName": "public",
+        "x": 1714.44384765625,
+        "y": 1584
+      },
+      {
+        "name": "lnk_customer_cart_items",
+        "schemaName": "public",
+        "x": 2060.43505859375,
+        "y": 1616
+      },
+      {
+        "name": "lnk_customer_favorites",
+        "schemaName": "public",
+        "x": 2400.1484375,
+        "y": 1616
+      },
+      {
+        "name": "lnk_customer_otp",
+        "schemaName": "public",
+        "x": 48,
+        "y": 1858
+      },
+      {
+        "name": "sat_branches",
+        "schemaName": "public",
+        "x": 386.41845703125,
+        "y": 1762
+      },
+      {
+        "name": "sat_categories",
+        "schemaName": "public",
+        "x": 720.88232421875,
+        "y": 1762
+      },
+      {
+        "name": "sat_products",
+        "schemaName": "public",
+        "x": 1048.5078125,
+        "y": 1762
+      },
+      {
+        "name": "sat_product_images",
+        "schemaName": "public",
+        "x": 1386.818359375,
+        "y": 1890
+      },
+      {
+        "name": "sat_ingredients",
+        "schemaName": "public",
+        "x": 1714.44384765625,
+        "y": 1890
+      },
+      {
+        "name": "sat_suppliers",
+        "schemaName": "public",
+        "x": 2060.43505859375,
+        "y": 1858
+      },
+      {
+        "name": "sat_dining_tables",
+        "schemaName": "public",
+        "x": 2400.1484375,
+        "y": 1858
+      },
+      {
+        "name": "sat_customers_standard",
+        "schemaName": "public",
+        "x": 48,
+        "y": 2100
+      },
+      {
+        "name": "sat_customers_sensitive",
+        "schemaName": "public",
+        "x": 386.41845703125,
+        "y": 2164
+      },
+      {
+        "name": "sat_delivery_zones",
+        "schemaName": "public",
+        "x": 720.88232421875,
+        "y": 2100
+      },
+      {
+        "name": "sat_customer_addresses",
+        "schemaName": "public",
+        "x": 1048.5078125,
+        "y": 2164
+      },
+      {
+        "name": "sat_coupons",
+        "schemaName": "public",
+        "x": 1386.818359375,
+        "y": 2196
+      },
+      {
+        "name": "sat_promotions",
+        "schemaName": "public",
+        "x": 1714.44384765625,
+        "y": 2292
+      },
+      {
+        "name": "sat_users_standard",
+        "schemaName": "public",
+        "x": 2060.43505859375,
+        "y": 2260
+      },
+      {
+        "name": "sat_users_sensitive",
+        "schemaName": "public",
+        "x": 2400.1484375,
+        "y": 2228
+      },
+      {
+        "name": "sat_user_delivery_details",
+        "schemaName": "public",
+        "x": 48,
+        "y": 2470
+      },
+      {
+        "name": "sat_order_details",
+        "schemaName": "public",
+        "x": 386.41845703125,
+        "y": 2470
+      },
+      {
+        "name": "sat_order_items",
+        "schemaName": "public",
+        "x": 720.88232421875,
+        "y": 2470
+      },
+      {
+        "name": "sat_order_deliveries",
+        "schemaName": "public",
+        "x": 1048.5078125,
+        "y": 2758
+      },
+      {
+        "name": "sat_purchase_orders",
+        "schemaName": "public",
+        "x": 1386.818359375,
+        "y": 2790
+      },
+      {
+        "name": "sat_purchase_order_items",
+        "schemaName": "public",
+        "x": 1714.44384765625,
+        "y": 2726
+      },
+      {
+        "name": "sat_stock_movements",
+        "schemaName": "public",
+        "x": 2060.43505859375,
+        "y": 2662
+      },
+      {
+        "name": "sat_product_ingredients",
+        "schemaName": "public",
+        "x": 2400.1484375,
+        "y": 2470
+      },
+      {
+        "name": "sat_customer_cart_items",
+        "schemaName": "public",
+        "x": 48,
+        "y": 2872
+      },
+      {
+        "name": "sat_customer_otp",
+        "schemaName": "public",
+        "x": 386.41845703125,
+        "y": 3256
+      },
+      {
+        "name": "sat_support_tickets",
+        "schemaName": "public",
+        "x": 720.88232421875,
+        "y": 2840
+      },
+      {
+        "name": "sat_ticket_messages",
+        "schemaName": "public",
+        "x": 1048.5078125,
+        "y": 3160
+      },
+      {
+        "name": "sat_notifications",
+        "schemaName": "public",
+        "x": 1386.818359375,
+        "y": 3192
+      },
+      {
+        "name": "sat_auth_tokens",
+        "schemaName": "public",
+        "x": 1714.44384765625,
+        "y": 3032
+      },
+      {
+        "name": "sat_coupon_redemptions",
+        "schemaName": "public",
+        "x": 2060.43505859375,
+        "y": 3032
+      },
+      {
+        "name": "sat_customer_loyalty_transactions",
+        "schemaName": "public",
+        "x": 2400.1484375,
+        "y": 2744
+      },
+      {
+        "name": "sat_customer_referrals",
+        "schemaName": "public",
+        "x": 48,
+        "y": 3146
+      },
+      {
+        "name": "ref_delivery_tracking",
+        "schemaName": "public",
+        "x": 386.41845703125,
+        "y": 3658
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "branches",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_id"
+        ],
+        "secondTableName": "operating_hours",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "branches",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_id"
+        ],
+        "secondTableName": "holidays",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "categories",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "category_id"
+        ],
+        "secondTableName": "products",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "product_images",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "product_ingredients",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "ingredients",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ingredient_id"
+        ],
+        "secondTableName": "product_ingredients",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "suppliers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "supplier_id"
+        ],
+        "secondTableName": "purchase_orders",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "branches",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_id"
+        ],
+        "secondTableName": "purchase_orders",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "purchase_orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "purchase_order_id"
+        ],
+        "secondTableName": "purchase_order_items",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "ingredients",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ingredient_id"
+        ],
+        "secondTableName": "purchase_order_items",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "ingredients",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ingredient_id"
+        ],
+        "secondTableName": "stock_movements",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "branches",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_id"
+        ],
+        "secondTableName": "stock_movements",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "created_by"
+        ],
+        "secondTableName": "stock_movements",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "branches",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_id"
+        ],
+        "secondTableName": "dining_tables",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "branches",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_id"
+        ],
+        "secondTableName": "users",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_id"
+        ],
+        "secondTableName": "delivery_personnel",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "referred_by"
+        ],
+        "secondTableName": "customers",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "customer_addresses",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "delivery_zones",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "zone_id"
+        ],
+        "secondTableName": "customer_addresses",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "otp_verifications",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "favorites",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "favorites",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "reviews",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "reviews",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "reviews",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "loyalty_transactions",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "loyalty_transactions",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "referrer_id"
+        ],
+        "secondTableName": "referrals",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "referred_id"
+        ],
+        "secondTableName": "referrals",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "support_tickets",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "support_tickets",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "assigned_to"
+        ],
+        "secondTableName": "support_tickets",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "support_tickets",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ticket_id"
+        ],
+        "secondTableName": "ticket_messages",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "carts",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "carts",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "cart_id"
+        ],
+        "secondTableName": "cart_items",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "cart_items",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "product_promotions",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "promotions",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "promotion_id"
+        ],
+        "secondTableName": "product_promotions",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "coupons",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "coupon_id"
+        ],
+        "secondTableName": "coupon_redemptions",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "coupon_redemptions",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "coupon_redemptions",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customers",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "branches",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "dining_tables",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "table_id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customer_addresses",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "address_id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "coupons",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "coupon_id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "order_items",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "order_items",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "order_status_history",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "changed_by"
+        ],
+        "secondTableName": "order_status_history",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "payments",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "refunds",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "payments",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "payment_id"
+        ],
+        "secondTableName": "refunds",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "processed_by"
+        ],
+        "secondTableName": "refunds",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "deliveries",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "delivery_personnel",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "delivery_person_id"
+        ],
+        "secondTableName": "deliveries",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "deliveries",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "delivery_id"
+        ],
+        "secondTableName": "delivery_tracking",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "notifications",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "branches",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_id"
+        ],
+        "secondTableName": "banners",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "users",
+        "firstSchemaName": "source",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_id"
+        ],
+        "secondTableName": "activity_logs",
+        "secondSchemaName": "source",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_hk"
+        ],
+        "secondTableName": "lnk_user_branch",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "branch_hk"
+        ],
+        "firstTableName": "hub_branches",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_hk"
+        ],
+        "secondTableName": "lnk_user_branch",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "lnk_customer_address",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "address_hk"
+        ],
+        "firstTableName": "hub_customer_addresses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "address_hk"
+        ],
+        "secondTableName": "lnk_customer_address",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "address_hk"
+        ],
+        "firstTableName": "hub_customer_addresses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "address_hk"
+        ],
+        "secondTableName": "lnk_address_delivery_zone",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "zone_hk"
+        ],
+        "firstTableName": "hub_delivery_zones",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "zone_hk"
+        ],
+        "secondTableName": "lnk_address_delivery_zone",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "hub_products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "lnk_product_category",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "category_hk"
+        ],
+        "firstTableName": "hub_categories",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "category_hk"
+        ],
+        "secondTableName": "lnk_product_category",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "hub_products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "lnk_product_ingredients",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "ingredient_hk"
+        ],
+        "firstTableName": "hub_ingredients",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ingredient_hk"
+        ],
+        "secondTableName": "lnk_product_ingredients",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "hub_products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "lnk_product_promotions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "promotion_hk"
+        ],
+        "firstTableName": "hub_promotions",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "promotion_hk"
+        ],
+        "secondTableName": "lnk_product_promotions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "table_hk"
+        ],
+        "firstTableName": "hub_dining_tables",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "table_hk"
+        ],
+        "secondTableName": "lnk_dining_table_branch",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "branch_hk"
+        ],
+        "firstTableName": "hub_branches",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_hk"
+        ],
+        "secondTableName": "lnk_dining_table_branch",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "referrer_hk"
+        ],
+        "secondTableName": "lnk_customer_referral",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "referred_hk"
+        ],
+        "secondTableName": "lnk_customer_referral",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "lnk_auth_tokens",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_hk"
+        ],
+        "secondTableName": "lnk_auth_tokens",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "lnk_support_tickets",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "lnk_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "lnk_support_tickets",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "assigned_to_user_hk"
+        ],
+        "secondTableName": "lnk_support_tickets",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "ticket_hk"
+        ],
+        "firstTableName": "lnk_support_tickets",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ticket_hk"
+        ],
+        "secondTableName": "lnk_ticket_messages",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "sender_customer_hk"
+        ],
+        "secondTableName": "lnk_ticket_messages",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "sender_user_hk"
+        ],
+        "secondTableName": "lnk_ticket_messages",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "lnk_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "lnk_notifications",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recipient_customer_hk"
+        ],
+        "secondTableName": "lnk_notifications",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recipient_user_hk"
+        ],
+        "secondTableName": "lnk_notifications",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "lnk_orders",
+        "secondSchemaName": "public",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "branch_hk"
+        ],
+        "firstTableName": "hub_branches",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_hk"
+        ],
+        "secondTableName": "lnk_orders",
+        "secondSchemaName": "public",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "table_hk"
+        ],
+        "firstTableName": "hub_dining_tables",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "table_hk"
+        ],
+        "secondTableName": "lnk_orders",
+        "secondSchemaName": "public",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "address_hk"
+        ],
+        "firstTableName": "hub_customer_addresses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "address_hk"
+        ],
+        "secondTableName": "lnk_orders",
+        "secondSchemaName": "public",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "coupon_hk"
+        ],
+        "firstTableName": "hub_coupons",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "coupon_hk"
+        ],
+        "secondTableName": "lnk_orders",
+        "secondSchemaName": "public",
+        "secondRelation": "0..*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "lnk_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "lnk_order_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "hub_products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "lnk_order_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "supplier_hk"
+        ],
+        "firstTableName": "hub_suppliers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "supplier_hk"
+        ],
+        "secondTableName": "lnk_purchase_orders",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "branch_hk"
+        ],
+        "firstTableName": "hub_branches",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_hk"
+        ],
+        "secondTableName": "lnk_purchase_orders",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "purchase_order_hk"
+        ],
+        "firstTableName": "lnk_purchase_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "purchase_order_hk"
+        ],
+        "secondTableName": "lnk_purchase_order_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "ingredient_hk"
+        ],
+        "firstTableName": "hub_ingredients",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ingredient_hk"
+        ],
+        "secondTableName": "lnk_purchase_order_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "ingredient_hk"
+        ],
+        "firstTableName": "hub_ingredients",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ingredient_hk"
+        ],
+        "secondTableName": "lnk_stock_movements",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "branch_hk"
+        ],
+        "firstTableName": "hub_branches",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_hk"
+        ],
+        "secondTableName": "lnk_stock_movements",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "created_by_user_hk"
+        ],
+        "secondTableName": "lnk_stock_movements",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "coupon_hk"
+        ],
+        "firstTableName": "hub_coupons",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "coupon_hk"
+        ],
+        "secondTableName": "lnk_coupon_redemptions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "lnk_coupon_redemptions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "lnk_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "lnk_coupon_redemptions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "lnk_customer_cart_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "hub_products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "lnk_customer_cart_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "lnk_customer_favorites",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "hub_products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "lnk_customer_favorites",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "lnk_customer_otp",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "branch_hk"
+        ],
+        "firstTableName": "hub_branches",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "branch_hk"
+        ],
+        "secondTableName": "sat_branches",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "category_hk"
+        ],
+        "firstTableName": "hub_categories",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "category_hk"
+        ],
+        "secondTableName": "sat_categories",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "hub_products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "sat_products",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "hub_products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "sat_product_images",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "ingredient_hk"
+        ],
+        "firstTableName": "hub_ingredients",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ingredient_hk"
+        ],
+        "secondTableName": "sat_ingredients",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "supplier_hk"
+        ],
+        "firstTableName": "hub_suppliers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "supplier_hk"
+        ],
+        "secondTableName": "sat_suppliers",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "table_hk"
+        ],
+        "firstTableName": "hub_dining_tables",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "table_hk"
+        ],
+        "secondTableName": "sat_dining_tables",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "sat_customers_standard",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "sat_customers_sensitive",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "zone_hk"
+        ],
+        "firstTableName": "hub_delivery_zones",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "zone_hk"
+        ],
+        "secondTableName": "sat_delivery_zones",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "address_hk"
+        ],
+        "firstTableName": "hub_customer_addresses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "address_hk"
+        ],
+        "secondTableName": "sat_customer_addresses",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "coupon_hk"
+        ],
+        "firstTableName": "hub_coupons",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "coupon_hk"
+        ],
+        "secondTableName": "sat_coupons",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "promotion_hk"
+        ],
+        "firstTableName": "hub_promotions",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "promotion_hk"
+        ],
+        "secondTableName": "sat_promotions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_hk"
+        ],
+        "secondTableName": "sat_users_standard",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_hk"
+        ],
+        "secondTableName": "sat_users_sensitive",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "user_hk"
+        ],
+        "secondTableName": "sat_user_delivery_details",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "lnk_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "sat_order_details",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_item_hk"
+        ],
+        "firstTableName": "lnk_order_items",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_item_hk"
+        ],
+        "secondTableName": "sat_order_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "lnk_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "sat_order_deliveries",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "user_hk"
+        ],
+        "firstTableName": "hub_users",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "delivery_person_user_hk"
+        ],
+        "secondTableName": "sat_order_deliveries",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "purchase_order_hk"
+        ],
+        "firstTableName": "lnk_purchase_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "purchase_order_hk"
+        ],
+        "secondTableName": "sat_purchase_orders",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "po_item_hk"
+        ],
+        "firstTableName": "lnk_purchase_order_items",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "po_item_hk"
+        ],
+        "secondTableName": "sat_purchase_order_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "stock_movement_hk"
+        ],
+        "firstTableName": "lnk_stock_movements",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "stock_movement_hk"
+        ],
+        "secondTableName": "sat_stock_movements",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_ingredient_hk"
+        ],
+        "firstTableName": "lnk_product_ingredients",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_ingredient_hk"
+        ],
+        "secondTableName": "sat_product_ingredients",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "cart_item_hk"
+        ],
+        "firstTableName": "lnk_customer_cart_items",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "cart_item_hk"
+        ],
+        "secondTableName": "sat_customer_cart_items",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_otp_hk"
+        ],
+        "firstTableName": "lnk_customer_otp",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_otp_hk"
+        ],
+        "secondTableName": "sat_customer_otp",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "ticket_hk"
+        ],
+        "firstTableName": "lnk_support_tickets",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ticket_hk"
+        ],
+        "secondTableName": "sat_support_tickets",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "ticket_message_hk"
+        ],
+        "firstTableName": "lnk_ticket_messages",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "ticket_message_hk"
+        ],
+        "secondTableName": "sat_ticket_messages",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "notification_hk"
+        ],
+        "firstTableName": "lnk_notifications",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "notification_hk"
+        ],
+        "secondTableName": "sat_notifications",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "auth_token_hk"
+        ],
+        "firstTableName": "lnk_auth_tokens",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "auth_token_hk"
+        ],
+        "secondTableName": "sat_auth_tokens",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "redemption_hk"
+        ],
+        "firstTableName": "lnk_coupon_redemptions",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "redemption_hk"
+        ],
+        "secondTableName": "sat_coupon_redemptions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "hub_customers",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "sat_customer_loyalty_transactions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "lnk_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "sat_customer_loyalty_transactions",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_referral_hk"
+        ],
+        "firstTableName": "lnk_customer_referral",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_referral_hk"
+        ],
+        "secondTableName": "sat_customer_referrals",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "lnk_orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "ref_delivery_tracking",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      }
+    ]
+  },
+  "views": {}
+}
