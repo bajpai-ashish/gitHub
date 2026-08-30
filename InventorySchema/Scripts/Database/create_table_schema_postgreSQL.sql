@@ -1,5 +1,5 @@
 -- ============================================================================
--- Juice Corner Ordering & Delivery System
+-- Inventory System Ordering & Delivery System
 -- Complete PostgreSQL Database Schema DDL Script
 -- ============================================================================
 
