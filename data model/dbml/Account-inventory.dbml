@@ -1,4 +1,4 @@
-use * from './main'
+// use * from './Account-inventory advance'
 
 TablePartial audit {
   created_at timestamp
@@ -261,7 +261,7 @@ Table transactions.Employee_Commissions {
 //     transactions.Orders
 //   }
 // }
-TableGroup "User Wishlist System" [color: #1E69FD]
+TableGroup "User Wishlist System" [color: #1e58cc]
    {
     subjects.Persons
     objects.Categories
