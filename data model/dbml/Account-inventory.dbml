@@ -1,9 +1,10 @@
-// use * from './Account-inventory advance'
+
 
 TablePartial audit {
   created_at timestamp
   updated_at timestamp
 }
+
 
 Table subjects.Persons {
   person_id int [pk, increment]
@@ -137,13 +138,15 @@ Table transactions.Payment_Modes {
   description text
   ~audit
 }
+
+use * from './Account-inventory advance'
 Table transactions.Orders {
   orderid int [pk, increment]
   customer_id int [ref: ?> subjects.Customers.custid]
   vendor_id int [ref: ?> subjects.Vendors.vendor_id]
   empid int [ref: ?> subjects.employees.empid]
   order_date timestamp
-  paymentID int
+  paymentID int [dep: <- payments.id]
   status varchar
   total_amount decimal
   ~audit
