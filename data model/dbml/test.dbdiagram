@@ -24,10 +24,31 @@
         "schemaName": "public",
         "x": 12,
         "y": 468
+      },
+      {
+        "name": "jobs",
+        "schemaName": "public",
+        "x": 0,
+        "y": 50
       }
     ],
     "tableGroupCollapseStates": [],
-    "stickyNoteLayouts": [],
+    "stickyNoteLayouts": [
+      {
+        "name": "single_line_note",
+        "x": 262.85498046875,
+        "y": 12,
+        "width": 192,
+        "height": 192
+      },
+      {
+        "name": "multiple_lines_note",
+        "x": -32,
+        "y": 195,
+        "width": 192,
+        "height": 192
+      }
+    ],
     "referencePaths": []
   },
   "views": {}
