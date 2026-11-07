@@ -1,0 +1,90 @@
+use {
+  table customer
+  table orders
+  table product
+  table order_detail
+  table employee
+} from './schema'
+
+use {
+  table dim_customer
+  table dim_product
+  table dim_employee
+  table dim_date
+  table fact_order_detail
+} from './schema_dim'
+
+use {
+  table hub_customer
+  table hub_product
+  table hub_employee
+  table hub_order
+  table link_order_customer_employee
+  table link_order_product
+  table sat_customer
+  table sat_product
+  table sat_employee
+  table sat_order_details
+} from './schema_dv'
+
+dep hub_customer {
+  customer.id -> hub_customer.customer_id
+  note: 'Loading source customer to hub'
+  materialized: table
+  owner: 'data-eng'
+}
+
+dep sat_customer {
+  hub_customer.customer_hk -> sat_customer.customer_hk
+  customer.first_name -> sat_customer.first_name
+  customer.last_name -> sat_customer.last_name
+  customer.email -> sat_customer.email
+  customer.address -> sat_customer.address
+  note: 'Loading source customer to satellite'
+  materialized: table
+  owner: 'data-eng'
+}
+
+Dep dim_customer {
+  customer.id -> dim_customer.customer_id
+  customer.first_name -> dim_customer.first_name
+  customer.last_name -> dim_customer.last_name
+  customer.email -> dim_customer.email
+  customer.address -> dim_customer.address
+  note: 'Transforming source customer to SCD Type 1 dimension'
+  materialized: table
+  owner: 'data-eng'
+}
+
+Dep dim_product {
+  product.id -> dim_product.product_id
+  product.name -> dim_product.name
+  product.price -> dim_product.price
+  note: 'Transforming source product to dimension'
+  materialized: table
+  owner: 'data-eng'
+}
+
+Dep dim_employee {
+  employee.id -> dim_employee.employee_id
+  employee.first_name -> dim_employee.first_name
+  employee.last_name -> dim_employee.last_name
+  employee.job_title -> dim_employee.job_title
+  note: 'Transforming source employee to dimension'
+  materialized: table
+  owner: 'data-eng'
+}
+
+dep fact_order_detail {
+  order_detail.id -> fact_order_detail.order_detail_key
+  order_detail.order_id -> fact_order_detail.order_id
+  dim_customer.customer_key -> fact_order_detail.customer_key
+  dim_product.product_key -> fact_order_detail.product_key
+  dim_employee.employee_key -> fact_order_detail.employee_key
+  dim_date.date_key -> fact_order_detail.date_key
+  order_detail.quantity -> fact_order_detail.quantity
+  order_detail.unit_price -> fact_order_detail.unit_price
+  note: 'Transforming source order detail to fact table'
+  materialized: table
+  owner: 'data-eng'
+}

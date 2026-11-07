@@ -1,0 +1,102 @@
+// Data Vault 2.0 Model
+
+// --- HUBS (Business Keys) ---
+
+Table hub_customer {
+  customer_hk binary(20) [primary key] // Hash Key
+  customer_id varchar // Business Key
+  load_date datetime
+  record_source varchar
+}
+
+Table hub_product {
+  product_hk binary(20) [primary key]
+  product_id varchar
+  load_date datetime
+  record_source varchar
+}
+
+Table hub_employee {
+  employee_hk binary(20) [primary key]
+  employee_id varchar
+  load_date datetime
+  record_source varchar
+}
+
+Table hub_order {
+  order_hk binary(20) [primary key]
+  order_id varchar
+  load_date datetime
+  record_source varchar
+}
+
+// --- LINKS (Relationships) ---
+
+// Links an order to a customer and an employee
+Table link_order_customer_employee {
+  link_order_ce_hk binary(20) [primary key]
+  order_hk binary(20)
+  customer_hk binary(20)
+  employee_hk binary(20)
+  load_date datetime
+  record_source varchar
+}
+
+// Links an order to a product (via order details)
+Table link_order_product {
+  link_order_product_hk binary(20) [primary key]
+  order_hk binary(20)
+  product_hk binary(20)
+  load_date datetime
+  record_source varchar
+}
+
+// --- SATELLITES (Context & History) ---
+
+Table sat_customer {
+  customer_hk binary(20) [primary key]
+  load_date datetime [primary key]
+  first_name varchar
+  last_name varchar
+  email varchar
+  address varchar
+}
+
+Table sat_product {
+  product_hk binary(20) [primary key]
+  load_date datetime [primary key]
+  name varchar
+  price decimal
+  stock_quantity integer
+}
+
+Table sat_employee {
+  employee_hk binary(20) [primary key]
+  load_date datetime [primary key]
+  first_name varchar
+  last_name varchar
+  job_title varchar
+}
+
+Table sat_order_details {
+  link_order_product_hk binary(20) [primary key]
+  load_date datetime [primary key]
+  quantity integer
+  unit_price decimal
+}
+
+// --- RELATIONSHIPS ---
+
+// Link to Hubs
+Ref: link_order_customer_employee.order_hk > hub_order.order_hk
+Ref: link_order_customer_employee.customer_hk > hub_customer.customer_hk
+Ref: link_order_customer_employee.employee_hk > hub_employee.employee_hk
+
+Ref: link_order_product.order_hk > hub_order.order_hk
+Ref: link_order_product.product_hk > hub_product.product_hk
+
+// Satellite to Hubs/Links
+Ref: sat_customer.customer_hk > hub_customer.customer_hk
+Ref: sat_product.product_hk > hub_product.product_hk
+Ref: sat_employee.employee_hk > hub_employee.employee_hk
+Ref: sat_order_details.link_order_product_hk > link_order_product.link_order_product_hk

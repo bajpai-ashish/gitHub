@@ -1,0 +1,47 @@
+// Database Model in DBML
+
+Table customer {
+  id integer [primary key]
+  first_name varchar
+  last_name varchar
+  email varchar [unique]
+  address varchar
+}
+
+Table orders {
+  id integer [primary key]
+  customer_id integer
+  employee_id integer
+  order_date datetime
+  total_amount decimal
+}
+
+Table product {
+  id integer [primary key]
+  name varchar
+  price decimal
+  stock_quantity integer
+}
+
+Table order_detail {
+  id integer [primary key]
+  order_id integer
+  product_id integer
+  quantity integer
+  unit_price decimal
+}
+
+Table employee {
+  id integer [primary key]
+  first_name varchar
+  last_name varchar
+  email varchar
+  job_title varchar
+}
+
+// Relationships
+
+Ref: orders.customer_id > customer.id
+Ref: orders.employee_id > employee.id
+Ref: order_detail.order_id > orders.id
+Ref: order_detail.product_id > product.id

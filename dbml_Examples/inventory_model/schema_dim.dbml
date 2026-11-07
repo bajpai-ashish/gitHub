@@ -1,0 +1,63 @@
+// Dimensional Model (Star Schema)
+
+// --- Dimension Tables ---
+
+Table dim_customer {
+  customer_key integer [primary key]
+  customer_id integer // Original source ID
+  first_name varchar
+  last_name varchar
+  email varchar
+  address varchar
+}
+
+Table dim_product {
+  product_key integer [primary key]
+  product_id integer // Original source ID
+  name varchar
+  price decimal
+  category varchar
+}
+
+Table dim_employee {
+  employee_key integer [primary key]
+  employee_id integer // Original source ID
+  first_name varchar
+  last_name varchar
+  job_title varchar
+}
+
+Table dim_date {
+  date_key integer [primary key]
+  full_date date
+  day integer
+  month integer
+  year integer
+  quarter integer
+  day_of_week varchar
+}
+
+// --- Fact Table ---
+
+Table fact_order_detail {
+  order_detail_key integer [primary key]
+  order_id integer // Degenerate dimension
+  
+  // Foreign Keys to Dimensions
+  customer_key integer
+  product_key integer
+  employee_key integer
+  date_key integer
+  
+  // Measures
+  quantity integer
+  unit_price decimal
+  total_amount decimal
+}
+
+// --- Relationships ---
+
+Ref: fact_order_detail.customer_key > dim_customer.customer_key
+Ref: fact_order_detail.product_key > dim_product.product_key
+Ref: fact_order_detail.employee_key > dim_employee.employee_key
+Ref: fact_order_detail.date_key > dim_date.date_key

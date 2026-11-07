@@ -1,0 +1,392 @@
+{
+  "version": "3.0.0",
+  "darkMode": false,
+  "gridEnabling": false,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "relationshipMode": "Dependency",
+    "tablePositions": [
+      {
+        "name": "customer",
+        "schemaName": "public",
+        "x": 320,
+        "y": 312
+      },
+      {
+        "name": "orders",
+        "schemaName": "public",
+        "x": 48,
+        "y": 184
+      },
+      {
+        "name": "product",
+        "schemaName": "public",
+        "x": 576,
+        "y": 384
+      },
+      {
+        "name": "order_detail",
+        "schemaName": "public",
+        "x": 416,
+        "y": 48
+      },
+      {
+        "name": "employee",
+        "schemaName": "public",
+        "x": 152,
+        "y": 536
+      },
+      {
+        "name": "dim_customer",
+        "schemaName": "public",
+        "x": 1248,
+        "y": 120
+      },
+      {
+        "name": "dim_product",
+        "schemaName": "public",
+        "x": 792,
+        "y": 768
+      },
+      {
+        "name": "dim_employee",
+        "schemaName": "public",
+        "x": 1528,
+        "y": 288
+      },
+      {
+        "name": "dim_date",
+        "schemaName": "public",
+        "x": 936,
+        "y": 48
+      },
+      {
+        "name": "fact_order_detail",
+        "schemaName": "public",
+        "x": 1173.353010625016,
+        "y": 436.451003541672
+      },
+      {
+        "name": "hub_customer",
+        "schemaName": "public",
+        "x": 13.118048641220987,
+        "y": 853.0312188854944
+      },
+      {
+        "name": "hub_product",
+        "schemaName": "public",
+        "x": 369.5126953125,
+        "y": 1010
+      },
+      {
+        "name": "hub_employee",
+        "schemaName": "public",
+        "x": 727.7314453125,
+        "y": 1010
+      },
+      {
+        "name": "hub_order",
+        "schemaName": "public",
+        "x": 1025.41259765625,
+        "y": 1010
+      },
+      {
+        "name": "link_order_customer_employee",
+        "schemaName": "public",
+        "x": 795.7818322538254,
+        "y": 1514.316464589698
+      },
+      {
+        "name": "link_order_product",
+        "schemaName": "public",
+        "x": 369.5126953125,
+        "y": 1220
+      },
+      {
+        "name": "sat_customer",
+        "schemaName": "public",
+        "x": 13.118048641220987,
+        "y": 1069.5715847652655
+      },
+      {
+        "name": "sat_product",
+        "schemaName": "public",
+        "x": 1025.41259765625,
+        "y": 1220
+      },
+      {
+        "name": "sat_employee",
+        "schemaName": "public",
+        "x": 48,
+        "y": 1494
+      },
+      {
+        "name": "sat_order_details",
+        "schemaName": "public",
+        "x": 369.5126953125,
+        "y": 1462
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "customer_id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "customer",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "employee_id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "employee",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_id"
+        ],
+        "firstTableName": "order_detail",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_id"
+        ],
+        "firstTableName": "order_detail",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "product",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_key"
+        ],
+        "firstTableName": "fact_order_detail",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "customer_key"
+        ],
+        "secondTableName": "dim_customer",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_key"
+        ],
+        "firstTableName": "fact_order_detail",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "product_key"
+        ],
+        "secondTableName": "dim_product",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "employee_key"
+        ],
+        "firstTableName": "fact_order_detail",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "employee_key"
+        ],
+        "secondTableName": "dim_employee",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "date_key"
+        ],
+        "firstTableName": "fact_order_detail",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "date_key"
+        ],
+        "secondTableName": "dim_date",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "link_order_customer_employee",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "hub_order",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "link_order_customer_employee",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "hub_customer",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "employee_hk"
+        ],
+        "firstTableName": "link_order_customer_employee",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "employee_hk"
+        ],
+        "secondTableName": "hub_employee",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "order_hk"
+        ],
+        "firstTableName": "link_order_product",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "order_hk"
+        ],
+        "secondTableName": "hub_order",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "link_order_product",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "hub_product",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "customer_hk"
+        ],
+        "firstTableName": "sat_customer",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "customer_hk"
+        ],
+        "secondTableName": "hub_customer",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "product_hk"
+        ],
+        "firstTableName": "sat_product",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "product_hk"
+        ],
+        "secondTableName": "hub_product",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "employee_hk"
+        ],
+        "firstTableName": "sat_employee",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "employee_hk"
+        ],
+        "secondTableName": "hub_employee",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "link_order_product_hk"
+        ],
+        "firstTableName": "sat_order_details",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "link_order_product_hk"
+        ],
+        "secondTableName": "link_order_product",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      }
+    ]
+  },
+  "views": {}
+}
